@@ -2,6 +2,8 @@
 
 This repo contains pre-compiled Playwire SDKs binaries (XCFrameworks).
 
+> **Note**: Before uploading any code or binaries into this repository please ensure that you updated git config to be: `git config user.email "mobile.team@playwire.com" && git config user.name "Playwire Developer"`
+
 ## Environment Requirements
 
 #### Bundler
@@ -45,9 +47,10 @@ $ bundle exec fastlane lint_pod
 
 ### Push pod
 
-> **Note**: Before proceeding further, please verify that xcframework binaries are already uploaded to a repository and corresponding commit is tagged with correct version. Also please ensure that you already downloaded private spec repository to local machine using `pod repo add plw-ios-podspec <GIT_URL_TO_PRIVATE_PODSPEC_REPO>`.
+> **Note**: Before proceeding further, please verify that xcframework binaries are already uploaded to a remote repository and corresponding commit is tagged with correct version.
+> **Note**: Also please ensure that you already downloaded private spec repository to your local machine using command `pod repo add plw-ios-podspec git@github.com:intergi/playwire-ios-podspec.git`. That will download podspec repo into `~/.cocoapods/repos/plw-ios-podspec/` directory. Please set here the same shared git config from the README beginning, so every time you're pushing new pod version it will be correspondingly authored in git.
 
-- Push specified podspec (`Playwire` / `Playwire_Amazon` / `Playwire_Smaato`) to the remote
+- Push specified podspec to the remote
 
 ```ruby
 $ bundle exec fastlane push_pod
