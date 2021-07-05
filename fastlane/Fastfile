@@ -9,7 +9,7 @@ def podspec_file()
 end
 
 def pod_repo_name()
-  "plw-ios-podspec"
+  "playwire-ios-podspec"
 end
 
 lane :lint_pod do
