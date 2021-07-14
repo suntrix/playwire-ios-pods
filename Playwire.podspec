@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Playwire'
-  s.version          = '2.6.0'
+  s.version          = '3.0.0'
   s.summary          = 'Playwire SDK'
   s.homepage         = 'https://www.playwire.com'
   s.license          = { :type => 'Custom', :file => 'LICENSE' }

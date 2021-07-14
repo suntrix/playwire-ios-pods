@@ -194,6 +194,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @import Foundation;
 @import GoogleMobileAds;
 @import ObjectiveC;
+@import UIKit;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -211,38 +212,10 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma pop_macro("any")
 #endif
 
-typedef SWIFT_ENUM(NSInteger, PWAdBannerAlignment, open) {
-  PWAdBannerAlignmentTop = 0,
-  PWAdBannerAlignmentBottom = 1,
-};
-
-@class PWAdSlot;
-@class UIViewController;
-@class NSCoder;
-
-SWIFT_CLASS("_TtC8Playwire16PWAdBannerUIView")
-@interface PWAdBannerUIView : DFPBannerView
-- (nonnull instancetype)initWithAdSlot:(PWAdSlot * _Nonnull)adSlot viewController:(UIViewController * _Nonnull)viewController OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (void)addToControllerViewWithAlignment:(enum PWAdBannerAlignment)alignment;
-- (void)autorefresh;
-- (nonnull instancetype)initWithAdSize:(GADAdSize)adSize origin:(CGPoint)origin SWIFT_UNAVAILABLE;
-- (nonnull instancetype)initWithAdSize:(GADAdSize)adSize SWIFT_UNAVAILABLE;
-- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
-@end
-
 
 SWIFT_CLASS("_TtC8Playwire10PWAdBidder")
 @interface PWAdBidder : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-@class NSString;
-
-SWIFT_CLASS("_TtC8Playwire16PWAdInterstitial")
-@interface PWAdInterstitial : DFPInterstitial
-- (nonnull instancetype)initWithAdSlot:(PWAdSlot * _Nonnull)adSlot OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithAdUnitID:(NSString * _Nonnull)adUnitID SWIFT_UNAVAILABLE;
 @end
 
 
@@ -252,67 +225,156 @@ SWIFT_CLASS("_TtC8Playwire12PWAdMediator")
 @end
 
 
-SWIFT_CLASS("_TtC8Playwire12PWAdRewarded")
-@interface PWAdRewarded : GADRewardedAd
-- (nonnull instancetype)initWithAdSlot:(PWAdSlot * _Nonnull)adSlot completionHandler:(GADRewardedAdLoadCompletionHandler _Nullable)completionHandler OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithAdUnitID:(NSString * _Nonnull)adUnitID SWIFT_UNAVAILABLE;
+SWIFT_CLASS("_TtC8Playwire19PWAdUnitStoreConfig")
+@interface PWAdUnitStoreConfig : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@protocol PWBannerViewDelegate;
+@class NSString;
 @class NSNumber;
+@class NSCoder;
 
-SWIFT_CLASS("_TtC8Playwire8PWAdSlot")
-@interface PWAdSlot : NSObject
-- (nonnull instancetype)initWith:(NSString * _Nonnull)adUnitName;
-- (void)loadOnBidLoaded:(void (^ _Nonnull)(void))onBidLoaded;
-- (BOOL)isBanner SWIFT_WARN_UNUSED_RESULT;
-- (BOOL)isInterstitial SWIFT_WARN_UNUSED_RESULT;
-- (BOOL)isRewarded SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS("_TtC8Playwire12PWBannerView")
+@interface PWBannerView : UIView
+@property (nonatomic, weak) id <PWBannerViewDelegate> _Nullable delegate;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWBannerViewDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (void)load;
+@property (nonatomic, readonly) BOOL isLoaded;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
+@class GADBannerView;
+@class GADRequestError;
+
+@interface PWBannerView (SWIFT_EXTENSION(Playwire)) <GADBannerViewDelegate>
+- (void)adViewDidReceiveAd:(GADBannerView * _Nonnull)bannerView;
+- (void)adView:(GADBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(GADRequestError * _Nonnull)error;
+- (void)adViewWillPresentScreen:(GADBannerView * _Nonnull)bannerView;
+- (void)adViewWillDismissScreen:(GADBannerView * _Nonnull)bannerView;
+- (void)adViewDidDismissScreen:(GADBannerView * _Nonnull)bannerView;
+- (void)adViewWillLeaveApplication:(GADBannerView * _Nonnull)bannerView;
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire20PWBannerViewDelegate_")
+@protocol PWBannerViewDelegate
+- (void)bannerViewDidReceiveAd:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerViewWillPresentScreen:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerViewWillDismissScreen:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerViewDidDismissScreen:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerViewWillLeaveApplication:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerView:(PWBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(NSString * _Nonnull)error;
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire18PWConfigFileLoader_")
+@protocol PWConfigFileLoader
+- (PWAdUnitStoreConfig * _Nonnull)getConfig SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@protocol PWInterstitialDelegate;
+@class UIViewController;
+
+SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
+@interface PWInterstitial : NSObject
+@property (nonatomic, weak) id <PWInterstitialDelegate> _Nullable delegate;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWInterstitialDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (void)load;
+@property (nonatomic, readonly) BOOL isLoaded;
+- (void)showFromViewController:(UIViewController * _Nonnull)viewController;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@class GADInterstitial;
 
-SWIFT_CLASS("_TtC8Playwire10PWUMPDebug")
-@interface PWUMPDebug : NSObject
-- (nonnull instancetype)initWithDebug:(BOOL)debug OBJC_DESIGNATED_INITIALIZER;
-- (PWUMPDebug * _Nonnull)withDevices:(NSArray<NSString *> * _Nonnull)devices SWIFT_WARN_UNUSED_RESULT;
-- (PWUMPDebug * _Nonnull)forcingEEALocation SWIFT_WARN_UNUSED_RESULT;
-- (PWUMPDebug * _Nonnull)forcingNotEEALocation SWIFT_WARN_UNUSED_RESULT;
-- (PWUMPDebug * _Nonnull)resetingInfo SWIFT_WARN_UNUSED_RESULT;
+@interface PWInterstitial (SWIFT_EXTENSION(Playwire)) <GADInterstitialDelegate>
+- (void)interstitialDidReceiveAd:(GADInterstitial * _Nonnull)ad;
+- (void)interstitial:(GADInterstitial * _Nonnull)ad didFailToReceiveAdWithError:(GADRequestError * _Nonnull)error;
+- (void)interstitialWillPresentScreen:(GADInterstitial * _Nonnull)ad;
+- (void)interstitialDidFailToPresentScreen:(GADInterstitial * _Nonnull)ad;
+- (void)interstitialWillDismissScreen:(GADInterstitial * _Nonnull)ad;
+- (void)interstitialDidDismissScreen:(GADInterstitial * _Nonnull)ad;
+- (void)interstitialWillLeaveApplication:(GADInterstitial * _Nonnull)ad;
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire22PWInterstitialDelegate_")
+@protocol PWInterstitialDelegate
+- (void)interstitialDidReceiveAd:(PWInterstitial * _Nonnull)ad;
+- (void)interstitialWillPresentScreen:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitialDidFailToPresentScreen:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitialWillDismissScreen:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitialDidDismissScreen:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitialWillLeaveApplication:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitial:(PWInterstitial * _Nonnull)interstitial didFailToReceiveAdWithError:(NSString * _Nonnull)error;
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire26PWResourceConfigFileLoader")
+@interface PWResourceConfigFileLoader : NSObject <PWConfigFileLoader>
+- (nonnull instancetype)initWithResource:(NSString * _Nonnull)resource withExtension:(NSString * _Nonnull)ext OBJC_DESIGNATED_INITIALIZER;
+- (PWAdUnitStoreConfig * _Nonnull)getConfig SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-enum Result : NSInteger;
+@protocol PWRewardedDelegate;
 
-SWIFT_CLASS("_TtC8Playwire12PWUMPManager")
-@interface PWUMPManager : NSObject
-@property (nonatomic, strong) PWUMPDebug * _Nonnull debugInfo;
-- (void)requestConsentWithController:(UIViewController * _Nonnull)controller;
-- (void)requestConsentWithController:(UIViewController * _Nonnull)controller andHandler:(void (^ _Nullable)(enum Result))handler;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+SWIFT_CLASS("_TtC8Playwire10PWRewarded")
+@interface PWRewarded : NSObject
+@property (nonatomic, weak) id <PWRewardedDelegate> _Nullable delegate;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWRewardedDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (void)load;
+@property (nonatomic, readonly) BOOL isLoaded;
+- (void)showFromViewController:(UIViewController * _Nonnull)viewController;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-typedef SWIFT_ENUM(NSInteger, Result, open) {
-  ResultRequestError = 0,
-  ResultFormNotAvailable = 1,
-  ResultFormNotLoader = 2,
-  ResultConsentNotRequired = 3,
-  ResultConsentNotAquired = 4,
-  ResultConsentAquired = 5,
-};
+@class GADRewardedAd;
+@class GADAdReward;
 
+@interface PWRewarded (SWIFT_EXTENSION(Playwire)) <GADRewardedAdDelegate>
+- (void)rewardedAd:(GADRewardedAd * _Nonnull)rewardedAd userDidEarnReward:(GADAdReward * _Nonnull)reward;
+- (void)rewardedAd:(GADRewardedAd * _Nonnull)rewardedAd didFailToPresentWithError:(NSError * _Nonnull)error;
+- (void)rewardedAdDidPresent:(GADRewardedAd * _Nonnull)rewardedAd;
+- (void)rewardedAdDidDismiss:(GADRewardedAd * _Nonnull)rewardedAd;
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire18PWRewardedDelegate_")
+@protocol PWRewardedDelegate
+- (void)rewardedDidLoad:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidUserEarn:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidPresent:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidDismiss:(PWRewarded * _Nonnull)rewarded;
+- (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToLoadWithError:(NSString * _Nonnull)error;
+- (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToPresentWithError:(NSString * _Nonnull)error;
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire24PWStringConfigFileLoader")
+@interface PWStringConfigFileLoader : NSObject <PWConfigFileLoader>
+- (nonnull instancetype)initWithString:(NSString * _Nonnull)string OBJC_DESIGNATED_INITIALIZER;
+- (PWAdUnitStoreConfig * _Nonnull)getConfig SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class GADRequest;
 
 SWIFT_CLASS("_TtC8Playwire11PlaywireSDK")
 @interface PlaywireSDK : NSObject
-- (void)loadFromUrlForResource:(NSString * _Nonnull)resource withExtension:(NSString * _Nonnull)ext;
-- (void)loadFromJsonString:(NSString * _Nonnull)jsonString;
-@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull adUnitNames;
-@property (nonatomic, readonly, strong) PWUMPManager * _Nonnull umpManager;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PlaywireSDK * _Nonnull shared;)
 + (PlaywireSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, strong) id <PWConfigFileLoader> _Nonnull configLoader;
+- (void)initializeWithViewController:(UIViewController * _Nonnull)viewController completionHandler:(void (^ _Nonnull)(void))completionHandler;
+@property (nonatomic, readonly, copy) NSDictionary<NSString *, NSArray<NSString *> *> * _Nonnull adUnitsDictionary;
+- (void)configureWithRequest:(GADRequest * _Nonnull)request;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -517,6 +579,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @import Foundation;
 @import GoogleMobileAds;
 @import ObjectiveC;
+@import UIKit;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -534,38 +597,10 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma pop_macro("any")
 #endif
 
-typedef SWIFT_ENUM(NSInteger, PWAdBannerAlignment, open) {
-  PWAdBannerAlignmentTop = 0,
-  PWAdBannerAlignmentBottom = 1,
-};
-
-@class PWAdSlot;
-@class UIViewController;
-@class NSCoder;
-
-SWIFT_CLASS("_TtC8Playwire16PWAdBannerUIView")
-@interface PWAdBannerUIView : DFPBannerView
-- (nonnull instancetype)initWithAdSlot:(PWAdSlot * _Nonnull)adSlot viewController:(UIViewController * _Nonnull)viewController OBJC_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (void)addToControllerViewWithAlignment:(enum PWAdBannerAlignment)alignment;
-- (void)autorefresh;
-- (nonnull instancetype)initWithAdSize:(GADAdSize)adSize origin:(CGPoint)origin SWIFT_UNAVAILABLE;
-- (nonnull instancetype)initWithAdSize:(GADAdSize)adSize SWIFT_UNAVAILABLE;
-- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
-@end
-
 
 SWIFT_CLASS("_TtC8Playwire10PWAdBidder")
 @interface PWAdBidder : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-@class NSString;
-
-SWIFT_CLASS("_TtC8Playwire16PWAdInterstitial")
-@interface PWAdInterstitial : DFPInterstitial
-- (nonnull instancetype)initWithAdSlot:(PWAdSlot * _Nonnull)adSlot OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithAdUnitID:(NSString * _Nonnull)adUnitID SWIFT_UNAVAILABLE;
 @end
 
 
@@ -575,67 +610,156 @@ SWIFT_CLASS("_TtC8Playwire12PWAdMediator")
 @end
 
 
-SWIFT_CLASS("_TtC8Playwire12PWAdRewarded")
-@interface PWAdRewarded : GADRewardedAd
-- (nonnull instancetype)initWithAdSlot:(PWAdSlot * _Nonnull)adSlot completionHandler:(GADRewardedAdLoadCompletionHandler _Nullable)completionHandler OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithAdUnitID:(NSString * _Nonnull)adUnitID SWIFT_UNAVAILABLE;
+SWIFT_CLASS("_TtC8Playwire19PWAdUnitStoreConfig")
+@interface PWAdUnitStoreConfig : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@protocol PWBannerViewDelegate;
+@class NSString;
 @class NSNumber;
+@class NSCoder;
 
-SWIFT_CLASS("_TtC8Playwire8PWAdSlot")
-@interface PWAdSlot : NSObject
-- (nonnull instancetype)initWith:(NSString * _Nonnull)adUnitName;
-- (void)loadOnBidLoaded:(void (^ _Nonnull)(void))onBidLoaded;
-- (BOOL)isBanner SWIFT_WARN_UNUSED_RESULT;
-- (BOOL)isInterstitial SWIFT_WARN_UNUSED_RESULT;
-- (BOOL)isRewarded SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS("_TtC8Playwire12PWBannerView")
+@interface PWBannerView : UIView
+@property (nonatomic, weak) id <PWBannerViewDelegate> _Nullable delegate;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWBannerViewDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (void)load;
+@property (nonatomic, readonly) BOOL isLoaded;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
+@class GADBannerView;
+@class GADRequestError;
+
+@interface PWBannerView (SWIFT_EXTENSION(Playwire)) <GADBannerViewDelegate>
+- (void)adViewDidReceiveAd:(GADBannerView * _Nonnull)bannerView;
+- (void)adView:(GADBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(GADRequestError * _Nonnull)error;
+- (void)adViewWillPresentScreen:(GADBannerView * _Nonnull)bannerView;
+- (void)adViewWillDismissScreen:(GADBannerView * _Nonnull)bannerView;
+- (void)adViewDidDismissScreen:(GADBannerView * _Nonnull)bannerView;
+- (void)adViewWillLeaveApplication:(GADBannerView * _Nonnull)bannerView;
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire20PWBannerViewDelegate_")
+@protocol PWBannerViewDelegate
+- (void)bannerViewDidReceiveAd:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerViewWillPresentScreen:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerViewWillDismissScreen:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerViewDidDismissScreen:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerViewWillLeaveApplication:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerView:(PWBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(NSString * _Nonnull)error;
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire18PWConfigFileLoader_")
+@protocol PWConfigFileLoader
+- (PWAdUnitStoreConfig * _Nonnull)getConfig SWIFT_WARN_UNUSED_RESULT;
+@end
+
+@protocol PWInterstitialDelegate;
+@class UIViewController;
+
+SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
+@interface PWInterstitial : NSObject
+@property (nonatomic, weak) id <PWInterstitialDelegate> _Nullable delegate;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWInterstitialDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (void)load;
+@property (nonatomic, readonly) BOOL isLoaded;
+- (void)showFromViewController:(UIViewController * _Nonnull)viewController;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+@class GADInterstitial;
 
-SWIFT_CLASS("_TtC8Playwire10PWUMPDebug")
-@interface PWUMPDebug : NSObject
-- (nonnull instancetype)initWithDebug:(BOOL)debug OBJC_DESIGNATED_INITIALIZER;
-- (PWUMPDebug * _Nonnull)withDevices:(NSArray<NSString *> * _Nonnull)devices SWIFT_WARN_UNUSED_RESULT;
-- (PWUMPDebug * _Nonnull)forcingEEALocation SWIFT_WARN_UNUSED_RESULT;
-- (PWUMPDebug * _Nonnull)forcingNotEEALocation SWIFT_WARN_UNUSED_RESULT;
-- (PWUMPDebug * _Nonnull)resetingInfo SWIFT_WARN_UNUSED_RESULT;
+@interface PWInterstitial (SWIFT_EXTENSION(Playwire)) <GADInterstitialDelegate>
+- (void)interstitialDidReceiveAd:(GADInterstitial * _Nonnull)ad;
+- (void)interstitial:(GADInterstitial * _Nonnull)ad didFailToReceiveAdWithError:(GADRequestError * _Nonnull)error;
+- (void)interstitialWillPresentScreen:(GADInterstitial * _Nonnull)ad;
+- (void)interstitialDidFailToPresentScreen:(GADInterstitial * _Nonnull)ad;
+- (void)interstitialWillDismissScreen:(GADInterstitial * _Nonnull)ad;
+- (void)interstitialDidDismissScreen:(GADInterstitial * _Nonnull)ad;
+- (void)interstitialWillLeaveApplication:(GADInterstitial * _Nonnull)ad;
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire22PWInterstitialDelegate_")
+@protocol PWInterstitialDelegate
+- (void)interstitialDidReceiveAd:(PWInterstitial * _Nonnull)ad;
+- (void)interstitialWillPresentScreen:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitialDidFailToPresentScreen:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitialWillDismissScreen:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitialDidDismissScreen:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitialWillLeaveApplication:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitial:(PWInterstitial * _Nonnull)interstitial didFailToReceiveAdWithError:(NSString * _Nonnull)error;
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire26PWResourceConfigFileLoader")
+@interface PWResourceConfigFileLoader : NSObject <PWConfigFileLoader>
+- (nonnull instancetype)initWithResource:(NSString * _Nonnull)resource withExtension:(NSString * _Nonnull)ext OBJC_DESIGNATED_INITIALIZER;
+- (PWAdUnitStoreConfig * _Nonnull)getConfig SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-enum Result : NSInteger;
+@protocol PWRewardedDelegate;
 
-SWIFT_CLASS("_TtC8Playwire12PWUMPManager")
-@interface PWUMPManager : NSObject
-@property (nonatomic, strong) PWUMPDebug * _Nonnull debugInfo;
-- (void)requestConsentWithController:(UIViewController * _Nonnull)controller;
-- (void)requestConsentWithController:(UIViewController * _Nonnull)controller andHandler:(void (^ _Nullable)(enum Result))handler;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+SWIFT_CLASS("_TtC8Playwire10PWRewarded")
+@interface PWRewarded : NSObject
+@property (nonatomic, weak) id <PWRewardedDelegate> _Nullable delegate;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWRewardedDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (void)load;
+@property (nonatomic, readonly) BOOL isLoaded;
+- (void)showFromViewController:(UIViewController * _Nonnull)viewController;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-typedef SWIFT_ENUM(NSInteger, Result, open) {
-  ResultRequestError = 0,
-  ResultFormNotAvailable = 1,
-  ResultFormNotLoader = 2,
-  ResultConsentNotRequired = 3,
-  ResultConsentNotAquired = 4,
-  ResultConsentAquired = 5,
-};
+@class GADRewardedAd;
+@class GADAdReward;
 
+@interface PWRewarded (SWIFT_EXTENSION(Playwire)) <GADRewardedAdDelegate>
+- (void)rewardedAd:(GADRewardedAd * _Nonnull)rewardedAd userDidEarnReward:(GADAdReward * _Nonnull)reward;
+- (void)rewardedAd:(GADRewardedAd * _Nonnull)rewardedAd didFailToPresentWithError:(NSError * _Nonnull)error;
+- (void)rewardedAdDidPresent:(GADRewardedAd * _Nonnull)rewardedAd;
+- (void)rewardedAdDidDismiss:(GADRewardedAd * _Nonnull)rewardedAd;
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire18PWRewardedDelegate_")
+@protocol PWRewardedDelegate
+- (void)rewardedDidLoad:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidUserEarn:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidPresent:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidDismiss:(PWRewarded * _Nonnull)rewarded;
+- (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToLoadWithError:(NSString * _Nonnull)error;
+- (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToPresentWithError:(NSString * _Nonnull)error;
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire24PWStringConfigFileLoader")
+@interface PWStringConfigFileLoader : NSObject <PWConfigFileLoader>
+- (nonnull instancetype)initWithString:(NSString * _Nonnull)string OBJC_DESIGNATED_INITIALIZER;
+- (PWAdUnitStoreConfig * _Nonnull)getConfig SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@class GADRequest;
 
 SWIFT_CLASS("_TtC8Playwire11PlaywireSDK")
 @interface PlaywireSDK : NSObject
-- (void)loadFromUrlForResource:(NSString * _Nonnull)resource withExtension:(NSString * _Nonnull)ext;
-- (void)loadFromJsonString:(NSString * _Nonnull)jsonString;
-@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nonnull adUnitNames;
-@property (nonatomic, readonly, strong) PWUMPManager * _Nonnull umpManager;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PlaywireSDK * _Nonnull shared;)
 + (PlaywireSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, strong) id <PWConfigFileLoader> _Nonnull configLoader;
+- (void)initializeWithViewController:(UIViewController * _Nonnull)viewController completionHandler:(void (^ _Nonnull)(void))completionHandler;
+@property (nonatomic, readonly, copy) NSDictionary<NSString *, NSArray<NSString *> *> * _Nonnull adUnitsDictionary;
+- (void)configureWithRequest:(GADRequest * _Nonnull)request;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 

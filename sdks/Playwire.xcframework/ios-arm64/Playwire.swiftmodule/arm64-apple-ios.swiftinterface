@@ -4,58 +4,102 @@
 import Foundation
 import GoogleMobileAds
 import Swift
-import SwiftUI
 import UIKit
 import UserMessagingPlatform
-@objc public class PWUMPDebug : ObjectiveC.NSObject {
-  @objc public init(debug: Swift.Bool = true)
-  @objc public func with(devices: Swift.Array<Swift.String>) -> Playwire.PWUMPDebug
-  @objc public func forcingEEALocation() -> Playwire.PWUMPDebug
-  @objc public func forcingNotEEALocation() -> Playwire.PWUMPDebug
-  @objc public func resetingInfo() -> Playwire.PWUMPDebug
+@objc public protocol PWConfigFileLoader {
+  @objc func getConfig() -> Playwire.PWAdUnitStoreConfig
+}
+@objc @objcMembers public class PWStringConfigFileLoader : ObjectiveC.NSObject, Playwire.PWConfigFileLoader {
+  @objc public init(string: Swift.String)
+  @objc public func getConfig() -> Playwire.PWAdUnitStoreConfig
   @objc override dynamic public init()
   @objc deinit
 }
-@_inheritsConvenienceInitializers @objc public class PWUMPManager : ObjectiveC.NSObject {
-  @objc public var debugInfo: Playwire.PWUMPDebug
-  @objc public enum Result : Swift.Int {
-    case RequestError
-    case FormNotAvailable
-    case FormNotLoader
-    case ConsentNotRequired
-    case ConsentNotAquired
-    case ConsentAquired
-    public init?(rawValue: Swift.Int)
-    public typealias RawValue = Swift.Int
-    public var rawValue: Swift.Int {
-      get
-    }
+@objc @objcMembers public class PWResourceConfigFileLoader : ObjectiveC.NSObject, Playwire.PWConfigFileLoader {
+  @objc public init(resource: Swift.String, withExtension ext: Swift.String)
+  @objc public func getConfig() -> Playwire.PWAdUnitStoreConfig
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public protocol PWInterstitialDelegate {
+  @objc func interstitialDidReceiveAd(_ ad: Playwire.PWInterstitial)
+  @objc func interstitialWillPresentScreen(_ interstitial: Playwire.PWInterstitial)
+  @objc func interstitialDidFail(toPresentScreen interstitial: Playwire.PWInterstitial)
+  @objc func interstitialWillDismissScreen(_ interstitial: Playwire.PWInterstitial)
+  @objc func interstitialDidDismissScreen(_ interstitial: Playwire.PWInterstitial)
+  @objc func interstitialWillLeaveApplication(_ interstitial: Playwire.PWInterstitial)
+  @objc func interstitial(_ interstitial: Playwire.PWInterstitial, didFailToReceiveAdWithError error: Swift.String)
+}
+@objc @objcMembers public class PWInterstitial : ObjectiveC.NSObject {
+  @objc weak public var delegate: Playwire.PWInterstitialDelegate?
+  @objc public init(adUnitName: Swift.String, delegate: Playwire.PWInterstitialDelegate? = nil)
+  @objc public func load()
+  @objc public var isLoaded: Swift.Bool {
+    @objc get
   }
-  @objc public func requestConsent(withController controller: UIKit.UIViewController)
-  @objc public func requestConsent(withController controller: UIKit.UIViewController, andHandler handler: ((Playwire.PWUMPManager.Result) -> ())?)
+  @objc public func show(fromViewController viewController: UIKit.UIViewController)
   @objc override dynamic public init()
   @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc public class PWAdInterstitial : GoogleMobileAds.DFPInterstitial {
-  @objc public init(adSlot: Playwire.PWAdSlot)
-  @objc override dynamic public init(adUnitID: Swift.String)
+extension PWInterstitial : GoogleMobileAds.GADInterstitialDelegate {
+  @objc dynamic public func interstitialDidReceiveAd(_ ad: GoogleMobileAds.GADInterstitial)
+  @objc dynamic public func interstitial(_ ad: GoogleMobileAds.GADInterstitial, didFailToReceiveAdWithError error: GoogleMobileAds.GADRequestError)
+  @objc dynamic public func interstitialWillPresentScreen(_ ad: GoogleMobileAds.GADInterstitial)
+  @objc dynamic public func interstitialDidFail(toPresentScreen ad: GoogleMobileAds.GADInterstitial)
+  @objc dynamic public func interstitialWillDismissScreen(_ ad: GoogleMobileAds.GADInterstitial)
+  @objc dynamic public func interstitialDidDismissScreen(_ ad: GoogleMobileAds.GADInterstitial)
+  @objc dynamic public func interstitialWillLeaveApplication(_ ad: GoogleMobileAds.GADInterstitial)
+}
+@objc public protocol PWBannerViewDelegate {
+  @objc func bannerViewDidReceiveAd(_ bannerView: Playwire.PWBannerView)
+  @objc func bannerViewWillPresentScreen(_ bannerView: Playwire.PWBannerView)
+  @objc func bannerViewWillDismissScreen(_ bannerView: Playwire.PWBannerView)
+  @objc func bannerViewDidDismissScreen(_ bannerView: Playwire.PWBannerView)
+  @objc func bannerViewWillLeaveApplication(_ bannerView: Playwire.PWBannerView)
+  @objc func bannerView(_ bannerView: Playwire.PWBannerView, didFailToReceiveAdWithError error: Swift.String)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWBannerView : UIKit.UIView {
+  @objc weak public var delegate: Playwire.PWBannerViewDelegate?
+  @objc public init(adUnitName: Swift.String, delegate: Playwire.PWBannerViewDelegate? = nil)
+  @objc public func load()
+  @objc public var isLoaded: Swift.Bool {
+    @objc get
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc public class PWAdSlot : ObjectiveC.NSObject {
-  public var adUnit: Playwire.PWAdUnit?
-  @objc convenience public init(with adUnitName: Swift.String)
-  @objc public func load(onBidLoaded: @escaping () -> ())
-  @objc public func isBanner() -> Swift.Bool
-  @objc public func isInterstitial() -> Swift.Bool
-  @objc public func isRewarded() -> Swift.Bool
+extension PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
+  @objc dynamic public func adViewDidReceiveAd(_ bannerView: GoogleMobileAds.GADBannerView)
+  @objc dynamic public func adView(_ bannerView: GoogleMobileAds.GADBannerView, didFailToReceiveAdWithError error: GoogleMobileAds.GADRequestError)
+  @objc dynamic public func adViewWillPresentScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+  @objc dynamic public func adViewWillDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+  @objc dynamic public func adViewDidDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+  @objc dynamic public func adViewWillLeaveApplication(_ bannerView: GoogleMobileAds.GADBannerView)
+}
+@objc public protocol PWRewardedDelegate {
+  @objc func rewardedDidLoad(_ rewarded: Playwire.PWRewarded)
+  @objc func rewardedDidUserEarn(_ rewarded: Playwire.PWRewarded)
+  @objc func rewardedDidPresent(_ rewarded: Playwire.PWRewarded)
+  @objc func rewardedDidDismiss(_ rewarded: Playwire.PWRewarded)
+  @objc func rewarded(_ rewarded: Playwire.PWRewarded, didFailToLoadWithError error: Swift.String)
+  @objc func rewarded(_ rewarded: Playwire.PWRewarded, didFailToPresentWithError error: Swift.String)
+}
+@objc @objcMembers public class PWRewarded : ObjectiveC.NSObject {
+  @objc weak public var delegate: Playwire.PWRewardedDelegate?
+  @objc public init(adUnitName: Swift.String, delegate: Playwire.PWRewardedDelegate? = nil)
+  @objc public func load()
+  @objc public var isLoaded: Swift.Bool {
+    @objc get
+  }
+  @objc public func show(fromViewController viewController: UIKit.UIViewController)
   @objc override dynamic public init()
   @objc deinit
 }
-@_hasMissingDesignatedInitializers @objc public class PWAdRewarded : GoogleMobileAds.GADRewardedAd {
-  @objc public init(adSlot: Playwire.PWAdSlot, completionHandler: GoogleMobileAds.GADRewardedAdLoadCompletionHandler?)
-  @objc override dynamic public init(adUnitID: Swift.String)
-  @objc override dynamic public init()
-  @objc deinit
+extension PWRewarded : GoogleMobileAds.GADRewardedAdDelegate {
+  @objc dynamic public func rewardedAd(_ rewardedAd: GoogleMobileAds.GADRewardedAd, userDidEarn reward: GoogleMobileAds.GADAdReward)
+  @objc dynamic public func rewardedAd(_ rewardedAd: GoogleMobileAds.GADRewardedAd, didFailToPresentWithError error: Swift.Error)
+  @objc dynamic public func rewardedAdDidPresent(_ rewardedAd: GoogleMobileAds.GADRewardedAd)
+  @objc dynamic public func rewardedAdDidDismiss(_ rewardedAd: GoogleMobileAds.GADRewardedAd)
 }
 public typealias PWAdBid = [Swift.AnyHashable : Any]
 @_hasMissingDesignatedInitializers public class PWAdBidderConfig {
@@ -71,24 +115,6 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   public var config: Playwire.PWAdBidderConfig!
   @objc override required dynamic public init()
   open func load()
-  @objc deinit
-}
-@objc public enum PWAdBannerAlignment : Swift.Int {
-  case Top
-  case Bottom
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-@_hasMissingDesignatedInitializers @objc public class PWAdBannerUIView : GoogleMobileAds.DFPBannerView {
-  @objc public init(adSlot: Playwire.PWAdSlot, viewController: UIKit.UIViewController)
-  @objc public func addToControllerView(alignment: Playwire.PWAdBannerAlignment)
-  @objc public func autorefresh()
-  @objc override dynamic public init(adSize: GoogleMobileAds.GADAdSize, origin: CoreGraphics.CGPoint)
-  @objc override dynamic public init(adSize: GoogleMobileAds.GADAdSize)
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc deinit
 }
 public struct PWAdSize : Swift.Decodable {
@@ -120,6 +146,11 @@ public struct PWAdUnitConfig : Swift.Decodable {
   public let adUnitId: Swift.String
   public let adSizes: Swift.Array<Playwire.PWAdSize>?
   public init(from decoder: Swift.Decoder) throws
+}
+@_hasMissingDesignatedInitializers @objc public class PWAdUnitStoreConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc override dynamic public init()
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
 }
 public struct PWAdUnit : Swift.Decodable {
   public enum PWAdBidStrategyType : Swift.String, Swift.Decodable {
@@ -180,36 +211,20 @@ public struct PWAdMediatorConfig : Swift.Decodable {
   open func configure(request: GoogleMobileAds.GADRequest)
   @objc deinit
 }
-@_inheritsConvenienceInitializers @objc public class PlaywireSDK : ObjectiveC.NSObject {
-  @objc public func loadFrom(urlForResource resource: Swift.String, withExtension ext: Swift.String)
-  @objc public func loadFrom(jsonString: Swift.String)
-  @objc public var adUnitNames: Swift.Array<Swift.String> {
+@objc @_inheritsConvenienceInitializers @objcMembers public class PlaywireSDK : ObjectiveC.NSObject {
+  @objc public static let shared: Playwire.PlaywireSDK
+  @objc public var configLoader: Playwire.PWConfigFileLoader
+  @objc public func initialize(viewController: UIKit.UIViewController, completionHandler: @escaping () -> Swift.Void)
+  @objc public var adUnitsDictionary: [Swift.String : [Swift.String]] {
     @objc get
   }
   public func set(type: Playwire.PWAdBidder.Type, for serverType: Playwire.PWAdServerConfig.PWAdServerType)
   public func get(factoryFor serverType: Playwire.PWAdServerConfig.PWAdServerType) -> Playwire.PWAdBidder.Type?
   public func set(type: Playwire.PWAdMediator.Type, for mediatorType: Playwire.PWAdMediatorConfig.PWAdMediatorType)
-  open func configure(request: GoogleMobileAds.GADRequest)
-  @objc final public let umpManager: Playwire.PWUMPManager
-  @objc public static let shared: Playwire.PlaywireSDK
+  @objc open func configure(request: GoogleMobileAds.GADRequest)
   @objc override dynamic public init()
   @objc deinit
 }
-public struct PWAdBannerView : SwiftUI.UIViewControllerRepresentable {
-  public var adSlot: Playwire.PWAdSlot
-  public init(adSlot: Playwire.PWAdSlot)
-  public func makeUIViewController(context: Playwire.PWAdBannerView.Context) -> UIKit.UIViewController
-  public func updateUIViewController(_ uiViewController: UIKit.UIViewController, context: Playwire.PWAdBannerView.Context)
-  public typealias Body = Swift.Never
-  public typealias Coordinator = Swift.Void
-  public typealias UIViewControllerType = UIKit.UIViewController
-}
-extension Playwire.PWUMPManager.Result : Swift.Equatable {}
-extension Playwire.PWUMPManager.Result : Swift.Hashable {}
-extension Playwire.PWUMPManager.Result : Swift.RawRepresentable {}
-extension Playwire.PWAdBannerAlignment : Swift.Equatable {}
-extension Playwire.PWAdBannerAlignment : Swift.Hashable {}
-extension Playwire.PWAdBannerAlignment : Swift.RawRepresentable {}
 extension Playwire.PWAdServerConfig.PWAdServerType : Swift.RawRepresentable {}
 extension Playwire.PWAdUnit.PWAdBidStrategyType : Swift.Equatable {}
 extension Playwire.PWAdUnit.PWAdBidStrategyType : Swift.Hashable {}
