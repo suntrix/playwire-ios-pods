@@ -23,12 +23,11 @@ import UserMessagingPlatform
 }
 @objc public protocol PWInterstitialDelegate {
   @objc func interstitialDidReceiveAd(_ ad: Playwire.PWInterstitial)
-  @objc func interstitialWillPresentScreen(_ interstitial: Playwire.PWInterstitial)
-  @objc func interstitialDidFail(toPresentScreen interstitial: Playwire.PWInterstitial)
-  @objc func interstitialWillDismissScreen(_ interstitial: Playwire.PWInterstitial)
-  @objc func interstitialDidDismissScreen(_ interstitial: Playwire.PWInterstitial)
-  @objc func interstitialWillLeaveApplication(_ interstitial: Playwire.PWInterstitial)
   @objc func interstitial(_ interstitial: Playwire.PWInterstitial, didFailToReceiveAdWithError error: Swift.String)
+  @objc func interstitialDidPresentFullScreenContent(_ interstitial: Playwire.PWInterstitial)
+  @objc func interstitialDidDismissFullScreenContent(_ interstitial: Playwire.PWInterstitial)
+  @objc func interstitial(_ interstitial: Playwire.PWInterstitial, didFailToPresentFullScreenContentWithError error: Swift.String)
+  @objc func interstitialDidRecordImpression(_ ad: Playwire.PWInterstitial)
 }
 @objc @objcMembers public class PWInterstitial : ObjectiveC.NSObject {
   @objc weak public var delegate: Playwire.PWInterstitialDelegate?
@@ -41,14 +40,11 @@ import UserMessagingPlatform
   @objc override dynamic public init()
   @objc deinit
 }
-extension PWInterstitial : GoogleMobileAds.GADInterstitialDelegate {
-  @objc dynamic public func interstitialDidReceiveAd(_ ad: GoogleMobileAds.GADInterstitial)
-  @objc dynamic public func interstitial(_ ad: GoogleMobileAds.GADInterstitial, didFailToReceiveAdWithError error: GoogleMobileAds.GADRequestError)
-  @objc dynamic public func interstitialWillPresentScreen(_ ad: GoogleMobileAds.GADInterstitial)
-  @objc dynamic public func interstitialDidFail(toPresentScreen ad: GoogleMobileAds.GADInterstitial)
-  @objc dynamic public func interstitialWillDismissScreen(_ ad: GoogleMobileAds.GADInterstitial)
-  @objc dynamic public func interstitialDidDismissScreen(_ ad: GoogleMobileAds.GADInterstitial)
-  @objc dynamic public func interstitialWillLeaveApplication(_ ad: GoogleMobileAds.GADInterstitial)
+extension PWInterstitial : GoogleMobileAds.GADFullScreenContentDelegate {
+  @objc dynamic public func adDidPresentFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
+  @objc dynamic public func adDidRecordImpression(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
 }
 @objc public protocol PWBannerViewDelegate {
   @objc func bannerViewDidReceiveAd(_ bannerView: Playwire.PWBannerView)
@@ -69,20 +65,20 @@ extension PWInterstitial : GoogleMobileAds.GADInterstitialDelegate {
   @objc deinit
 }
 extension PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
-  @objc dynamic public func adViewDidReceiveAd(_ bannerView: GoogleMobileAds.GADBannerView)
-  @objc dynamic public func adView(_ bannerView: GoogleMobileAds.GADBannerView, didFailToReceiveAdWithError error: GoogleMobileAds.GADRequestError)
-  @objc dynamic public func adViewWillPresentScreen(_ bannerView: GoogleMobileAds.GADBannerView)
-  @objc dynamic public func adViewWillDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
-  @objc dynamic public func adViewDidDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
-  @objc dynamic public func adViewWillLeaveApplication(_ bannerView: GoogleMobileAds.GADBannerView)
+  @objc dynamic public func bannerViewDidReceiveAd(_ bannerView: GoogleMobileAds.GADBannerView)
+  @objc dynamic public func bannerView(_ bannerView: GoogleMobileAds.GADBannerView, didFailToReceiveAdWithError error: Swift.Error)
+  @objc dynamic public func bannerViewWillPresentScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+  @objc dynamic public func bannerViewWillDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+  @objc dynamic public func bannerViewDidDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
 }
 @objc public protocol PWRewardedDelegate {
   @objc func rewardedDidLoad(_ rewarded: Playwire.PWRewarded)
-  @objc func rewardedDidUserEarn(_ rewarded: Playwire.PWRewarded)
-  @objc func rewardedDidPresent(_ rewarded: Playwire.PWRewarded)
-  @objc func rewardedDidDismiss(_ rewarded: Playwire.PWRewarded)
   @objc func rewarded(_ rewarded: Playwire.PWRewarded, didFailToLoadWithError error: Swift.String)
-  @objc func rewarded(_ rewarded: Playwire.PWRewarded, didFailToPresentWithError error: Swift.String)
+  @objc func rewardedDidUserEarn(_ rewarded: Playwire.PWRewarded)
+  @objc func rewardedDidPresentFullScreenContent(_ rewarded: Playwire.PWRewarded)
+  @objc func rewardedDidDismissFullScreenContent(_ rewarded: Playwire.PWRewarded)
+  @objc func rewarded(_ rewarded: Playwire.PWRewarded, didFailToPresentFullScreenContentWithError error: Swift.String)
+  @objc func rewardedDidRecordImpression(_ ad: Playwire.PWRewarded)
 }
 @objc @objcMembers public class PWRewarded : ObjectiveC.NSObject {
   @objc weak public var delegate: Playwire.PWRewardedDelegate?
@@ -95,11 +91,11 @@ extension PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
   @objc override dynamic public init()
   @objc deinit
 }
-extension PWRewarded : GoogleMobileAds.GADRewardedAdDelegate {
-  @objc dynamic public func rewardedAd(_ rewardedAd: GoogleMobileAds.GADRewardedAd, userDidEarn reward: GoogleMobileAds.GADAdReward)
-  @objc dynamic public func rewardedAd(_ rewardedAd: GoogleMobileAds.GADRewardedAd, didFailToPresentWithError error: Swift.Error)
-  @objc dynamic public func rewardedAdDidPresent(_ rewardedAd: GoogleMobileAds.GADRewardedAd)
-  @objc dynamic public func rewardedAdDidDismiss(_ rewardedAd: GoogleMobileAds.GADRewardedAd)
+extension PWRewarded : GoogleMobileAds.GADFullScreenContentDelegate {
+  @objc dynamic public func adDidPresentFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
+  @objc dynamic public func adDidRecordImpression(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
 }
 public typealias PWAdBid = [Swift.AnyHashable : Any]
 @_hasMissingDesignatedInitializers public class PWAdBidderConfig {

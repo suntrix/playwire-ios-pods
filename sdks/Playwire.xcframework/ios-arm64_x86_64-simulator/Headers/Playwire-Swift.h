@@ -247,15 +247,13 @@ SWIFT_CLASS("_TtC8Playwire12PWBannerView")
 @end
 
 @class GADBannerView;
-@class GADRequestError;
 
 @interface PWBannerView (SWIFT_EXTENSION(Playwire)) <GADBannerViewDelegate>
-- (void)adViewDidReceiveAd:(GADBannerView * _Nonnull)bannerView;
-- (void)adView:(GADBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(GADRequestError * _Nonnull)error;
-- (void)adViewWillPresentScreen:(GADBannerView * _Nonnull)bannerView;
-- (void)adViewWillDismissScreen:(GADBannerView * _Nonnull)bannerView;
-- (void)adViewDidDismissScreen:(GADBannerView * _Nonnull)bannerView;
-- (void)adViewWillLeaveApplication:(GADBannerView * _Nonnull)bannerView;
+- (void)bannerViewDidReceiveAd:(GADBannerView * _Nonnull)bannerView;
+- (void)bannerView:(GADBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(NSError * _Nonnull)error;
+- (void)bannerViewWillPresentScreen:(GADBannerView * _Nonnull)bannerView;
+- (void)bannerViewWillDismissScreen:(GADBannerView * _Nonnull)bannerView;
+- (void)bannerViewDidDismissScreen:(GADBannerView * _Nonnull)bannerView;
 @end
 
 
@@ -289,28 +287,24 @@ SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class GADInterstitial;
+@protocol GADFullScreenPresentingAd;
 
-@interface PWInterstitial (SWIFT_EXTENSION(Playwire)) <GADInterstitialDelegate>
-- (void)interstitialDidReceiveAd:(GADInterstitial * _Nonnull)ad;
-- (void)interstitial:(GADInterstitial * _Nonnull)ad didFailToReceiveAdWithError:(GADRequestError * _Nonnull)error;
-- (void)interstitialWillPresentScreen:(GADInterstitial * _Nonnull)ad;
-- (void)interstitialDidFailToPresentScreen:(GADInterstitial * _Nonnull)ad;
-- (void)interstitialWillDismissScreen:(GADInterstitial * _Nonnull)ad;
-- (void)interstitialDidDismissScreen:(GADInterstitial * _Nonnull)ad;
-- (void)interstitialWillLeaveApplication:(GADInterstitial * _Nonnull)ad;
+@interface PWInterstitial (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
+- (void)adDidPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
+- (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
 @end
 
 
 SWIFT_PROTOCOL("_TtP8Playwire22PWInterstitialDelegate_")
 @protocol PWInterstitialDelegate
 - (void)interstitialDidReceiveAd:(PWInterstitial * _Nonnull)ad;
-- (void)interstitialWillPresentScreen:(PWInterstitial * _Nonnull)interstitial;
-- (void)interstitialDidFailToPresentScreen:(PWInterstitial * _Nonnull)interstitial;
-- (void)interstitialWillDismissScreen:(PWInterstitial * _Nonnull)interstitial;
-- (void)interstitialDidDismissScreen:(PWInterstitial * _Nonnull)interstitial;
-- (void)interstitialWillLeaveApplication:(PWInterstitial * _Nonnull)interstitial;
 - (void)interstitial:(PWInterstitial * _Nonnull)interstitial didFailToReceiveAdWithError:(NSString * _Nonnull)error;
+- (void)interstitialDidPresentFullScreenContent:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitialDidDismissFullScreenContent:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitial:(PWInterstitial * _Nonnull)interstitial didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
+- (void)interstitialDidRecordImpression:(PWInterstitial * _Nonnull)ad;
 @end
 
 
@@ -335,25 +329,24 @@ SWIFT_CLASS("_TtC8Playwire10PWRewarded")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class GADRewardedAd;
-@class GADAdReward;
 
-@interface PWRewarded (SWIFT_EXTENSION(Playwire)) <GADRewardedAdDelegate>
-- (void)rewardedAd:(GADRewardedAd * _Nonnull)rewardedAd userDidEarnReward:(GADAdReward * _Nonnull)reward;
-- (void)rewardedAd:(GADRewardedAd * _Nonnull)rewardedAd didFailToPresentWithError:(NSError * _Nonnull)error;
-- (void)rewardedAdDidPresent:(GADRewardedAd * _Nonnull)rewardedAd;
-- (void)rewardedAdDidDismiss:(GADRewardedAd * _Nonnull)rewardedAd;
+@interface PWRewarded (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
+- (void)adDidPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
+- (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
 @end
 
 
 SWIFT_PROTOCOL("_TtP8Playwire18PWRewardedDelegate_")
 @protocol PWRewardedDelegate
 - (void)rewardedDidLoad:(PWRewarded * _Nonnull)rewarded;
-- (void)rewardedDidUserEarn:(PWRewarded * _Nonnull)rewarded;
-- (void)rewardedDidPresent:(PWRewarded * _Nonnull)rewarded;
-- (void)rewardedDidDismiss:(PWRewarded * _Nonnull)rewarded;
 - (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToLoadWithError:(NSString * _Nonnull)error;
-- (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToPresentWithError:(NSString * _Nonnull)error;
+- (void)rewardedDidUserEarn:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidPresentFullScreenContent:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidDismissFullScreenContent:(PWRewarded * _Nonnull)rewarded;
+- (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
+- (void)rewardedDidRecordImpression:(PWRewarded * _Nonnull)ad;
 @end
 
 
@@ -632,15 +625,13 @@ SWIFT_CLASS("_TtC8Playwire12PWBannerView")
 @end
 
 @class GADBannerView;
-@class GADRequestError;
 
 @interface PWBannerView (SWIFT_EXTENSION(Playwire)) <GADBannerViewDelegate>
-- (void)adViewDidReceiveAd:(GADBannerView * _Nonnull)bannerView;
-- (void)adView:(GADBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(GADRequestError * _Nonnull)error;
-- (void)adViewWillPresentScreen:(GADBannerView * _Nonnull)bannerView;
-- (void)adViewWillDismissScreen:(GADBannerView * _Nonnull)bannerView;
-- (void)adViewDidDismissScreen:(GADBannerView * _Nonnull)bannerView;
-- (void)adViewWillLeaveApplication:(GADBannerView * _Nonnull)bannerView;
+- (void)bannerViewDidReceiveAd:(GADBannerView * _Nonnull)bannerView;
+- (void)bannerView:(GADBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(NSError * _Nonnull)error;
+- (void)bannerViewWillPresentScreen:(GADBannerView * _Nonnull)bannerView;
+- (void)bannerViewWillDismissScreen:(GADBannerView * _Nonnull)bannerView;
+- (void)bannerViewDidDismissScreen:(GADBannerView * _Nonnull)bannerView;
 @end
 
 
@@ -674,28 +665,24 @@ SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class GADInterstitial;
+@protocol GADFullScreenPresentingAd;
 
-@interface PWInterstitial (SWIFT_EXTENSION(Playwire)) <GADInterstitialDelegate>
-- (void)interstitialDidReceiveAd:(GADInterstitial * _Nonnull)ad;
-- (void)interstitial:(GADInterstitial * _Nonnull)ad didFailToReceiveAdWithError:(GADRequestError * _Nonnull)error;
-- (void)interstitialWillPresentScreen:(GADInterstitial * _Nonnull)ad;
-- (void)interstitialDidFailToPresentScreen:(GADInterstitial * _Nonnull)ad;
-- (void)interstitialWillDismissScreen:(GADInterstitial * _Nonnull)ad;
-- (void)interstitialDidDismissScreen:(GADInterstitial * _Nonnull)ad;
-- (void)interstitialWillLeaveApplication:(GADInterstitial * _Nonnull)ad;
+@interface PWInterstitial (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
+- (void)adDidPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
+- (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
 @end
 
 
 SWIFT_PROTOCOL("_TtP8Playwire22PWInterstitialDelegate_")
 @protocol PWInterstitialDelegate
 - (void)interstitialDidReceiveAd:(PWInterstitial * _Nonnull)ad;
-- (void)interstitialWillPresentScreen:(PWInterstitial * _Nonnull)interstitial;
-- (void)interstitialDidFailToPresentScreen:(PWInterstitial * _Nonnull)interstitial;
-- (void)interstitialWillDismissScreen:(PWInterstitial * _Nonnull)interstitial;
-- (void)interstitialDidDismissScreen:(PWInterstitial * _Nonnull)interstitial;
-- (void)interstitialWillLeaveApplication:(PWInterstitial * _Nonnull)interstitial;
 - (void)interstitial:(PWInterstitial * _Nonnull)interstitial didFailToReceiveAdWithError:(NSString * _Nonnull)error;
+- (void)interstitialDidPresentFullScreenContent:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitialDidDismissFullScreenContent:(PWInterstitial * _Nonnull)interstitial;
+- (void)interstitial:(PWInterstitial * _Nonnull)interstitial didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
+- (void)interstitialDidRecordImpression:(PWInterstitial * _Nonnull)ad;
 @end
 
 
@@ -720,25 +707,24 @@ SWIFT_CLASS("_TtC8Playwire10PWRewarded")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class GADRewardedAd;
-@class GADAdReward;
 
-@interface PWRewarded (SWIFT_EXTENSION(Playwire)) <GADRewardedAdDelegate>
-- (void)rewardedAd:(GADRewardedAd * _Nonnull)rewardedAd userDidEarnReward:(GADAdReward * _Nonnull)reward;
-- (void)rewardedAd:(GADRewardedAd * _Nonnull)rewardedAd didFailToPresentWithError:(NSError * _Nonnull)error;
-- (void)rewardedAdDidPresent:(GADRewardedAd * _Nonnull)rewardedAd;
-- (void)rewardedAdDidDismiss:(GADRewardedAd * _Nonnull)rewardedAd;
+@interface PWRewarded (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
+- (void)adDidPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
+- (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
 @end
 
 
 SWIFT_PROTOCOL("_TtP8Playwire18PWRewardedDelegate_")
 @protocol PWRewardedDelegate
 - (void)rewardedDidLoad:(PWRewarded * _Nonnull)rewarded;
-- (void)rewardedDidUserEarn:(PWRewarded * _Nonnull)rewarded;
-- (void)rewardedDidPresent:(PWRewarded * _Nonnull)rewarded;
-- (void)rewardedDidDismiss:(PWRewarded * _Nonnull)rewarded;
 - (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToLoadWithError:(NSString * _Nonnull)error;
-- (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToPresentWithError:(NSString * _Nonnull)error;
+- (void)rewardedDidUserEarn:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidPresentFullScreenContent:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidDismissFullScreenContent:(PWRewarded * _Nonnull)rewarded;
+- (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
+- (void)rewardedDidRecordImpression:(PWRewarded * _Nonnull)ad;
 @end
 
 
