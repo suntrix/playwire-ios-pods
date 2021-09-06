@@ -10,3 +10,15 @@ import Swift
   @objc override dynamic public init()
   @objc deinit
 }
+@objc @_inheritsConvenienceInitializers @objcMembers public class PWC_AMZ : ObjectiveC.NSObject {
+  @objc public static let EVT_amazonRequestSuccess: Swift.String
+  @objc public static let EVT_amazonRequestSuccess_response: Swift.String
+  @objc public static let EVT_amazonRequestSuccess_timestamp: Swift.String
+  @objc public static let EVT_amazonRequestSuccess_duration: Swift.String
+  @objc public static let EVT_amazonRequestFail: Swift.String
+  @objc public static let EVT_amazonRequestFail_error: Swift.String
+  @objc public static let EVT_amazonRequestFail_timestamp: Swift.String
+  @objc public static let EVT_amazonRequestFail_duration: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}

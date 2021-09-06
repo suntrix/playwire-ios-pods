@@ -249,6 +249,8 @@ SWIFT_CLASS("_TtC8Playwire12PWBannerView")
 @interface PWBannerView (SWIFT_EXTENSION(Playwire)) <GADBannerViewDelegate>
 - (void)bannerViewDidReceiveAd:(GADBannerView * _Nonnull)bannerView;
 - (void)bannerView:(GADBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(NSError * _Nonnull)error;
+- (void)bannerViewDidRecordImpression:(GADBannerView * _Nonnull)bannerView;
+- (void)bannerViewbannerViewDidRecordClick:(GADBannerView * _Nonnull)bannerView;
 - (void)bannerViewWillPresentScreen:(GADBannerView * _Nonnull)bannerView;
 - (void)bannerViewWillDismissScreen:(GADBannerView * _Nonnull)bannerView;
 - (void)bannerViewDidDismissScreen:(GADBannerView * _Nonnull)bannerView;
@@ -258,11 +260,138 @@ SWIFT_CLASS("_TtC8Playwire12PWBannerView")
 SWIFT_PROTOCOL("_TtP8Playwire20PWBannerViewDelegate_")
 @protocol PWBannerViewDelegate
 - (void)bannerViewDidReceiveAd:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerView:(PWBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(NSString * _Nonnull)error;
+- (void)bannerViewDidRecordImpression:(PWBannerView * _Nonnull)bannerView;
+- (void)bannerViewDidRecordClick:(PWBannerView * _Nonnull)bannerView;
 - (void)bannerViewWillPresentScreen:(PWBannerView * _Nonnull)bannerView;
 - (void)bannerViewWillDismissScreen:(PWBannerView * _Nonnull)bannerView;
 - (void)bannerViewDidDismissScreen:(PWBannerView * _Nonnull)bannerView;
-- (void)bannerViewWillLeaveApplication:(PWBannerView * _Nonnull)bannerView;
-- (void)bannerView:(PWBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(NSString * _Nonnull)error;
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire3PWC")
+@interface PWC : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamInit;)
++ (NSString * _Nonnull)EVT_gamInit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamInit_status;)
++ (NSString * _Nonnull)EVT_gamInit_status SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_ump;)
++ (NSString * _Nonnull)EVT_ump SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_ump_result;)
++ (NSString * _Nonnull)EVT_ump_result SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_bidding_index;)
++ (NSString * _Nonnull)EVT_CTX_bidding_index SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_bidding_adUnit;)
++ (NSString * _Nonnull)EVT_CTX_bidding_adUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_biddingStart;)
++ (NSString * _Nonnull)EVT_biddingStart SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_biddingStart_timestamp;)
++ (NSString * _Nonnull)EVT_biddingStart_timestamp SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_biddingEnd;)
++ (NSString * _Nonnull)EVT_biddingEnd SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_biddingEnd_timestamp;)
++ (NSString * _Nonnull)EVT_biddingEnd_timestamp SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_biddingEnd_duration;)
++ (NSString * _Nonnull)EVT_biddingEnd_duration SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_adUnit_mode;)
++ (NSString * _Nonnull)EVT_CTX_adUnit_mode SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_adUnit_name;)
++ (NSString * _Nonnull)EVT_CTX_adUnit_name SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_adUnit_gadUnitId;)
++ (NSString * _Nonnull)EVT_CTX_adUnit_gadUnitId SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_requestTimestamp;)
++ (NSString * _Nonnull)EVT_CTX_requestTimestamp SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamRequestSuccess;)
++ (NSString * _Nonnull)EVT_gamRequestSuccess SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamRequestSuccess_response;)
++ (NSString * _Nonnull)EVT_gamRequestSuccess_response SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamRequestSuccess_timestamp;)
++ (NSString * _Nonnull)EVT_gamRequestSuccess_timestamp SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamRequestSuccess_duration;)
++ (NSString * _Nonnull)EVT_gamRequestSuccess_duration SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamRequestFail;)
++ (NSString * _Nonnull)EVT_gamRequestFail SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamRequestFail_error;)
++ (NSString * _Nonnull)EVT_gamRequestFail_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamRequestFail_timestamp;)
++ (NSString * _Nonnull)EVT_gamRequestFail_timestamp SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamRequestFail_duration;)
++ (NSString * _Nonnull)EVT_gamRequestFail_duration SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamImpression;)
++ (NSString * _Nonnull)EVT_gamImpression SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamImpression_timestamp;)
++ (NSString * _Nonnull)EVT_gamImpression_timestamp SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_configType;)
++ (NSString * _Nonnull)EVT_CTX_configType SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_configType_String;)
++ (NSString * _Nonnull)EVT_CTX_configType_String SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_configType_Resource;)
++ (NSString * _Nonnull)EVT_CTX_configType_Resource SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configSuccess;)
++ (NSString * _Nonnull)EVT_configSuccess SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configSuccess_config;)
++ (NSString * _Nonnull)EVT_configSuccess_config SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail;)
++ (NSString * _Nonnull)EVT_configFail SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_config;)
++ (NSString * _Nonnull)EVT_configFail_config SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_resource;)
++ (NSString * _Nonnull)EVT_configFail_resource SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError;)
++ (NSString * _Nonnull)EVT_bannerInitError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error;)
++ (NSString * _Nonnull)EVT_bannerInitError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_noAdUnit;)
++ (NSString * _Nonnull)EVT_bannerInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_badAdUnit;)
++ (NSString * _Nonnull)EVT_bannerInitError_error_badAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_noSizes;)
++ (NSString * _Nonnull)EVT_bannerInitError_error_noSizes SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerLoadError;)
++ (NSString * _Nonnull)EVT_bannerLoadError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerLoadError_error;)
++ (NSString * _Nonnull)EVT_bannerLoadError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerLoadError_error_notPrepared;)
++ (NSString * _Nonnull)EVT_bannerLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerLoadError_error_notInternalRep;)
++ (NSString * _Nonnull)EVT_bannerLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialInitError;)
++ (NSString * _Nonnull)EVT_interstitialInitError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialInitError_error;)
++ (NSString * _Nonnull)EVT_interstitialInitError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialInitError_error_noAdUnit;)
++ (NSString * _Nonnull)EVT_interstitialInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialInitError_error_badAdUnit;)
++ (NSString * _Nonnull)EVT_interstitialInitError_error_badAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialLoadError;)
++ (NSString * _Nonnull)EVT_interstitialLoadError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialLoadError_error;)
++ (NSString * _Nonnull)EVT_interstitialLoadError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialLoadError_error_notPrepared;)
++ (NSString * _Nonnull)EVT_interstitialLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialLoadError_error_notLoaded;)
++ (NSString * _Nonnull)EVT_interstitialLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialLoadError_error_notInternalRep;)
++ (NSString * _Nonnull)EVT_interstitialLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInitError;)
++ (NSString * _Nonnull)EVT_rewardedInitError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInitError_error;)
++ (NSString * _Nonnull)EVT_rewardedInitError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInitError_error_noAdUnit;)
++ (NSString * _Nonnull)EVT_rewardedInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInitError_error_badAdUnit;)
++ (NSString * _Nonnull)EVT_rewardedInitError_error_badAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError;)
++ (NSString * _Nonnull)EVT_rewardedLoadError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError_error;)
++ (NSString * _Nonnull)EVT_rewardedLoadError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError_error_notPrepared;)
++ (NSString * _Nonnull)EVT_rewardedLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError_error_notLoaded;)
++ (NSString * _Nonnull)EVT_rewardedLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError_error_notInternalRep;)
++ (NSString * _Nonnull)EVT_rewardedLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
@@ -292,6 +421,7 @@ SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
 - (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
 - (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
 - (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)adDidRecordClick:(id <GADFullScreenPresentingAd> _Nonnull)ad;
 @end
 
 
@@ -303,6 +433,27 @@ SWIFT_PROTOCOL("_TtP8Playwire22PWInterstitialDelegate_")
 - (void)interstitialDidDismissFullScreenContent:(PWInterstitial * _Nonnull)interstitial;
 - (void)interstitial:(PWInterstitial * _Nonnull)interstitial didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
 - (void)interstitialDidRecordImpression:(PWInterstitial * _Nonnull)ad;
+- (void)interstitialDidRecordClick:(PWInterstitial * _Nonnull)ad;
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire15PWListenerToken")
+@interface PWListenerToken : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire10PWNotifier")
+@interface PWNotifier : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PWNotifier * _Nonnull shared;)
++ (PWNotifier * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
++ (NSInteger)timestamp SWIFT_WARN_UNUSED_RESULT;
+- (void)startConsoleLogger;
+- (void)startConsoleLoggerWithFilter:(BOOL (^ _Nonnull)(NSString * _Nonnull, BOOL, NSDictionary<NSString *, id> * _Nonnull))filter;
+- (PWListenerToken * _Nonnull)addListener:(id _Nonnull)listener filter:(BOOL (^ _Nonnull)(NSString * _Nonnull, BOOL, NSDictionary<NSString *, id> * _Nonnull))filter action:(void (^ _Nonnull)(id _Nonnull, NSString * _Nonnull, BOOL, NSDictionary<NSString *, id> * _Nonnull, NSDictionary<NSString *, id> * _Nonnull))action;
+- (void)notifyWithEvent:(NSString * _Nonnull)event critical:(BOOL)critical context:(NSDictionary<NSString *, id> * _Nullable)context data:(NSDictionary<NSString *, id> * _Nonnull)data;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
@@ -333,6 +484,7 @@ SWIFT_CLASS("_TtC8Playwire10PWRewarded")
 - (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
 - (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
 - (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)adDidRecordClick:(id <GADFullScreenPresentingAd> _Nonnull)ad;
 @end
 
 
@@ -345,6 +497,7 @@ SWIFT_PROTOCOL("_TtP8Playwire18PWRewardedDelegate_")
 - (void)rewardedDidDismissFullScreenContent:(PWRewarded * _Nonnull)rewarded;
 - (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
 - (void)rewardedDidRecordImpression:(PWRewarded * _Nonnull)ad;
+- (void)rewardedDidRecordClick:(PWRewarded * _Nonnull)ad;
 @end
 
 

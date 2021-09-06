@@ -6,6 +6,23 @@ import GoogleMobileAds
 import Swift
 import UIKit
 import UserMessagingPlatform
+@objc @_hasMissingDesignatedInitializers public class PWListenerToken : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class PWNotifier : ObjectiveC.NSObject {
+  @objc public static let shared: Playwire.PWNotifier
+  @objc public class func timestamp() -> Swift.Int
+  @objc public func startConsoleLogger()
+  @objc public func startConsoleLogger(filter: @escaping (Swift.String, Swift.Bool, [Swift.String : Any]) -> Swift.Bool)
+  public typealias PWNotifierFilter = (Swift.String, Swift.Bool, [Swift.String : Any]) -> Swift.Bool
+  public typealias PWNotifierAction = (Swift.AnyObject, Swift.String, Swift.Bool, [Swift.String : Any], [Swift.String : Any]) -> Swift.Void
+  @objc @discardableResult
+  public func addListener(_ listener: Swift.AnyObject, filter: @escaping Playwire.PWNotifier.PWNotifierFilter, action: @escaping Playwire.PWNotifier.PWNotifierAction) -> Playwire.PWListenerToken
+  @objc public func notify(event: Swift.String, critical: Swift.Bool, context: [Swift.String : Any]?, data: [Swift.String : Any])
+  @objc override dynamic public init()
+  @objc deinit
+}
 @objc public protocol PWConfigFileLoader {
   @objc func getConfig() -> Playwire.PWAdUnitStoreConfig
 }
@@ -28,6 +45,7 @@ import UserMessagingPlatform
   @objc func interstitialDidDismissFullScreenContent(_ interstitial: Playwire.PWInterstitial)
   @objc func interstitial(_ interstitial: Playwire.PWInterstitial, didFailToPresentFullScreenContentWithError error: Swift.String)
   @objc func interstitialDidRecordImpression(_ ad: Playwire.PWInterstitial)
+  @objc func interstitialDidRecordClick(_ ad: Playwire.PWInterstitial)
 }
 @objc @objcMembers public class PWInterstitial : ObjectiveC.NSObject {
   @objc weak public var delegate: Playwire.PWInterstitialDelegate?
@@ -45,14 +63,16 @@ extension PWInterstitial : GoogleMobileAds.GADFullScreenContentDelegate {
   @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
   @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
   @objc dynamic public func adDidRecordImpression(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adDidRecordClick(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
 }
 @objc public protocol PWBannerViewDelegate {
   @objc func bannerViewDidReceiveAd(_ bannerView: Playwire.PWBannerView)
+  @objc func bannerView(_ bannerView: Playwire.PWBannerView, didFailToReceiveAdWithError error: Swift.String)
+  @objc func bannerViewDidRecordImpression(_ bannerView: Playwire.PWBannerView)
+  @objc func bannerViewDidRecordClick(_ bannerView: Playwire.PWBannerView)
   @objc func bannerViewWillPresentScreen(_ bannerView: Playwire.PWBannerView)
   @objc func bannerViewWillDismissScreen(_ bannerView: Playwire.PWBannerView)
   @objc func bannerViewDidDismissScreen(_ bannerView: Playwire.PWBannerView)
-  @objc func bannerViewWillLeaveApplication(_ bannerView: Playwire.PWBannerView)
-  @objc func bannerView(_ bannerView: Playwire.PWBannerView, didFailToReceiveAdWithError error: Swift.String)
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class PWBannerView : UIKit.UIView {
   @objc weak public var delegate: Playwire.PWBannerViewDelegate?
@@ -67,6 +87,8 @@ extension PWInterstitial : GoogleMobileAds.GADFullScreenContentDelegate {
 extension PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
   @objc dynamic public func bannerViewDidReceiveAd(_ bannerView: GoogleMobileAds.GADBannerView)
   @objc dynamic public func bannerView(_ bannerView: GoogleMobileAds.GADBannerView, didFailToReceiveAdWithError error: Swift.Error)
+  @objc dynamic public func bannerViewDidRecordImpression(_ bannerView: GoogleMobileAds.GADBannerView)
+  @objc dynamic public func bannerViewbannerViewDidRecordClick(_ bannerView: GoogleMobileAds.GADBannerView)
   @objc dynamic public func bannerViewWillPresentScreen(_ bannerView: GoogleMobileAds.GADBannerView)
   @objc dynamic public func bannerViewWillDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
   @objc dynamic public func bannerViewDidDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
@@ -79,6 +101,7 @@ extension PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
   @objc func rewardedDidDismissFullScreenContent(_ rewarded: Playwire.PWRewarded)
   @objc func rewarded(_ rewarded: Playwire.PWRewarded, didFailToPresentFullScreenContentWithError error: Swift.String)
   @objc func rewardedDidRecordImpression(_ ad: Playwire.PWRewarded)
+  @objc func rewardedDidRecordClick(_ ad: Playwire.PWRewarded)
 }
 @objc @objcMembers public class PWRewarded : ObjectiveC.NSObject {
   @objc weak public var delegate: Playwire.PWRewardedDelegate?
@@ -96,6 +119,7 @@ extension PWRewarded : GoogleMobileAds.GADFullScreenContentDelegate {
   @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
   @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
   @objc dynamic public func adDidRecordImpression(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adDidRecordClick(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
 }
 public typealias PWAdBid = [Swift.AnyHashable : Any]
 @_hasMissingDesignatedInitializers public class PWAdBidderConfig {
@@ -109,8 +133,76 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
 }
 @objc @_inheritsConvenienceInitializers open class PWAdBidder : ObjectiveC.NSObject {
   public var config: Playwire.PWAdBidderConfig!
+  public var logContext: [Swift.String : Any]? {
+    get
+    set
+  }
   @objc override required dynamic public init()
   open func load()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class PWC : ObjectiveC.NSObject {
+  @objc public static let EVT_gamInit: Swift.String
+  @objc public static let EVT_gamInit_status: Swift.String
+  @objc public static let EVT_ump: Swift.String
+  @objc public static let EVT_ump_result: Swift.String
+  @objc public static let EVT_CTX_bidding_index: Swift.String
+  @objc public static let EVT_CTX_bidding_adUnit: Swift.String
+  @objc public static let EVT_biddingStart: Swift.String
+  @objc public static let EVT_biddingStart_timestamp: Swift.String
+  @objc public static let EVT_biddingEnd: Swift.String
+  @objc public static let EVT_biddingEnd_timestamp: Swift.String
+  @objc public static let EVT_biddingEnd_duration: Swift.String
+  @objc public static let EVT_CTX_adUnit_mode: Swift.String
+  @objc public static let EVT_CTX_adUnit_name: Swift.String
+  @objc public static let EVT_CTX_adUnit_gadUnitId: Swift.String
+  @objc public static let EVT_CTX_requestTimestamp: Swift.String
+  @objc public static let EVT_gamRequestSuccess: Swift.String
+  @objc public static let EVT_gamRequestSuccess_response: Swift.String
+  @objc public static let EVT_gamRequestSuccess_timestamp: Swift.String
+  @objc public static let EVT_gamRequestSuccess_duration: Swift.String
+  @objc public static let EVT_gamRequestFail: Swift.String
+  @objc public static let EVT_gamRequestFail_error: Swift.String
+  @objc public static let EVT_gamRequestFail_timestamp: Swift.String
+  @objc public static let EVT_gamRequestFail_duration: Swift.String
+  @objc public static let EVT_gamImpression: Swift.String
+  @objc public static let EVT_gamImpression_timestamp: Swift.String
+  @objc public static let EVT_CTX_configType: Swift.String
+  @objc public static let EVT_CTX_configType_String: Swift.String
+  @objc public static let EVT_CTX_configType_Resource: Swift.String
+  @objc public static let EVT_configSuccess: Swift.String
+  @objc public static let EVT_configSuccess_config: Swift.String
+  @objc public static let EVT_configFail: Swift.String
+  @objc public static let EVT_configFail_config: Swift.String
+  @objc public static let EVT_configFail_resource: Swift.String
+  @objc public static let EVT_bannerInitError: Swift.String
+  @objc public static let EVT_bannerInitError_error: Swift.String
+  @objc public static let EVT_bannerInitError_error_noAdUnit: Swift.String
+  @objc public static let EVT_bannerInitError_error_badAdUnit: Swift.String
+  @objc public static let EVT_bannerInitError_error_noSizes: Swift.String
+  @objc public static let EVT_bannerLoadError: Swift.String
+  @objc public static let EVT_bannerLoadError_error: Swift.String
+  @objc public static let EVT_bannerLoadError_error_notPrepared: Swift.String
+  @objc public static let EVT_bannerLoadError_error_notInternalRep: Swift.String
+  @objc public static let EVT_interstitialInitError: Swift.String
+  @objc public static let EVT_interstitialInitError_error: Swift.String
+  @objc public static let EVT_interstitialInitError_error_noAdUnit: Swift.String
+  @objc public static let EVT_interstitialInitError_error_badAdUnit: Swift.String
+  @objc public static let EVT_interstitialLoadError: Swift.String
+  @objc public static let EVT_interstitialLoadError_error: Swift.String
+  @objc public static let EVT_interstitialLoadError_error_notPrepared: Swift.String
+  @objc public static let EVT_interstitialLoadError_error_notLoaded: Swift.String
+  @objc public static let EVT_interstitialLoadError_error_notInternalRep: Swift.String
+  @objc public static let EVT_rewardedInitError: Swift.String
+  @objc public static let EVT_rewardedInitError_error: Swift.String
+  @objc public static let EVT_rewardedInitError_error_noAdUnit: Swift.String
+  @objc public static let EVT_rewardedInitError_error_badAdUnit: Swift.String
+  @objc public static let EVT_rewardedLoadError: Swift.String
+  @objc public static let EVT_rewardedLoadError_error: Swift.String
+  @objc public static let EVT_rewardedLoadError_error_notPrepared: Swift.String
+  @objc public static let EVT_rewardedLoadError_error_notLoaded: Swift.String
+  @objc public static let EVT_rewardedLoadError_error_notInternalRep: Swift.String
+  @objc override dynamic public init()
   @objc deinit
 }
 public struct PWAdSize : Swift.Decodable {

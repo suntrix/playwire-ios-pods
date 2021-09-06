@@ -206,6 +206,29 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma pop_macro("any")
 #endif
 
+@class NSString;
+
+SWIFT_CLASS("_TtC15Playwire_Amazon7PWC_AMZ")
+@interface PWC_AMZ : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_amazonRequestSuccess;)
++ (NSString * _Nonnull)EVT_amazonRequestSuccess SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_amazonRequestSuccess_response;)
++ (NSString * _Nonnull)EVT_amazonRequestSuccess_response SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_amazonRequestSuccess_timestamp;)
++ (NSString * _Nonnull)EVT_amazonRequestSuccess_timestamp SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_amazonRequestSuccess_duration;)
++ (NSString * _Nonnull)EVT_amazonRequestSuccess_duration SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_amazonRequestFail;)
++ (NSString * _Nonnull)EVT_amazonRequestFail SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_amazonRequestFail_error;)
++ (NSString * _Nonnull)EVT_amazonRequestFail_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_amazonRequestFail_timestamp;)
++ (NSString * _Nonnull)EVT_amazonRequestFail_timestamp SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_amazonRequestFail_duration;)
++ (NSString * _Nonnull)EVT_amazonRequestFail_duration SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 
 SWIFT_CLASS("_TtC15Playwire_Amazon15Playwire_Amazon")
 @interface Playwire_Amazon : NSObject
