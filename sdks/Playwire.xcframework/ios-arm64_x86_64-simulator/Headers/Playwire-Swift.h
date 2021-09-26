@@ -441,6 +441,7 @@ SWIFT_PROTOCOL("_TtP8Playwire22PWInterstitialDelegate_")
 
 SWIFT_CLASS("_TtC8Playwire15PWListenerToken")
 @interface PWListenerToken : NSObject
+- (void)cancel;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -972,6 +973,7 @@ SWIFT_PROTOCOL("_TtP8Playwire22PWInterstitialDelegate_")
 
 SWIFT_CLASS("_TtC8Playwire15PWListenerToken")
 @interface PWListenerToken : NSObject
+- (void)cancel;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
