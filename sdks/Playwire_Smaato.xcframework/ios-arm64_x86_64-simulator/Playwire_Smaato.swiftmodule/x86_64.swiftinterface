@@ -4,10 +4,18 @@
 import Foundation
 import GoogleMobileAds
 import Playwire
+import SmaatoSDKCore
 import Swift
-import iSoma
 @_inheritsConvenienceInitializers @objc public class Playwire_Smaato : ObjectiveC.NSObject {
   @objc public class func register()
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class PWC_SMA : ObjectiveC.NSObject {
+  @objc public static let EVT_smaatoInitFailure: Swift.String
+  @objc public static let EVT_smaatoInitFailure_error: Swift.String
+  @objc public static let EVT_smaatoInitFailure_error_publisherId: Swift.String
+  @objc public static let EVT_smaatoInitFailure_error_init: Swift.String
   @objc override dynamic public init()
   @objc deinit
 }

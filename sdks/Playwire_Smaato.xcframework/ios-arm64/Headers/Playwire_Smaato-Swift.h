@@ -206,6 +206,21 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma pop_macro("any")
 #endif
 
+@class NSString;
+
+SWIFT_CLASS("_TtC15Playwire_Smaato7PWC_SMA")
+@interface PWC_SMA : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_smaatoInitFailure;)
++ (NSString * _Nonnull)EVT_smaatoInitFailure SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_smaatoInitFailure_error;)
++ (NSString * _Nonnull)EVT_smaatoInitFailure_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_smaatoInitFailure_error_publisherId;)
++ (NSString * _Nonnull)EVT_smaatoInitFailure_error_publisherId SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_smaatoInitFailure_error_init;)
++ (NSString * _Nonnull)EVT_smaatoInitFailure_error_init SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 
 SWIFT_CLASS("_TtC15Playwire_Smaato15Playwire_Smaato")
 @interface Playwire_Smaato : NSObject

@@ -222,16 +222,96 @@ SWIFT_CLASS("_TtC8Playwire12PWAdMediator")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class NSString;
+
+SWIFT_CLASS("_TtC8Playwire18PWAdMediatorConfig")
+@interface PWAdMediatorConfig : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMediatorType_AdColony;)
++ (NSString * _Nonnull)PWAdMediatorType_AdColony SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMediatorType_Vungle;)
++ (NSString * _Nonnull)PWAdMediatorType_Vungle SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMediatorType_Smaato;)
++ (NSString * _Nonnull)PWAdMediatorType_Smaato SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly, copy) NSString * _Nullable adcolony_appId;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable adcolony_zones;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable vungle_placements;
+@property (nonatomic, readonly, copy) NSString * _Nullable vungle_userId;
+@property (nonatomic, readonly, copy) NSString * _Nullable smaato_publisherId;
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire16PWAdServerConfig")
+@interface PWAdServerConfig : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdServerType_Amazon;)
++ (NSString * _Nonnull)PWAdServerType_Amazon SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdServerType_Prebid;)
++ (NSString * _Nonnull)PWAdServerType_Prebid SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly, copy) NSString * _Nonnull name;
+@property (nonatomic, readonly, copy) NSString * _Nullable host;
+@property (nonatomic, readonly, copy) NSString * _Nullable account;
+@end
+
+@class NSNumber;
+
+SWIFT_CLASS("_TtC8Playwire8PWAdSize")
+@interface PWAdSize : NSObject
+@property (nonatomic, readonly) NSInteger width;
+@property (nonatomic, readonly) NSInteger height;
+@end
+
+@class PWAdUnitConfig;
+
+SWIFT_CLASS("_TtC8Playwire8PWAdUnit")
+@interface PWAdUnit : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdBidStrategyType_Priority;)
++ (NSString * _Nonnull)PWAdBidStrategyType_Priority SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdBidStrategyType_Combined;)
++ (NSString * _Nonnull)PWAdBidStrategyType_Combined SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_Banner;)
++ (NSString * _Nonnull)PWAdMode_Banner SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_Interstitial;)
++ (NSString * _Nonnull)PWAdMode_Interstitial SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_Rewarded;)
++ (NSString * _Nonnull)PWAdMode_Rewarded SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly, copy) NSString * _Nonnull name;
+@property (nonatomic, readonly, copy) NSArray<PWAdUnitConfig *> * _Nullable adUnitConfigs;
+@property (nonatomic, readonly, copy) NSString * _Nonnull gadUnitId;
+@property (nonatomic, readonly, copy) NSArray<PWAdSize *> * _Nullable gadSizes;
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire14PWAdUnitConfig")
+@interface PWAdUnitConfig : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull serverConfig;
+@property (nonatomic, readonly, copy) NSString * _Nonnull adUnitId;
+@property (nonatomic, readonly, copy) NSArray<PWAdSize *> * _Nullable adSizes;
+@end
+
+@class PWUMPConfig;
+@class PWAppConfig;
+@class PWOMConfig;
 
 SWIFT_CLASS("_TtC8Playwire19PWAdUnitStoreConfig")
 @interface PWAdUnitStoreConfig : NSObject
+@property (nonatomic, readonly, copy) NSArray<PWAdServerConfig *> * _Nullable serverConfigs;
+@property (nonatomic, readonly, copy) NSArray<PWAdUnit *> * _Nonnull adUnits;
+@property (nonatomic, readonly, copy) NSArray<PWAdMediatorConfig *> * _Nullable mediators;
+@property (nonatomic, readonly, strong) PWUMPConfig * _Nullable ump;
+@property (nonatomic, readonly, strong) PWAppConfig * _Nullable app;
+@property (nonatomic, readonly, strong) PWOMConfig * _Nullable om;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+
+SWIFT_CLASS("_TtC8Playwire11PWAppConfig")
+@interface PWAppConfig : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nullable gamAppId;
+@property (nonatomic, readonly, copy) NSString * _Nullable storeUrl;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 @protocol PWBannerViewDelegate;
-@class NSString;
-@class NSNumber;
 @class NSCoder;
 
 SWIFT_CLASS("_TtC8Playwire12PWBannerView")
@@ -271,6 +351,8 @@ SWIFT_PROTOCOL("_TtP8Playwire20PWBannerViewDelegate_")
 
 SWIFT_CLASS("_TtC8Playwire3PWC")
 @interface PWC : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull Version;)
++ (NSString * _Nonnull)Version SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamInit;)
 + (NSString * _Nonnull)EVT_gamInit SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamInit_status;)
@@ -458,6 +540,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PWNotifier *
 @end
 
 
+SWIFT_CLASS("_TtC8Playwire10PWOMConfig")
+@interface PWOMConfig : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull partnerName;
+@property (nonatomic, readonly, copy) NSString * _Nonnull partnerVersion;
+@end
+
+
 SWIFT_CLASS("_TtC8Playwire26PWResourceConfigFileLoader")
 @interface PWResourceConfigFileLoader : NSObject <PWConfigFileLoader>
 - (nonnull instancetype)initWithResource:(NSString * _Nonnull)resource withExtension:(NSString * _Nonnull)ext OBJC_DESIGNATED_INITIALIZER;
@@ -510,10 +599,24 @@ SWIFT_CLASS("_TtC8Playwire24PWStringConfigFileLoader")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+
+SWIFT_CLASS("_TtC8Playwire11PWUMPConfig")
+@interface PWUMPConfig : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWUMPLocation_Current;)
++ (NSString * _Nonnull)PWUMPLocation_Current SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWUMPLocation_EEA;)
++ (NSString * _Nonnull)PWUMPLocation_EEA SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWUMPLocation_NotEEA;)
++ (NSString * _Nonnull)PWUMPLocation_NotEEA SWIFT_WARN_UNUSED_RESULT;
+@property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable debugDevices;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 @class GADRequest;
 
 SWIFT_CLASS("_TtC8Playwire11PlaywireSDK")
 @interface PlaywireSDK : NSObject
+@property (nonatomic, readonly, strong) PWAdUnitStoreConfig * _Nullable config;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PlaywireSDK * _Nonnull shared;)
 + (PlaywireSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, strong) id <PWConfigFileLoader> _Nonnull configLoader;
