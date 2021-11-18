@@ -316,14 +316,16 @@ SWIFT_CLASS("_TtC8Playwire11PWAppConfig")
 @protocol PWBannerViewDelegate;
 @class NSCoder;
 
+IB_DESIGNABLE
 SWIFT_CLASS("_TtC8Playwire12PWBannerView")
 @interface PWBannerView : UIView
+@property (nonatomic, copy) IBInspectable NSString * _Nullable adUnitName;
 @property (nonatomic, weak) id <PWBannerViewDelegate> _Nullable delegate;
-- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWBannerViewDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWBannerViewDelegate> _Nullable)delegate;
 - (void)load;
 @property (nonatomic, readonly) BOOL isLoaded;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
 @end
 
 @class GADBannerView;
@@ -425,6 +427,10 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_bannerInitError SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error;)
 + (NSString * _Nonnull)EVT_bannerInitError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_alreadyInitialized;)
++ (NSString * _Nonnull)EVT_bannerInitError_error_alreadyInitialized SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_noAdUnitName;)
++ (NSString * _Nonnull)EVT_bannerInitError_error_noAdUnitName SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_noAdUnit;)
 + (NSString * _Nonnull)EVT_bannerInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_badAdUnit;)
@@ -475,6 +481,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_rewardedLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError_error_notInternalRep;)
 + (NSString * _Nonnull)EVT_rewardedLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedReward;)
++ (NSString * _Nonnull)EVT_rewardedReward SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedReward_type;)
++ (NSString * _Nonnull)EVT_rewardedReward_type SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedReward_amount;)
++ (NSString * _Nonnull)EVT_rewardedReward_amount SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -584,7 +596,7 @@ SWIFT_PROTOCOL("_TtP8Playwire18PWRewardedDelegate_")
 @protocol PWRewardedDelegate
 - (void)rewardedDidLoad:(PWRewarded * _Nonnull)rewarded;
 - (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToLoadWithError:(NSString * _Nonnull)error;
-- (void)rewardedDidUserEarn:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidUserEarn:(PWRewarded * _Nonnull)rewarded type:(NSString * _Nonnull)type amount:(double)amount;
 - (void)rewardedDidPresentFullScreenContent:(PWRewarded * _Nonnull)rewarded;
 - (void)rewardedDidDismissFullScreenContent:(PWRewarded * _Nonnull)rewarded;
 - (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
@@ -951,14 +963,16 @@ SWIFT_CLASS("_TtC8Playwire11PWAppConfig")
 @protocol PWBannerViewDelegate;
 @class NSCoder;
 
+IB_DESIGNABLE
 SWIFT_CLASS("_TtC8Playwire12PWBannerView")
 @interface PWBannerView : UIView
+@property (nonatomic, copy) IBInspectable NSString * _Nullable adUnitName;
 @property (nonatomic, weak) id <PWBannerViewDelegate> _Nullable delegate;
-- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWBannerViewDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWBannerViewDelegate> _Nullable)delegate;
 - (void)load;
 @property (nonatomic, readonly) BOOL isLoaded;
-- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder SWIFT_UNAVAILABLE;
-- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
 @end
 
 @class GADBannerView;
@@ -1060,6 +1074,10 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_bannerInitError SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error;)
 + (NSString * _Nonnull)EVT_bannerInitError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_alreadyInitialized;)
++ (NSString * _Nonnull)EVT_bannerInitError_error_alreadyInitialized SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_noAdUnitName;)
++ (NSString * _Nonnull)EVT_bannerInitError_error_noAdUnitName SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_noAdUnit;)
 + (NSString * _Nonnull)EVT_bannerInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_badAdUnit;)
@@ -1110,6 +1128,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_rewardedLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError_error_notInternalRep;)
 + (NSString * _Nonnull)EVT_rewardedLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedReward;)
++ (NSString * _Nonnull)EVT_rewardedReward SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedReward_type;)
++ (NSString * _Nonnull)EVT_rewardedReward_type SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedReward_amount;)
++ (NSString * _Nonnull)EVT_rewardedReward_amount SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -1219,7 +1243,7 @@ SWIFT_PROTOCOL("_TtP8Playwire18PWRewardedDelegate_")
 @protocol PWRewardedDelegate
 - (void)rewardedDidLoad:(PWRewarded * _Nonnull)rewarded;
 - (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToLoadWithError:(NSString * _Nonnull)error;
-- (void)rewardedDidUserEarn:(PWRewarded * _Nonnull)rewarded;
+- (void)rewardedDidUserEarn:(PWRewarded * _Nonnull)rewarded type:(NSString * _Nonnull)type amount:(double)amount;
 - (void)rewardedDidPresentFullScreenContent:(PWRewarded * _Nonnull)rewarded;
 - (void)rewardedDidDismissFullScreenContent:(PWRewarded * _Nonnull)rewarded;
 - (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;

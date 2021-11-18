@@ -75,14 +75,16 @@ extension PWInterstitial : GoogleMobileAds.GADFullScreenContentDelegate {
   @objc func bannerViewWillDismissScreen(_ bannerView: Playwire.PWBannerView)
   @objc func bannerViewDidDismissScreen(_ bannerView: Playwire.PWBannerView)
 }
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWBannerView : UIKit.UIView {
+@objc @_inheritsConvenienceInitializers @IBDesignable @objcMembers public class PWBannerView : UIKit.UIView {
+  @objc @IBInspectable public var adUnitName: Swift.String?
   @objc weak public var delegate: Playwire.PWBannerViewDelegate?
-  @objc public init(adUnitName: Swift.String, delegate: Playwire.PWBannerViewDelegate? = nil)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWBannerViewDelegate? = nil)
   @objc public func load()
   @objc public var isLoaded: Swift.Bool {
     @objc get
   }
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc deinit
 }
 extension PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
@@ -97,7 +99,7 @@ extension PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
 @objc public protocol PWRewardedDelegate {
   @objc func rewardedDidLoad(_ rewarded: Playwire.PWRewarded)
   @objc func rewarded(_ rewarded: Playwire.PWRewarded, didFailToLoadWithError error: Swift.String)
-  @objc func rewardedDidUserEarn(_ rewarded: Playwire.PWRewarded)
+  @objc func rewardedDidUserEarn(_ rewarded: Playwire.PWRewarded, type: Swift.String, amount: Swift.Double)
   @objc func rewardedDidPresentFullScreenContent(_ rewarded: Playwire.PWRewarded)
   @objc func rewardedDidDismissFullScreenContent(_ rewarded: Playwire.PWRewarded)
   @objc func rewarded(_ rewarded: Playwire.PWRewarded, didFailToPresentFullScreenContentWithError error: Swift.String)
@@ -179,6 +181,8 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let EVT_configFail_resource: Swift.String
   @objc public static let EVT_bannerInitError: Swift.String
   @objc public static let EVT_bannerInitError_error: Swift.String
+  @objc public static let EVT_bannerInitError_error_alreadyInitialized: Swift.String
+  @objc public static let EVT_bannerInitError_error_noAdUnitName: Swift.String
   @objc public static let EVT_bannerInitError_error_noAdUnit: Swift.String
   @objc public static let EVT_bannerInitError_error_badAdUnit: Swift.String
   @objc public static let EVT_bannerInitError_error_noSizes: Swift.String
@@ -204,6 +208,9 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let EVT_rewardedLoadError_error_notPrepared: Swift.String
   @objc public static let EVT_rewardedLoadError_error_notLoaded: Swift.String
   @objc public static let EVT_rewardedLoadError_error_notInternalRep: Swift.String
+  @objc public static let EVT_rewardedReward: Swift.String
+  @objc public static let EVT_rewardedReward_type: Swift.String
+  @objc public static let EVT_rewardedReward_amount: Swift.String
   @objc override dynamic public init()
   @objc deinit
 }
@@ -301,6 +308,9 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
     get
   }
   @objc public var storeUrl: Swift.String? {
+    get
+  }
+  public var childProtection: Swift.Bool? {
     get
   }
   @objc override dynamic public init()
