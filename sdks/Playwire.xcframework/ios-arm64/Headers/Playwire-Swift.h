@@ -314,10 +314,10 @@ SWIFT_CLASS("_TtC8Playwire11PWAppConfig")
 @protocol PWBannerViewDelegate;
 @class NSCoder;
 
-IB_DESIGNABLE
 SWIFT_CLASS("_TtC8Playwire12PWBannerView")
 @interface PWBannerView : UIView
-@property (nonatomic, copy) IBInspectable NSString * _Nullable adUnitName;
+@property (nonatomic) BOOL autoload;
+@property (nonatomic, copy) NSString * _Nullable adUnitName;
 @property (nonatomic, weak) id <PWBannerViewDelegate> _Nullable delegate;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;

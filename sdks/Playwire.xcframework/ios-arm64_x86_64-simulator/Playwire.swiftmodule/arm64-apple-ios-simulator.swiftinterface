@@ -75,8 +75,15 @@ extension PWInterstitial : GoogleMobileAds.GADFullScreenContentDelegate {
   @objc func bannerViewWillDismissScreen(_ bannerView: Playwire.PWBannerView)
   @objc func bannerViewDidDismissScreen(_ bannerView: Playwire.PWBannerView)
 }
-@objc @_inheritsConvenienceInitializers @IBDesignable @objcMembers public class PWBannerView : UIKit.UIView {
-  @objc @IBInspectable public var adUnitName: Swift.String?
+@objc @_inheritsConvenienceInitializers @objcMembers public class PWBannerView : UIKit.UIView {
+  @objc public var autoload: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc public var adUnitName: Swift.String? {
+    @objc get
+    @objc set
+  }
   @objc weak public var delegate: Playwire.PWBannerViewDelegate?
   @objc required dynamic public init?(coder: Foundation.NSCoder)
   @objc override dynamic public init(frame: CoreGraphics.CGRect)
