@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/PrebidMobile-Swift.h</key>
 		<data>
-		6avVp2j8QliX48hvSnpgu0ryB6g=
+		G5xCUBoKnLmb7b43DVkXiVxHYMM=
 		</data>
 		<key>Headers/PrebidMobile.h</key>
 		<data>
@@ -14,55 +14,55 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		NA2bX3Ln/c9OAV75IvGDDWG5gIA=
+		LHxIP4YzrhfVB2qDxfMYIHLhr4I=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		zmNbT3nd2GgGkDmhj0v0oWKE0b8=
+		7TjIPQM1Abp9tRyxLepBZBGMJfc=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		ghv0VTvEIF4mzJV4CIdo0gBXqdg=
+		5ryNatemB4vFQNVBCtZg7juNyWU=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		Da4/n0kPo0xkMgMlxGOBiaxD6nk=
+		/82ZoSyPwUw0eYpWgEpij6bngwY=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		zmNbT3nd2GgGkDmhj0v0oWKE0b8=
+		7TjIPQM1Abp9tRyxLepBZBGMJfc=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/arm64.swiftinterface</key>
 		<data>
-		ghv0VTvEIF4mzJV4CIdo0gBXqdg=
+		5ryNatemB4vFQNVBCtZg7juNyWU=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		Da4/n0kPo0xkMgMlxGOBiaxD6nk=
+		/82ZoSyPwUw0eYpWgEpij6bngwY=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		Ax2hgu+ubEL0TwblR+Wgrp9fabI=
+		PPUF+QhSwIrN5gCJtGlinj3OOOo=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		grTFWYB5Dj9vLuwGf9LicG+7A7o=
+		uL2tj/p3veUB5e+T0ybgFXASp+k=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		hdXXONDRFNGMsPDk3Pq71yFRJwQ=
+		mLIZ+k8HEvstiLyyfhk3117fYr8=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		Ax2hgu+ubEL0TwblR+Wgrp9fabI=
+		PPUF+QhSwIrN5gCJtGlinj3OOOo=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64.swiftinterface</key>
 		<data>
-		grTFWYB5Dj9vLuwGf9LicG+7A7o=
+		uL2tj/p3veUB5e+T0ybgFXASp+k=
 		</data>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		hdXXONDRFNGMsPDk3Pq71yFRJwQ=
+		mLIZ+k8HEvstiLyyfhk3117fYr8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -75,11 +75,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			6avVp2j8QliX48hvSnpgu0ryB6g=
+			G5xCUBoKnLmb7b43DVkXiVxHYMM=
 			</data>
 			<key>hash2</key>
 			<data>
-			Bxs8xviMa5VjeYxU8tpUxQ/M6hYS/ipUtZ7JCiAIcbM=
+			DtrRYgDHbaK/03lePIc3dXkypzXW5DKvAoCnM27SKpg=
 			</data>
 		</dict>
 		<key>Headers/PrebidMobile.h</key>
@@ -97,132 +97,132 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			zmNbT3nd2GgGkDmhj0v0oWKE0b8=
+			7TjIPQM1Abp9tRyxLepBZBGMJfc=
 			</data>
 			<key>hash2</key>
 			<data>
-			MqeWhWKHubajVeif9gWg2odzaAz2SHsKiLSGZhXjxJ8=
+			2fT35xC9BIuQV6vw1hgyT+zKo+GYk/Iq6XhW1YzRHyk=
 			</data>
 		</dict>
 		<key>Modules/PrebidMobile.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ghv0VTvEIF4mzJV4CIdo0gBXqdg=
+			5ryNatemB4vFQNVBCtZg7juNyWU=
 			</data>
 			<key>hash2</key>
 			<data>
-			IOqk0w/vUruvLLShdQma4obHEbirPOo1/PO92XD2i+g=
+			YKp9m9TGJA033Sd7nzcStf5LvVhUvVIx1gb5q4FTqhY=
 			</data>
 		</dict>
 		<key>Modules/PrebidMobile.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Da4/n0kPo0xkMgMlxGOBiaxD6nk=
+			/82ZoSyPwUw0eYpWgEpij6bngwY=
 			</data>
 			<key>hash2</key>
 			<data>
-			8i40b/J4AU1OfA7H5mthRzgjOT90Eppswcxxb8mtsiI=
+			A7B09eCwypiV/ldlVOr4RPeEE9WSgqsQZigtvYkiNLY=
 			</data>
 		</dict>
 		<key>Modules/PrebidMobile.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zmNbT3nd2GgGkDmhj0v0oWKE0b8=
+			7TjIPQM1Abp9tRyxLepBZBGMJfc=
 			</data>
 			<key>hash2</key>
 			<data>
-			MqeWhWKHubajVeif9gWg2odzaAz2SHsKiLSGZhXjxJ8=
+			2fT35xC9BIuQV6vw1hgyT+zKo+GYk/Iq6XhW1YzRHyk=
 			</data>
 		</dict>
 		<key>Modules/PrebidMobile.swiftmodule/arm64.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ghv0VTvEIF4mzJV4CIdo0gBXqdg=
+			5ryNatemB4vFQNVBCtZg7juNyWU=
 			</data>
 			<key>hash2</key>
 			<data>
-			IOqk0w/vUruvLLShdQma4obHEbirPOo1/PO92XD2i+g=
+			YKp9m9TGJA033Sd7nzcStf5LvVhUvVIx1gb5q4FTqhY=
 			</data>
 		</dict>
 		<key>Modules/PrebidMobile.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Da4/n0kPo0xkMgMlxGOBiaxD6nk=
+			/82ZoSyPwUw0eYpWgEpij6bngwY=
 			</data>
 			<key>hash2</key>
 			<data>
-			8i40b/J4AU1OfA7H5mthRzgjOT90Eppswcxxb8mtsiI=
+			A7B09eCwypiV/ldlVOr4RPeEE9WSgqsQZigtvYkiNLY=
 			</data>
 		</dict>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Ax2hgu+ubEL0TwblR+Wgrp9fabI=
+			PPUF+QhSwIrN5gCJtGlinj3OOOo=
 			</data>
 			<key>hash2</key>
 			<data>
-			8gh1GG2SvSAIPw18xNkoxi65KaQ8Qf/2p01HB5KJ+y8=
+			MFjQWhASU+pvdpSCyoemjencjzV8J/CWM0bjVy9XXe0=
 			</data>
 		</dict>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			grTFWYB5Dj9vLuwGf9LicG+7A7o=
+			uL2tj/p3veUB5e+T0ybgFXASp+k=
 			</data>
 			<key>hash2</key>
 			<data>
-			8ikZdCl034cPNwDKf/5r9KECR2q5jQSjXDybLRkJi3g=
+			XaNMjqnPbZsQt5YwPou2SImuvePbKIXekFHeq2KjPqk=
 			</data>
 		</dict>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			hdXXONDRFNGMsPDk3Pq71yFRJwQ=
+			mLIZ+k8HEvstiLyyfhk3117fYr8=
 			</data>
 			<key>hash2</key>
 			<data>
-			AfVlW4wOR0tEFOoARlvSFqobj93zvKRDBFiEFjMFv94=
+			F/c5FhyBvcUmE+4MzbjkEB/XKh1AycNfixI2YA98NLE=
 			</data>
 		</dict>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Ax2hgu+ubEL0TwblR+Wgrp9fabI=
+			PPUF+QhSwIrN5gCJtGlinj3OOOo=
 			</data>
 			<key>hash2</key>
 			<data>
-			8gh1GG2SvSAIPw18xNkoxi65KaQ8Qf/2p01HB5KJ+y8=
+			MFjQWhASU+pvdpSCyoemjencjzV8J/CWM0bjVy9XXe0=
 			</data>
 		</dict>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			grTFWYB5Dj9vLuwGf9LicG+7A7o=
+			uL2tj/p3veUB5e+T0ybgFXASp+k=
 			</data>
 			<key>hash2</key>
 			<data>
-			8ikZdCl034cPNwDKf/5r9KECR2q5jQSjXDybLRkJi3g=
+			XaNMjqnPbZsQt5YwPou2SImuvePbKIXekFHeq2KjPqk=
 			</data>
 		</dict>
 		<key>Modules/PrebidMobile.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			hdXXONDRFNGMsPDk3Pq71yFRJwQ=
+			mLIZ+k8HEvstiLyyfhk3117fYr8=
 			</data>
 			<key>hash2</key>
 			<data>
-			AfVlW4wOR0tEFOoARlvSFqobj93zvKRDBFiEFjMFv94=
+			F/c5FhyBvcUmE+4MzbjkEB/XKh1AycNfixI2YA98NLE=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

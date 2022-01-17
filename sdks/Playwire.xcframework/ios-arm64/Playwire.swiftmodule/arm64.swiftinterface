@@ -1,14 +1,14 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
+// swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
 // swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Playwire
 import Foundation
 import GoogleMobileAds
 import Swift
 import UIKit
 import UserMessagingPlatform
+import _Concurrency
 @objc @_hasMissingDesignatedInitializers public class PWListenerToken : ObjectiveC.NSObject {
   @objc public func cancel()
-  @objc override dynamic public init()
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @objcMembers public class PWNotifier : ObjectiveC.NSObject {
@@ -30,13 +30,11 @@ import UserMessagingPlatform
 @objc @objcMembers public class PWStringConfigFileLoader : ObjectiveC.NSObject, Playwire.PWConfigFileLoader {
   @objc public init(string: Swift.String)
   @objc public func getConfig() -> Playwire.PWAdUnitStoreConfig
-  @objc override dynamic public init()
   @objc deinit
 }
 @objc @objcMembers public class PWResourceConfigFileLoader : ObjectiveC.NSObject, Playwire.PWConfigFileLoader {
   @objc public init(resource: Swift.String, withExtension ext: Swift.String)
   @objc public func getConfig() -> Playwire.PWAdUnitStoreConfig
-  @objc override dynamic public init()
   @objc deinit
 }
 @objc public protocol PWInterstitialDelegate {
@@ -56,10 +54,9 @@ import UserMessagingPlatform
     @objc get
   }
   @objc public func show(fromViewController viewController: UIKit.UIViewController)
-  @objc override dynamic public init()
   @objc deinit
 }
-extension PWInterstitial : GoogleMobileAds.GADFullScreenContentDelegate {
+extension Playwire.PWInterstitial : GoogleMobileAds.GADFullScreenContentDelegate {
   @objc dynamic public func adDidPresentFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
   @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
   @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
@@ -75,33 +72,33 @@ extension PWInterstitial : GoogleMobileAds.GADFullScreenContentDelegate {
   @objc func bannerViewWillDismissScreen(_ bannerView: Playwire.PWBannerView)
   @objc func bannerViewDidDismissScreen(_ bannerView: Playwire.PWBannerView)
 }
-@objc @_inheritsConvenienceInitializers @objcMembers public class PWBannerView : UIKit.UIView {
-  @objc public var autoload: Swift.Bool {
+@objc @_inheritsConvenienceInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerView : UIKit.UIView {
+  @objc @_Concurrency.MainActor(unsafe) public var autoload: Swift.Bool {
     @objc get
     @objc set
   }
-  @objc public var adUnitName: Swift.String? {
+  @objc @_Concurrency.MainActor(unsafe) public var adUnitName: Swift.String? {
     @objc get
     @objc set
   }
-  @objc weak public var delegate: Playwire.PWBannerViewDelegate?
-  @objc required dynamic public init?(coder: Foundation.NSCoder)
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
-  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWBannerViewDelegate? = nil)
-  @objc public func load()
-  @objc public var isLoaded: Swift.Bool {
+  @objc @_Concurrency.MainActor(unsafe) weak public var delegate: Playwire.PWBannerViewDelegate?
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc @_Concurrency.MainActor(unsafe) convenience public init(adUnitName: Swift.String, delegate: Playwire.PWBannerViewDelegate? = nil)
+  @objc @_Concurrency.MainActor(unsafe) public func load()
+  @objc @_Concurrency.MainActor(unsafe) public var isLoaded: Swift.Bool {
     @objc get
   }
   @objc deinit
 }
-extension PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
-  @objc dynamic public func bannerViewDidReceiveAd(_ bannerView: GoogleMobileAds.GADBannerView)
-  @objc dynamic public func bannerView(_ bannerView: GoogleMobileAds.GADBannerView, didFailToReceiveAdWithError error: Swift.Error)
-  @objc dynamic public func bannerViewDidRecordImpression(_ bannerView: GoogleMobileAds.GADBannerView)
-  @objc dynamic public func bannerViewbannerViewDidRecordClick(_ bannerView: GoogleMobileAds.GADBannerView)
-  @objc dynamic public func bannerViewWillPresentScreen(_ bannerView: GoogleMobileAds.GADBannerView)
-  @objc dynamic public func bannerViewWillDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
-  @objc dynamic public func bannerViewDidDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+extension Playwire.PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidReceiveAd(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerView(_ bannerView: GoogleMobileAds.GADBannerView, didFailToReceiveAdWithError error: Swift.Error)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidRecordImpression(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidRecordClick(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewWillPresentScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewWillDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
 }
 @objc public protocol PWRewardedDelegate {
   @objc func rewardedDidLoad(_ rewarded: Playwire.PWRewarded)
@@ -121,10 +118,9 @@ extension PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
     @objc get
   }
   @objc public func show(fromViewController viewController: UIKit.UIViewController)
-  @objc override dynamic public init()
   @objc deinit
 }
-extension PWRewarded : GoogleMobileAds.GADFullScreenContentDelegate {
+extension Playwire.PWRewarded : GoogleMobileAds.GADFullScreenContentDelegate {
   @objc dynamic public func adDidPresentFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
   @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
   @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
@@ -356,7 +352,9 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public var om: Playwire.PWOMConfig? {
     get
   }
-  @objc override dynamic public init()
+  @objc public var schain: Playwire.PWSchainConfig? {
+    get
+  }
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
@@ -452,6 +450,38 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   }
   public var smaato_gpsEnabled: Swift.Bool? {
     get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @objcMembers public class PWSchainConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public class SchainNodeConfig : ObjectiveC.NSObject, Swift.Decodable {
+    public var asi: Swift.String {
+      get
+    }
+    public var sid: Swift.String {
+      get
+    }
+    public var hp: Swift.Int {
+      get
+    }
+    public var dictionary: [Swift.String : Any] {
+      get
+    }
+    @objc deinit
+    required public init(from decoder: Swift.Decoder) throws
+  }
+  @objc public var ver: Swift.String {
+    get
+  }
+  @objc public var complete: Swift.Int {
+    get
+  }
+  @objc public var nodes: [Playwire.PWSchainConfig.SchainNodeConfig] {
+    get
+  }
+  @objc public var dictionary: [Swift.String : Any] {
+    @objc get
   }
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws

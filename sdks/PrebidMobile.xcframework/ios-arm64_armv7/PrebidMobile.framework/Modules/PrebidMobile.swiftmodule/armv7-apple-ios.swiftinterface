@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)
+// swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
 // swift-module-flags: -target armv7-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name PrebidMobile
 import AdSupport
 import AppTrackingTransparency
@@ -12,6 +12,7 @@ import Swift
 import SystemConfiguration
 import UIKit
 import WebKit
+import _Concurrency
 import ObjectiveC.runtime
 @objc public class SingleContainerInt : ObjectiveC.NSObject, Swift.ExpressibleByIntegerLiteral {
   public typealias IntegerLiteralType = Swift.Int
@@ -21,7 +22,6 @@ import ObjectiveC.runtime
   @objc override dynamic public var hash: Swift.Int {
     @objc get
   }
-  @objc override dynamic public init()
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class Signals : ObjectiveC.NSObject {
@@ -150,6 +150,7 @@ public enum LogLevel : Swift.String {
   public var locationPrecision: Swift.Int?
   @objc public var omidPartnerName: Swift.String?
   @objc public var omidPartnerVersion: Swift.String?
+  @objc public var schain: [Swift.String : Any]?
   @objc @available(swift, obsoleted: 1.0)
   public func setLocationPrecision(_ newValue: Foundation.NSNumber?)
   @objc @available(swift, obsoleted: 1.0)
@@ -230,7 +231,6 @@ public enum LogLevel : Swift.String {
   @objc public init(source: Swift.String, identifier: Swift.String, atype: Foundation.NSNumber? = nil, ext: [Swift.String : Any]? = nil)
   @objc public func encode(with coder: Foundation.NSCoder)
   @objc required public init?(coder: Foundation.NSCoder)
-  @objc override dynamic public init()
   @objc deinit
 }
 @objc public protocol NativeAdDelegate {
@@ -263,6 +263,7 @@ public enum LogLevel : Swift.String {
   @objc public var prebidServerAccountId: Swift.String
   @objc public var storedAuctionResponse: Swift.String
   @objc public var pbsDebug: Swift.Bool
+  @objc public var shouldAssignNativeAssetID: Swift.Bool
   @objc public var shareGeoLocation: Swift.Bool
   @objc public var prebidServerHost: PrebidMobile.PrebidHost {
     @objc get
@@ -286,13 +287,11 @@ public enum LogLevel : Swift.String {
 @objc public class NativeAsset : ObjectiveC.NSObject {
   public var required: Swift.Bool
   public init(isRequired: Swift.Bool)
-  @objc override dynamic public init()
   @objc deinit
 }
 @objc @objcMembers public class NativeAssetTitle : PrebidMobile.NativeAsset {
   @objc public var ext: Swift.AnyObject?
   @objc required public init(length: ObjectiveC.NSInteger, required: Swift.Bool)
-  @objc override public init(isRequired: Swift.Bool)
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers @objcMembers public class NativeAssetImage : PrebidMobile.NativeAsset {
@@ -311,7 +310,6 @@ public enum LogLevel : Swift.String {
   public var length: Swift.Int?
   @objc public var ext: Swift.AnyObject?
   @objc required public init(type: PrebidMobile.DataAsset, required: Swift.Bool)
-  @objc override public init(isRequired: Swift.Bool)
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class ImageAsset : PrebidMobile.SingleContainerInt {
@@ -398,8 +396,8 @@ public enum LogLevel : Swift.String {
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class AdUnit : ObjectiveC.NSObject {
   @objc public var pbAdSlot: Swift.String?
-  @objc dynamic public func fetchDemand(completion: @escaping (PrebidMobile.ResultCode, [Swift.String : Swift.String]?) -> Swift.Void)
-  @objc dynamic public func fetchDemand(adObject: Swift.AnyObject, completion: @escaping (PrebidMobile.ResultCode) -> Swift.Void)
+  @objc dynamic public func fetchDemand(completion: @escaping (_ result: PrebidMobile.ResultCode, _ kvResultDict: [Swift.String : Swift.String]?) -> Swift.Void)
+  @objc dynamic public func fetchDemand(adObject: Swift.AnyObject, completion: @escaping (_ result: PrebidMobile.ResultCode) -> Swift.Void)
   @objc public func addContextData(key: Swift.String, value: Swift.String)
   @objc public func updateContextData(key: Swift.String, value: Swift.Set<Swift.String>)
   @objc public func removeContextData(forKey: Swift.String)
@@ -410,12 +408,16 @@ public enum LogLevel : Swift.String {
   @objc public func clearContextKeywords()
   @objc public func setAutoRefreshMillis(time: Swift.Double)
   @objc public func stopAutoRefresh()
+  @objc public func setAppContent(appContent: PrebidMobile.ContentObject)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc(PBAdUnitContentObject) public class ContentObject : ObjectiveC.NSObject {
+  @objc public var url: Swift.String?
   @objc override dynamic public init()
   @objc deinit
 }
 @objc public class NativeEventTracker : ObjectiveC.NSObject {
   @objc public init(event: PrebidMobile.EventType, methods: Swift.Array<PrebidMobile.EventTracking>)
-  @objc override dynamic public init()
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class EventType : PrebidMobile.SingleContainerInt {
