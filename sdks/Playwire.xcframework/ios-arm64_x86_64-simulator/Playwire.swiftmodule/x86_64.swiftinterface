@@ -24,19 +24,6 @@ import _Concurrency
   @objc override dynamic public init()
   @objc deinit
 }
-@objc public protocol PWConfigFileLoader {
-  @objc func getConfig() -> Playwire.PWAdUnitStoreConfig
-}
-@objc @objcMembers public class PWStringConfigFileLoader : ObjectiveC.NSObject, Playwire.PWConfigFileLoader {
-  @objc public init(string: Swift.String)
-  @objc public func getConfig() -> Playwire.PWAdUnitStoreConfig
-  @objc deinit
-}
-@objc @objcMembers public class PWResourceConfigFileLoader : ObjectiveC.NSObject, Playwire.PWConfigFileLoader {
-  @objc public init(resource: Swift.String, withExtension ext: Swift.String)
-  @objc public func getConfig() -> Playwire.PWAdUnitStoreConfig
-  @objc deinit
-}
 @objc public protocol PWInterstitialDelegate {
   @objc func interstitialDidReceiveAd(_ ad: Playwire.PWInterstitial)
   @objc func interstitial(_ interstitial: Playwire.PWInterstitial, didFailToReceiveAdWithError error: Swift.String)
@@ -46,9 +33,9 @@ import _Concurrency
   @objc func interstitialDidRecordImpression(_ ad: Playwire.PWInterstitial)
   @objc func interstitialDidRecordClick(_ ad: Playwire.PWInterstitial)
 }
-@objc @objcMembers public class PWInterstitial : ObjectiveC.NSObject {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWInterstitial : ObjectiveC.NSObject {
   @objc weak public var delegate: Playwire.PWInterstitialDelegate?
-  @objc public init(adUnitName: Swift.String, delegate: Playwire.PWInterstitialDelegate? = nil)
+  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWInterstitialDelegate? = nil)
   @objc public func load()
   @objc public var isLoaded: Swift.Bool {
     @objc get
@@ -110,9 +97,9 @@ extension Playwire.PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
   @objc func rewardedDidRecordImpression(_ ad: Playwire.PWRewarded)
   @objc func rewardedDidRecordClick(_ ad: Playwire.PWRewarded)
 }
-@objc @objcMembers public class PWRewarded : ObjectiveC.NSObject {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWRewarded : ObjectiveC.NSObject {
   @objc weak public var delegate: Playwire.PWRewardedDelegate?
-  @objc public init(adUnitName: Swift.String, delegate: Playwire.PWRewardedDelegate? = nil)
+  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWRewardedDelegate? = nil)
   @objc public func load()
   @objc public var isLoaded: Swift.Bool {
     @objc get
@@ -175,13 +162,19 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let EVT_gamImpression: Swift.String
   @objc public static let EVT_gamImpression_timestamp: Swift.String
   @objc public static let EVT_CTX_configType: Swift.String
-  @objc public static let EVT_CTX_configType_String: Swift.String
-  @objc public static let EVT_CTX_configType_Resource: Swift.String
+  @objc public static let EVT_CTX_configType_Backend: Swift.String
+  @objc public static let EVT_CTX_configType_Cache: Swift.String
   @objc public static let EVT_configSuccess: Swift.String
   @objc public static let EVT_configSuccess_config: Swift.String
   @objc public static let EVT_configFail: Swift.String
   @objc public static let EVT_configFail_config: Swift.String
-  @objc public static let EVT_configFail_resource: Swift.String
+  @objc public static let EVT_configFail_error: Swift.String
+  @objc public static let EVT_configFail_empty_file: Swift.String
+  @objc public static let EVT_configFileLoading: Swift.String
+  @objc public static let EVT_configFileLoading_status_code: Swift.String
+  @objc public static let EVT_cachedConfigFileSavingFail: Swift.String
+  @objc public static let EVT_cachedConfigFileFail_error: Swift.String
+  @objc public static let EVT_cachedConfigFileSavingSuccess: Swift.String
   @objc public static let EVT_bannerInitError: Swift.String
   @objc public static let EVT_bannerInitError_error: Swift.String
   @objc public static let EVT_bannerInitError_error_alreadyInitialized: Swift.String
@@ -217,7 +210,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc override dynamic public init()
   @objc deinit
 }
-@objc @objcMembers public class PWAdSize : ObjectiveC.NSObject, Swift.Decodable {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdSize : ObjectiveC.NSObject, Swift.Decodable {
   @objc public var width: Swift.Int {
     get
   }
@@ -227,7 +220,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @objcMembers public class PWAdServerConfig : ObjectiveC.NSObject, Swift.Decodable {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdServerConfig : ObjectiveC.NSObject, Swift.Decodable {
   public enum PWAdServerType : Swift.String, Swift.Hashable, Swift.Decodable {
     case Amazon
     case Prebid
@@ -263,7 +256,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @_inheritsConvenienceInitializers @objcMembers public class PWUMPConfig : ObjectiveC.NSObject, Swift.Decodable {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWUMPConfig : ObjectiveC.NSObject, Swift.Decodable {
   public enum PWUMPLocation : Swift.String, Swift.Decodable {
     case Current
     case EEA
@@ -289,11 +282,10 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public var debugDevices: Swift.Array<Swift.String>? {
     get
   }
-  @objc override dynamic public init()
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @objcMembers public class PWAdUnitConfig : ObjectiveC.NSObject, Swift.Decodable {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdUnitConfig : ObjectiveC.NSObject, Swift.Decodable {
   @objc public var serverConfig: Swift.String {
     get
   }
@@ -306,7 +298,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @_inheritsConvenienceInitializers @objcMembers public class PWAppConfig : ObjectiveC.NSObject, Swift.Decodable {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAppConfig : ObjectiveC.NSObject, Swift.Decodable {
   @objc public var gamAppId: Swift.String? {
     get
   }
@@ -316,11 +308,10 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   public var childProtection: Swift.Bool? {
     get
   }
-  @objc override dynamic public init()
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @objcMembers public class PWOMConfig : ObjectiveC.NSObject, Swift.Decodable {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWOMConfig : ObjectiveC.NSObject, Swift.Decodable {
   @objc public var partnerName: Swift.String {
     get
   }
@@ -358,7 +349,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @objcMembers public class PWAdUnit : ObjectiveC.NSObject, Swift.Decodable {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdUnit : ObjectiveC.NSObject, Swift.Decodable {
   public enum PWAdBidStrategyType : Swift.String, Swift.Decodable {
     case Priority
     case Combined
@@ -407,7 +398,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @objcMembers public class PWAdMediatorConfig : ObjectiveC.NSObject, Swift.Decodable {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdMediatorConfig : ObjectiveC.NSObject, Swift.Decodable {
   public enum PWAdMediatorType : Swift.String, Swift.Decodable {
     case AdColony
     case Vungle
@@ -454,8 +445,8 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @objcMembers public class PWSchainConfig : ObjectiveC.NSObject, Swift.Decodable {
-  @objc public class SchainNodeConfig : ObjectiveC.NSObject, Swift.Decodable {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWSchainConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc @_hasMissingDesignatedInitializers public class SchainNodeConfig : ObjectiveC.NSObject, Swift.Decodable {
     public var asi: Swift.String {
       get
     }
@@ -494,13 +485,12 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   open func configure(request: GoogleMobileAds.GADRequest)
   @objc deinit
 }
-@objc @_inheritsConvenienceInitializers @objcMembers public class PlaywireSDK : ObjectiveC.NSObject {
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PlaywireSDK : ObjectiveC.NSObject {
   @objc public var config: Playwire.PWAdUnitStoreConfig? {
     get
   }
   @objc public static let shared: Playwire.PlaywireSDK
-  @objc public var configLoader: Playwire.PWConfigFileLoader
-  @objc public func initialize(viewController: UIKit.UIViewController, completionHandler: @escaping () -> Swift.Void)
+  @objc public func initialize(publisherId: Swift.String, appId: Swift.String, version: Swift.String, viewController: UIKit.UIViewController, completionHandler: @escaping (Swift.Error?) -> Swift.Void)
   @objc public var adUnitsDictionary: [Swift.String : [Swift.String]] {
     @objc get
   }
@@ -508,7 +498,6 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   public func get(factoryFor serverType: Playwire.PWAdServerConfig.PWAdServerType) -> Playwire.PWAdBidder.Type?
   public func set(type: Playwire.PWAdMediator.Type, for mediatorType: Playwire.PWAdMediatorConfig.PWAdMediatorType)
   @objc open func configure(request: GoogleMobileAds.GADRequest)
-  @objc override dynamic public init()
   @objc deinit
 }
 extension Playwire.PWAdServerConfig.PWAdServerType : Swift.RawRepresentable {}

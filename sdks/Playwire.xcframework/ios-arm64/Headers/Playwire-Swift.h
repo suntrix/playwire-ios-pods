@@ -211,6 +211,8 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 
 
+
+
 SWIFT_CLASS("_TtC8Playwire10PWAdBidder")
 @interface PWAdBidder : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -237,6 +239,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable vungle_placements;
 @property (nonatomic, readonly, copy) NSString * _Nullable vungle_userId;
 @property (nonatomic, readonly, copy) NSString * _Nullable smaato_publisherId;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 
@@ -249,6 +253,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly, copy) NSString * _Nonnull name;
 @property (nonatomic, readonly, copy) NSString * _Nullable host;
 @property (nonatomic, readonly, copy) NSString * _Nullable account;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 @class NSNumber;
@@ -257,6 +263,8 @@ SWIFT_CLASS("_TtC8Playwire8PWAdSize")
 @interface PWAdSize : NSObject
 @property (nonatomic, readonly) NSInteger width;
 @property (nonatomic, readonly) NSInteger height;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 @class PWAdUnitConfig;
@@ -277,6 +285,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly, copy) NSArray<PWAdUnitConfig *> * _Nullable adUnitConfigs;
 @property (nonatomic, readonly, copy) NSString * _Nonnull gadUnitId;
 @property (nonatomic, readonly, copy) NSArray<PWAdSize *> * _Nullable gadSizes;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 
@@ -285,6 +295,8 @@ SWIFT_CLASS("_TtC8Playwire14PWAdUnitConfig")
 @property (nonatomic, readonly, copy) NSString * _Nonnull serverConfig;
 @property (nonatomic, readonly, copy) NSString * _Nonnull adUnitId;
 @property (nonatomic, readonly, copy) NSArray<PWAdSize *> * _Nullable adSizes;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 @class PWUMPConfig;
@@ -310,7 +322,8 @@ SWIFT_CLASS("_TtC8Playwire11PWAppConfig")
 @interface PWAppConfig : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nullable gamAppId;
 @property (nonatomic, readonly, copy) NSString * _Nullable storeUrl;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 @protocol PWBannerViewDelegate;
@@ -409,10 +422,10 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_gamImpression_timestamp SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_configType;)
 + (NSString * _Nonnull)EVT_CTX_configType SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_configType_String;)
-+ (NSString * _Nonnull)EVT_CTX_configType_String SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_configType_Resource;)
-+ (NSString * _Nonnull)EVT_CTX_configType_Resource SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_configType_Backend;)
++ (NSString * _Nonnull)EVT_CTX_configType_Backend SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_configType_Cache;)
++ (NSString * _Nonnull)EVT_CTX_configType_Cache SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configSuccess;)
 + (NSString * _Nonnull)EVT_configSuccess SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configSuccess_config;)
@@ -421,8 +434,20 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_configFail SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_config;)
 + (NSString * _Nonnull)EVT_configFail_config SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_resource;)
-+ (NSString * _Nonnull)EVT_configFail_resource SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_error;)
++ (NSString * _Nonnull)EVT_configFail_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_empty_file;)
++ (NSString * _Nonnull)EVT_configFail_empty_file SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFileLoading;)
++ (NSString * _Nonnull)EVT_configFileLoading SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFileLoading_status_code;)
++ (NSString * _Nonnull)EVT_configFileLoading_status_code SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_cachedConfigFileSavingFail;)
++ (NSString * _Nonnull)EVT_cachedConfigFileSavingFail SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_cachedConfigFileFail_error;)
++ (NSString * _Nonnull)EVT_cachedConfigFileFail_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_cachedConfigFileSavingSuccess;)
++ (NSString * _Nonnull)EVT_cachedConfigFileSavingSuccess SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError;)
 + (NSString * _Nonnull)EVT_bannerInitError SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error;)
@@ -490,19 +515,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-
-SWIFT_PROTOCOL("_TtP8Playwire18PWConfigFileLoader_")
-@protocol PWConfigFileLoader
-- (PWAdUnitStoreConfig * _Nonnull)getConfig SWIFT_WARN_UNUSED_RESULT;
-@end
-
 @protocol PWInterstitialDelegate;
 @class UIViewController;
 
 SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
 @interface PWInterstitial : NSObject
 @property (nonatomic, weak) id <PWInterstitialDelegate> _Nullable delegate;
-- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWInterstitialDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWInterstitialDelegate> _Nullable)delegate;
 - (void)load;
 @property (nonatomic, readonly) BOOL isLoaded;
 - (void)showFromViewController:(UIViewController * _Nonnull)viewController;
@@ -558,13 +577,6 @@ SWIFT_CLASS("_TtC8Playwire10PWOMConfig")
 @interface PWOMConfig : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull partnerName;
 @property (nonatomic, readonly, copy) NSString * _Nonnull partnerVersion;
-@end
-
-
-SWIFT_CLASS("_TtC8Playwire26PWResourceConfigFileLoader")
-@interface PWResourceConfigFileLoader : NSObject <PWConfigFileLoader>
-- (nonnull instancetype)initWithResource:(NSString * _Nonnull)resource withExtension:(NSString * _Nonnull)ext OBJC_DESIGNATED_INITIALIZER;
-- (PWAdUnitStoreConfig * _Nonnull)getConfig SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -574,7 +586,7 @@ SWIFT_CLASS("_TtC8Playwire26PWResourceConfigFileLoader")
 SWIFT_CLASS("_TtC8Playwire10PWRewarded")
 @interface PWRewarded : NSObject
 @property (nonatomic, weak) id <PWRewardedDelegate> _Nullable delegate;
-- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWRewardedDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWRewardedDelegate> _Nullable)delegate;
 - (void)load;
 @property (nonatomic, readonly) BOOL isLoaded;
 - (void)showFromViewController:(UIViewController * _Nonnull)viewController;
@@ -612,13 +624,6 @@ SWIFT_CLASS("_TtC8Playwire14PWSchainConfig")
 @property (nonatomic, readonly) NSInteger complete;
 @property (nonatomic, readonly, copy) NSArray<SchainNodeConfig *> * _Nonnull nodes;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nonnull dictionary;
-@end
-
-
-SWIFT_CLASS("_TtC8Playwire24PWStringConfigFileLoader")
-@interface PWStringConfigFileLoader : NSObject <PWConfigFileLoader>
-- (nonnull instancetype)initWithString:(NSString * _Nonnull)string OBJC_DESIGNATED_INITIALIZER;
-- (PWAdUnitStoreConfig * _Nonnull)getConfig SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -633,7 +638,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWUMPLocation_NotEEA;)
 + (NSString * _Nonnull)PWUMPLocation_NotEEA SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable debugDevices;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 @class GADRequest;
@@ -643,12 +649,15 @@ SWIFT_CLASS("_TtC8Playwire11PlaywireSDK")
 @property (nonatomic, readonly, strong) PWAdUnitStoreConfig * _Nullable config;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PlaywireSDK * _Nonnull shared;)
 + (PlaywireSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
-@property (nonatomic, strong) id <PWConfigFileLoader> _Nonnull configLoader;
-- (void)initializeWithViewController:(UIViewController * _Nonnull)viewController completionHandler:(void (^ _Nonnull)(void))completionHandler;
+- (void)initializeWithPublisherId:(NSString * _Nonnull)publisherId appId:(NSString * _Nonnull)appId version:(NSString * _Nonnull)version viewController:(UIViewController * _Nonnull)viewController completionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, NSArray<NSString *> *> * _Nonnull adUnitsDictionary;
 - (void)configureWithRequest:(GADRequest * _Nonnull)request;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
+
+
 
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop

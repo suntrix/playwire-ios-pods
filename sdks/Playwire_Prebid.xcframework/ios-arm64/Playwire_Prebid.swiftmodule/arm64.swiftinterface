@@ -6,6 +6,7 @@ import Foundation
 import Playwire
 import PrebidMobile
 import Swift
+import UIKit
 import _Concurrency
 @_inheritsConvenienceInitializers @objc public class Playwire_Prebid : ObjectiveC.NSObject {
   @objc public class func register()
