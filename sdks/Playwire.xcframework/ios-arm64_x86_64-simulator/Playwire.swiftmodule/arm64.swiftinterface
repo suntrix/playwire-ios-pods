@@ -24,6 +24,34 @@ import _Concurrency
   @objc override dynamic public init()
   @objc deinit
 }
+@objc public protocol PWAppOpenAdDelegate {
+  @objc func appOpenAdDidLoad(_ appOpenAd: Playwire.PWAppOpenAd)
+  @objc func appOpenAd(_ appOpenAd: Playwire.PWAppOpenAd, didFailToLoadWithError error: Swift.String)
+  @objc func appOpenAdDidPresentFullScreenContent(_ appOpenAd: Playwire.PWAppOpenAd)
+  @objc func appOpenAdDidDismissFullScreenContent(_ appOpenAd: Playwire.PWAppOpenAd)
+  @objc func appOpenAd(_ appOpenAd: Playwire.PWAppOpenAd, didFailToPresentFullScreenContentWithError error: Swift.String)
+  @objc func appOpenAdDidRecordImpression(_ appOpenAd: Playwire.PWAppOpenAd)
+  @objc func appOpenAdDidRecordClick(_ appOpenAd: Playwire.PWAppOpenAd)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAppOpenAd : ObjectiveC.NSObject {
+  @objc weak public var delegate: Playwire.PWAppOpenAdDelegate?
+  @objc public var autoReloadOnExpiration: Swift.Bool
+  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWAppOpenAdDelegate? = nil)
+  @objc public var isLoaded: Swift.Bool {
+    @objc get
+  }
+  @objc public func load()
+  @objc public func load(orientation: UIKit.UIInterfaceOrientation)
+  @objc public func show(fromViewController viewController: UIKit.UIViewController)
+  @objc deinit
+}
+extension Playwire.PWAppOpenAd : GoogleMobileAds.GADFullScreenContentDelegate {
+  @objc dynamic public func adDidPresentFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
+  @objc dynamic public func adDidRecordImpression(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adDidRecordClick(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+}
 @objc public protocol PWInterstitialDelegate {
   @objc func interstitialDidReceiveAd(_ ad: Playwire.PWInterstitial)
   @objc func interstitial(_ interstitial: Playwire.PWInterstitial, didFailToReceiveAdWithError error: Swift.String)
@@ -207,6 +235,20 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let EVT_rewardedReward: Swift.String
   @objc public static let EVT_rewardedReward_type: Swift.String
   @objc public static let EVT_rewardedReward_amount: Swift.String
+  @objc public static let EVT_appOpenAdInitError: Swift.String
+  @objc public static let EVT_appOpenAdInitError_error: Swift.String
+  @objc public static let EVT_appOpenAdInitError_error_noAdUnit: Swift.String
+  @objc public static let EVT_appOpenAdInitError_error_badAdUnit: Swift.String
+  @objc public static let EVT_appOpenAdLoadError: Swift.String
+  @objc public static let EVT_appOpenAdLoadError_error: Swift.String
+  @objc public static let EVT_appOpenAdLoadError_error_notPrepared: Swift.String
+  @objc public static let EVT_appOpenAdLoadError_error_notLoaded: Swift.String
+  @objc public static let EVT_appOpenAdLoadError_error_notInternalRep: Swift.String
+  @objc public static let EVT_appOpenAdLoadError_error_notProfitable: Swift.String
+  @objc public static let EVT_appOpenAdLoadWarning: Swift.String
+  @objc public static let EVT_appOpenAdLoadWarning_warning: Swift.String
+  @objc public static let EVT_appOpenAdLoadWarning_warning_notProfitable: Swift.String
+  @objc public static let EVT_appOpenAdLoadWarning_autoReload: Swift.String
   @objc override dynamic public init()
   @objc deinit
 }
@@ -365,6 +407,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
     case Banner
     case Interstitial
     case Rewarded
+    case AppOpenAd
     public init?(rawValue: Swift.String)
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
@@ -374,6 +417,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let PWAdMode_Banner: Swift.String
   @objc public static let PWAdMode_Interstitial: Swift.String
   @objc public static let PWAdMode_Rewarded: Swift.String
+  @objc public static let PWAdMode_AppOpenAd: Swift.String
   @objc public var name: Swift.String {
     get
   }

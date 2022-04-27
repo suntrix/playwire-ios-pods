@@ -281,6 +281,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)PWAdMode_Interstitial SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_Rewarded;)
 + (NSString * _Nonnull)PWAdMode_Rewarded SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_AppOpenAd;)
++ (NSString * _Nonnull)PWAdMode_AppOpenAd SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, copy) NSString * _Nonnull name;
 @property (nonatomic, readonly, copy) NSArray<PWAdUnitConfig *> * _Nullable adUnitConfigs;
 @property (nonatomic, readonly, copy) NSString * _Nonnull gadUnitId;
@@ -324,6 +326,44 @@ SWIFT_CLASS("_TtC8Playwire11PWAppConfig")
 @property (nonatomic, readonly, copy) NSString * _Nullable storeUrl;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@protocol PWAppOpenAdDelegate;
+@class UIViewController;
+
+SWIFT_CLASS("_TtC8Playwire11PWAppOpenAd")
+@interface PWAppOpenAd : NSObject
+@property (nonatomic, weak) id <PWAppOpenAdDelegate> _Nullable delegate;
+@property (nonatomic) BOOL autoReloadOnExpiration;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWAppOpenAdDelegate> _Nullable)delegate;
+@property (nonatomic, readonly) BOOL isLoaded;
+- (void)load;
+- (void)loadWithOrientation:(UIInterfaceOrientation)orientation;
+- (void)showFromViewController:(UIViewController * _Nonnull)viewController;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@protocol GADFullScreenPresentingAd;
+
+@interface PWAppOpenAd (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
+- (void)adDidPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
+- (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)adDidRecordClick:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire19PWAppOpenAdDelegate_")
+@protocol PWAppOpenAdDelegate
+- (void)appOpenAdDidLoad:(PWAppOpenAd * _Nonnull)appOpenAd;
+- (void)appOpenAd:(PWAppOpenAd * _Nonnull)appOpenAd didFailToLoadWithError:(NSString * _Nonnull)error;
+- (void)appOpenAdDidPresentFullScreenContent:(PWAppOpenAd * _Nonnull)appOpenAd;
+- (void)appOpenAdDidDismissFullScreenContent:(PWAppOpenAd * _Nonnull)appOpenAd;
+- (void)appOpenAd:(PWAppOpenAd * _Nonnull)appOpenAd didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
+- (void)appOpenAdDidRecordImpression:(PWAppOpenAd * _Nonnull)appOpenAd;
+- (void)appOpenAdDidRecordClick:(PWAppOpenAd * _Nonnull)appOpenAd;
 @end
 
 @protocol PWBannerViewDelegate;
@@ -512,11 +552,38 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_rewardedReward_type SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedReward_amount;)
 + (NSString * _Nonnull)EVT_rewardedReward_amount SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdInitError;)
++ (NSString * _Nonnull)EVT_appOpenAdInitError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdInitError_error;)
++ (NSString * _Nonnull)EVT_appOpenAdInitError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdInitError_error_noAdUnit;)
++ (NSString * _Nonnull)EVT_appOpenAdInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdInitError_error_badAdUnit;)
++ (NSString * _Nonnull)EVT_appOpenAdInitError_error_badAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError;)
++ (NSString * _Nonnull)EVT_appOpenAdLoadError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError_error;)
++ (NSString * _Nonnull)EVT_appOpenAdLoadError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError_error_notPrepared;)
++ (NSString * _Nonnull)EVT_appOpenAdLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError_error_notLoaded;)
++ (NSString * _Nonnull)EVT_appOpenAdLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError_error_notInternalRep;)
++ (NSString * _Nonnull)EVT_appOpenAdLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError_error_notProfitable;)
++ (NSString * _Nonnull)EVT_appOpenAdLoadError_error_notProfitable SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadWarning;)
++ (NSString * _Nonnull)EVT_appOpenAdLoadWarning SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadWarning_warning;)
++ (NSString * _Nonnull)EVT_appOpenAdLoadWarning_warning SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadWarning_warning_notProfitable;)
++ (NSString * _Nonnull)EVT_appOpenAdLoadWarning_warning_notProfitable SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadWarning_autoReload;)
++ (NSString * _Nonnull)EVT_appOpenAdLoadWarning_autoReload SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 @protocol PWInterstitialDelegate;
-@class UIViewController;
 
 SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
 @interface PWInterstitial : NSObject
@@ -529,7 +596,6 @@ SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@protocol GADFullScreenPresentingAd;
 
 @interface PWInterstitial (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
 - (void)adDidPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
