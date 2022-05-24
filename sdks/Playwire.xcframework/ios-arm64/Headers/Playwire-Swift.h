@@ -268,6 +268,7 @@ SWIFT_CLASS("_TtC8Playwire8PWAdSize")
 @end
 
 @class PWAdUnitConfig;
+@class PWBannerRefresh;
 
 SWIFT_CLASS("_TtC8Playwire8PWAdUnit")
 @interface PWAdUnit : NSObject
@@ -285,8 +286,10 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)PWAdMode_AppOpenAd SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, copy) NSString * _Nonnull name;
 @property (nonatomic, readonly, copy) NSArray<PWAdUnitConfig *> * _Nullable adUnitConfigs;
+@property (nonatomic, readonly, strong) PWBannerRefresh * _Nullable refresh;
 @property (nonatomic, readonly, copy) NSString * _Nonnull gadUnitId;
 @property (nonatomic, readonly, copy) NSArray<PWAdSize *> * _Nullable gadSizes;
+@property (nonatomic, readonly, copy) NSDictionary<NSString *, NSString *> * _Nullable customTargets;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -338,7 +341,9 @@ SWIFT_CLASS("_TtC8Playwire11PWAppOpenAd")
 - (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWAppOpenAdDelegate> _Nullable)delegate;
 @property (nonatomic, readonly) BOOL isLoaded;
 - (void)load;
+- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
 - (void)loadWithOrientation:(UIInterfaceOrientation)orientation;
+- (void)loadWithOrientation:(UIInterfaceOrientation)orientation customTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
 - (void)showFromViewController:(UIViewController * _Nonnull)viewController;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -366,19 +371,29 @@ SWIFT_PROTOCOL("_TtP8Playwire19PWAppOpenAdDelegate_")
 - (void)appOpenAdDidRecordClick:(PWAppOpenAd * _Nonnull)appOpenAd;
 @end
 
+
+SWIFT_CLASS("_TtC8Playwire15PWBannerRefresh")
+@interface PWBannerRefresh : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 @protocol PWBannerViewDelegate;
 @class NSCoder;
 
 SWIFT_CLASS("_TtC8Playwire12PWBannerView")
 @interface PWBannerView : UIView
-@property (nonatomic) BOOL autoload;
 @property (nonatomic, copy) NSString * _Nullable adUnitName;
+@property (nonatomic) BOOL autoload;
 @property (nonatomic, weak) id <PWBannerViewDelegate> _Nullable delegate;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWBannerViewDelegate> _Nullable)delegate;
+- (void)awakeFromNib;
 - (void)load;
+- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
 @property (nonatomic, readonly) BOOL isLoaded;
+- (void)refresh;
 @end
 
 @class GADBannerView;
@@ -440,6 +455,10 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_CTX_adUnit_gadUnitId SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_requestTimestamp;)
 + (NSString * _Nonnull)EVT_CTX_requestTimestamp SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_staticTargeting;)
++ (NSString * _Nonnull)EVT_CTX_staticTargeting SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_dynamicTargeting;)
++ (NSString * _Nonnull)EVT_CTX_dynamicTargeting SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamRequestSuccess;)
 + (NSString * _Nonnull)EVT_gamRequestSuccess SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamRequestSuccess_response;)
@@ -510,6 +529,24 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_bannerLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerLoadError_error_notInternalRep;)
 + (NSString * _Nonnull)EVT_bannerLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError;)
++ (NSString * _Nonnull)EVT_bannerRefreshError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error;)
++ (NSString * _Nonnull)EVT_bannerRefreshError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_maxReached;)
++ (NSString * _Nonnull)EVT_bannerRefreshError_error_maxReached SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_maxReached_count;)
++ (NSString * _Nonnull)EVT_bannerRefreshError_error_maxReached_count SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_early;)
++ (NSString * _Nonnull)EVT_bannerRefreshError_error_early SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_early_elapsed;)
++ (NSString * _Nonnull)EVT_bannerRefreshError_error_early_elapsed SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_early_required;)
++ (NSString * _Nonnull)EVT_bannerRefreshError_error_early_required SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_manual;)
++ (NSString * _Nonnull)EVT_bannerRefreshError_error_manual SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshEarly;)
++ (NSString * _Nonnull)EVT_bannerRefreshEarly SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialInitError;)
 + (NSString * _Nonnull)EVT_interstitialInitError SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialInitError_error;)
@@ -590,6 +627,7 @@ SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
 @property (nonatomic, weak) id <PWInterstitialDelegate> _Nullable delegate;
 - (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWInterstitialDelegate> _Nullable)delegate;
 - (void)load;
+- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
 @property (nonatomic, readonly) BOOL isLoaded;
 - (void)showFromViewController:(UIViewController * _Nonnull)viewController;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -630,7 +668,6 @@ SWIFT_CLASS("_TtC8Playwire10PWNotifier")
 @interface PWNotifier : NSObject
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PWNotifier * _Nonnull shared;)
 + (PWNotifier * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
-+ (NSInteger)timestamp SWIFT_WARN_UNUSED_RESULT;
 - (void)startConsoleLogger;
 - (void)startConsoleLoggerWithFilter:(BOOL (^ _Nonnull)(NSString * _Nonnull, BOOL, NSDictionary<NSString *, id> * _Nonnull))filter;
 - (PWListenerToken * _Nonnull)addListener:(id _Nonnull)listener filter:(BOOL (^ _Nonnull)(NSString * _Nonnull, BOOL, NSDictionary<NSString *, id> * _Nonnull))filter action:(void (^ _Nonnull)(id _Nonnull, NSString * _Nonnull, BOOL, NSDictionary<NSString *, id> * _Nonnull, NSDictionary<NSString *, id> * _Nonnull))action;
@@ -654,6 +691,7 @@ SWIFT_CLASS("_TtC8Playwire10PWRewarded")
 @property (nonatomic, weak) id <PWRewardedDelegate> _Nullable delegate;
 - (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWRewardedDelegate> _Nullable)delegate;
 - (void)load;
+- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
 @property (nonatomic, readonly) BOOL isLoaded;
 - (void)showFromViewController:(UIViewController * _Nonnull)viewController;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
