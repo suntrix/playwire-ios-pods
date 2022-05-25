@@ -100,6 +100,7 @@ extension Playwire.PWInterstitial : GoogleMobileAds.GADFullScreenContentDelegate
   @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc @_Concurrency.MainActor(unsafe) convenience public init(adUnitName: Swift.String, delegate: Playwire.PWBannerViewDelegate? = nil)
   @objc override dynamic public func awakeFromNib()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func didMoveToSuperview()
   @objc @_Concurrency.MainActor(unsafe) public func load()
   @objc @_Concurrency.MainActor(unsafe) public func load(customTargets: [Swift.String : Swift.String]?)
   @objc @_Concurrency.MainActor(unsafe) public var isLoaded: Swift.Bool {

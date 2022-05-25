@@ -390,6 +390,7 @@ SWIFT_CLASS("_TtC8Playwire12PWBannerView")
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWBannerViewDelegate> _Nullable)delegate;
 - (void)awakeFromNib;
+- (void)didMoveToSuperview;
 - (void)load;
 - (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
 @property (nonatomic, readonly) BOOL isLoaded;
@@ -759,6 +760,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PlaywireSDK 
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
+
 
 
 
