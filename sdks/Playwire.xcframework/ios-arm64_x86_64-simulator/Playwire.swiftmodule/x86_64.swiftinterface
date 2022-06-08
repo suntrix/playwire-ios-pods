@@ -23,6 +23,34 @@ import _Concurrency
   @objc override dynamic public init()
   @objc deinit
 }
+@objc public protocol PWRewardedInterstitialDelegate {
+  @objc func rewardedInterstitialDidLoad(_ rewardedInterstitial: Playwire.PWRewardedInterstitial)
+  @objc func rewardedInterstitial(_ rewardedInterstitial: Playwire.PWRewardedInterstitial, didFailToLoadWithError error: Swift.String)
+  @objc func rewardedInterstitialDidUserEarn(_ rewardedInterstitial: Playwire.PWRewardedInterstitial, type: Swift.String, amount: Swift.Double)
+  @objc func rewardedInterstitialDidPresentFullScreenContent(_ rewardedInterstitial: Playwire.PWRewardedInterstitial)
+  @objc func rewardedInterstitialDidDismissFullScreenContent(_ rewardedInterstitial: Playwire.PWRewardedInterstitial)
+  @objc func rewardedInterstitial(_ rewardedInterstitial: Playwire.PWRewardedInterstitial, didFailToPresentFullScreenContentWithError error: Swift.String)
+  @objc func rewardedInterstitialDidRecordImpression(_ rewardedInterstitial: Playwire.PWRewardedInterstitial)
+  @objc func rewardedInterstitialDidRecordClick(_ rewardedInterstitial: Playwire.PWRewardedInterstitial)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWRewardedInterstitial : ObjectiveC.NSObject {
+  @objc weak public var delegate: Playwire.PWRewardedInterstitialDelegate?
+  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWRewardedInterstitialDelegate? = nil)
+  @objc public func load()
+  @objc public func load(customTargets: [Swift.String : Swift.String]?)
+  @objc public var isLoaded: Swift.Bool {
+    @objc get
+  }
+  @objc public func show(fromViewController viewController: UIKit.UIViewController)
+  @objc deinit
+}
+extension Playwire.PWRewardedInterstitial : GoogleMobileAds.GADFullScreenContentDelegate {
+  @objc dynamic public func adDidPresentFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
+  @objc dynamic public func adDidRecordImpression(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adDidRecordClick(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+}
 @objc public protocol PWAppOpenAdDelegate {
   @objc func appOpenAdDidLoad(_ appOpenAd: Playwire.PWAppOpenAd)
   @objc func appOpenAd(_ appOpenAd: Playwire.PWAppOpenAd, didFailToLoadWithError error: Swift.String)
@@ -264,6 +292,18 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let EVT_appOpenAdLoadWarning_warning: Swift.String
   @objc public static let EVT_appOpenAdLoadWarning_warning_notProfitable: Swift.String
   @objc public static let EVT_appOpenAdLoadWarning_autoReload: Swift.String
+  @objc public static let EVT_rewardedInterstitialInitError: Swift.String
+  @objc public static let EVT_rewardedInterstitialInitError_error: Swift.String
+  @objc public static let EVT_rewardedInterstitialInitError_error_noAdUnit: Swift.String
+  @objc public static let EVT_rewardedInterstitialInitError_error_badAdUnit: Swift.String
+  @objc public static let EVT_rewardedInterstitialLoadError: Swift.String
+  @objc public static let EVT_rewardedInterstitialLoadError_error: Swift.String
+  @objc public static let EVT_rewardedInterstitialLoadError_error_notPrepared: Swift.String
+  @objc public static let EVT_rewardedInterstitialLoadError_error_notLoaded: Swift.String
+  @objc public static let EVT_rewardedInterstitialLoadError_error_notInternalRep: Swift.String
+  @objc public static let EVT_rewardedInterstitialReward: Swift.String
+  @objc public static let EVT_rewardedInterstitialReward_type: Swift.String
+  @objc public static let EVT_rewardedInterstitialReward_amount: Swift.String
   @objc override dynamic public init()
   @objc deinit
 }
@@ -423,6 +463,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
     case Interstitial
     case Rewarded
     case AppOpenAd
+    case RewardedInterstitial
     public init?(rawValue: Swift.String)
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
@@ -433,6 +474,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let PWAdMode_Interstitial: Swift.String
   @objc public static let PWAdMode_Rewarded: Swift.String
   @objc public static let PWAdMode_AppOpenAd: Swift.String
+  @objc public static let PWAdMode_RewardedInterstitial: Swift.String
   @objc public var name: Swift.String {
     get
   }
@@ -443,6 +485,9 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
     get
   }
   public var mode: Playwire.PWAdUnit.PWAdMode {
+    get
+  }
+  public var autorefreshTime: Swift.Int? {
     get
   }
   @objc public var refresh: Playwire.PWBannerRefresh? {

@@ -284,6 +284,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)PWAdMode_Rewarded SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_AppOpenAd;)
 + (NSString * _Nonnull)PWAdMode_AppOpenAd SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_RewardedInterstitial;)
++ (NSString * _Nonnull)PWAdMode_RewardedInterstitial SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly, copy) NSString * _Nonnull name;
 @property (nonatomic, readonly, copy) NSArray<PWAdUnitConfig *> * _Nullable adUnitConfigs;
 @property (nonatomic, readonly, strong) PWBannerRefresh * _Nullable refresh;
@@ -618,6 +620,30 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_appOpenAdLoadWarning_warning_notProfitable SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadWarning_autoReload;)
 + (NSString * _Nonnull)EVT_appOpenAdLoadWarning_autoReload SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialInitError;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialInitError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialInitError_error;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialInitError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialInitError_error_noAdUnit;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialInitError_error_badAdUnit;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialInitError_error_badAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialLoadError;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialLoadError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialLoadError_error;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialLoadError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialLoadError_error_notPrepared;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialLoadError_error_notLoaded;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialLoadError_error_notInternalRep;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialReward;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialReward SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialReward_type;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialReward_type SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialReward_amount;)
++ (NSString * _Nonnull)EVT_rewardedInterstitialReward_amount SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -719,6 +745,42 @@ SWIFT_PROTOCOL("_TtP8Playwire18PWRewardedDelegate_")
 - (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
 - (void)rewardedDidRecordImpression:(PWRewarded * _Nonnull)ad;
 - (void)rewardedDidRecordClick:(PWRewarded * _Nonnull)ad;
+@end
+
+@protocol PWRewardedInterstitialDelegate;
+
+SWIFT_CLASS("_TtC8Playwire22PWRewardedInterstitial")
+@interface PWRewardedInterstitial : NSObject
+@property (nonatomic, weak) id <PWRewardedInterstitialDelegate> _Nullable delegate;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWRewardedInterstitialDelegate> _Nullable)delegate;
+- (void)load;
+- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
+@property (nonatomic, readonly) BOOL isLoaded;
+- (void)showFromViewController:(UIViewController * _Nonnull)viewController;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+@interface PWRewardedInterstitial (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
+- (void)adDidPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
+- (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)adDidRecordClick:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire30PWRewardedInterstitialDelegate_")
+@protocol PWRewardedInterstitialDelegate
+- (void)rewardedInterstitialDidLoad:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial;
+- (void)rewardedInterstitial:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial didFailToLoadWithError:(NSString * _Nonnull)error;
+- (void)rewardedInterstitialDidUserEarn:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial type:(NSString * _Nonnull)type amount:(double)amount;
+- (void)rewardedInterstitialDidPresentFullScreenContent:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial;
+- (void)rewardedInterstitialDidDismissFullScreenContent:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial;
+- (void)rewardedInterstitial:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
+- (void)rewardedInterstitialDidRecordImpression:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial;
+- (void)rewardedInterstitialDidRecordClick:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial;
 @end
 
 @class SchainNodeConfig;
