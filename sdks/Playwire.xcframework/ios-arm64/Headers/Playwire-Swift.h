@@ -333,45 +333,33 @@ SWIFT_CLASS("_TtC8Playwire11PWAppConfig")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@protocol PWAppOpenAdDelegate;
+@protocol PWFullScreenAdDelegate;
 @class UIViewController;
 
-SWIFT_CLASS("_TtC8Playwire11PWAppOpenAd")
-@interface PWAppOpenAd : NSObject
-@property (nonatomic, weak) id <PWAppOpenAdDelegate> _Nullable delegate;
-@property (nonatomic) BOOL autoReloadOnExpiration;
-- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWAppOpenAdDelegate> _Nullable)delegate;
+SWIFT_CLASS("_TtC8Playwire14PWFullScreenAd")
+@interface PWFullScreenAd : NSObject
+@property (nonatomic, readonly, strong) PWAdUnit * _Nullable adUnit;
 @property (nonatomic, readonly) BOOL isLoaded;
+@property (nonatomic, weak) id <PWFullScreenAdDelegate> _Nullable delegate;
 - (void)load;
 - (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
-- (void)loadWithOrientation:(UIInterfaceOrientation)orientation;
-- (void)loadWithOrientation:(UIInterfaceOrientation)orientation customTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
 - (void)showFromViewController:(UIViewController * _Nonnull)viewController;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@protocol GADFullScreenPresentingAd;
 
-@interface PWAppOpenAd (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
-- (void)adDidPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
-- (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
-- (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
-- (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
-- (void)adDidRecordClick:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+SWIFT_CLASS("_TtC8Playwire11PWAppOpenAd")
+@interface PWAppOpenAd : PWFullScreenAd
+@property (nonatomic) BOOL autoReloadOnExpiration;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWFullScreenAdDelegate> _Nullable)delegate;
+- (void)load;
+- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
+- (void)loadWithOrientation:(UIInterfaceOrientation)orientation;
+- (void)loadWithOrientation:(UIInterfaceOrientation)orientation customTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
+- (void)showFromViewController:(UIViewController * _Nonnull)viewController;
 @end
 
-
-SWIFT_PROTOCOL("_TtP8Playwire19PWAppOpenAdDelegate_")
-@protocol PWAppOpenAdDelegate
-- (void)appOpenAdDidLoad:(PWAppOpenAd * _Nonnull)appOpenAd;
-- (void)appOpenAd:(PWAppOpenAd * _Nonnull)appOpenAd didFailToLoadWithError:(NSString * _Nonnull)error;
-- (void)appOpenAdDidPresentFullScreenContent:(PWAppOpenAd * _Nonnull)appOpenAd;
-- (void)appOpenAdDidDismissFullScreenContent:(PWAppOpenAd * _Nonnull)appOpenAd;
-- (void)appOpenAd:(PWAppOpenAd * _Nonnull)appOpenAd didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
-- (void)appOpenAdDidRecordImpression:(PWAppOpenAd * _Nonnull)appOpenAd;
-- (void)appOpenAdDidRecordClick:(PWAppOpenAd * _Nonnull)appOpenAd;
-@end
 
 
 SWIFT_CLASS("_TtC8Playwire15PWBannerRefresh")
@@ -380,26 +368,41 @@ SWIFT_CLASS("_TtC8Playwire15PWBannerRefresh")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@protocol PWBannerViewDelegate;
+@protocol PWViewAdDelegate;
 @class NSCoder;
 
-SWIFT_CLASS("_TtC8Playwire12PWBannerView")
-@interface PWBannerView : UIView
+SWIFT_CLASS("_TtC8Playwire8PWViewAd")
+@interface PWViewAd : UIView
 @property (nonatomic, copy) NSString * _Nullable adUnitName;
 @property (nonatomic) BOOL autoload;
-@property (nonatomic, weak) id <PWBannerViewDelegate> _Nullable delegate;
+@property (nonatomic, readonly, strong) PWAdUnit * _Nullable adUnit;
+@property (nonatomic, weak) id <PWViewAdDelegate> _Nullable delegate;
+@property (nonatomic, weak) UIViewController * _Nullable viewController;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWBannerViewDelegate> _Nullable)delegate;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName controller:(UIViewController * _Nullable)controller delegate:(id <PWViewAdDelegate> _Nullable)delegate;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWViewAdDelegate> _Nullable)delegate;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName controller:(UIViewController * _Nullable)controller;
 - (void)awakeFromNib;
-- (void)didMoveToSuperview;
 - (void)load;
 - (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
 @property (nonatomic, readonly) BOOL isLoaded;
 - (void)refresh;
 @end
 
+
+SWIFT_CLASS("_TtC8Playwire12PWBannerView")
+@interface PWBannerView : PWViewAd
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+@end
+
 @class GADBannerView;
+
+@interface PWBannerView (SWIFT_EXTENSION(Playwire)) <GADAdSizeDelegate>
+- (void)adView:(GADBannerView * _Nonnull)bannerView willChangeAdSizeTo:(GADAdSize)size;
+@end
+
 
 @interface PWBannerView (SWIFT_EXTENSION(Playwire)) <GADBannerViewDelegate>
 - (void)bannerViewDidReceiveAd:(GADBannerView * _Nonnull)bannerView;
@@ -409,18 +412,6 @@ SWIFT_CLASS("_TtC8Playwire12PWBannerView")
 - (void)bannerViewWillPresentScreen:(GADBannerView * _Nonnull)bannerView;
 - (void)bannerViewWillDismissScreen:(GADBannerView * _Nonnull)bannerView;
 - (void)bannerViewDidDismissScreen:(GADBannerView * _Nonnull)bannerView;
-@end
-
-
-SWIFT_PROTOCOL("_TtP8Playwire20PWBannerViewDelegate_")
-@protocol PWBannerViewDelegate
-- (void)bannerViewDidReceiveAd:(PWBannerView * _Nonnull)bannerView;
-- (void)bannerView:(PWBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(NSString * _Nonnull)error;
-- (void)bannerViewDidRecordImpression:(PWBannerView * _Nonnull)bannerView;
-- (void)bannerViewDidRecordClick:(PWBannerView * _Nonnull)bannerView;
-- (void)bannerViewWillPresentScreen:(PWBannerView * _Nonnull)bannerView;
-- (void)bannerViewWillDismissScreen:(PWBannerView * _Nonnull)bannerView;
-- (void)bannerViewDidDismissScreen:(PWBannerView * _Nonnull)bannerView;
 @end
 
 
@@ -510,160 +501,75 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_cachedConfigFileFail_error SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_cachedConfigFileSavingSuccess;)
 + (NSString * _Nonnull)EVT_cachedConfigFileSavingSuccess SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError;)
-+ (NSString * _Nonnull)EVT_bannerInitError SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error;)
-+ (NSString * _Nonnull)EVT_bannerInitError_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_alreadyInitialized;)
-+ (NSString * _Nonnull)EVT_bannerInitError_error_alreadyInitialized SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_noAdUnitName;)
-+ (NSString * _Nonnull)EVT_bannerInitError_error_noAdUnitName SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_noAdUnit;)
-+ (NSString * _Nonnull)EVT_bannerInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_badAdUnit;)
-+ (NSString * _Nonnull)EVT_bannerInitError_error_badAdUnit SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerInitError_error_noSizes;)
-+ (NSString * _Nonnull)EVT_bannerInitError_error_noSizes SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerLoadError;)
-+ (NSString * _Nonnull)EVT_bannerLoadError SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerLoadError_error;)
-+ (NSString * _Nonnull)EVT_bannerLoadError_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerLoadError_error_notPrepared;)
-+ (NSString * _Nonnull)EVT_bannerLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerLoadError_error_notInternalRep;)
-+ (NSString * _Nonnull)EVT_bannerLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError;)
-+ (NSString * _Nonnull)EVT_bannerRefreshError SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error;)
-+ (NSString * _Nonnull)EVT_bannerRefreshError_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_maxReached;)
-+ (NSString * _Nonnull)EVT_bannerRefreshError_error_maxReached SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_maxReached_count;)
-+ (NSString * _Nonnull)EVT_bannerRefreshError_error_maxReached_count SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_early;)
-+ (NSString * _Nonnull)EVT_bannerRefreshError_error_early SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_early_elapsed;)
-+ (NSString * _Nonnull)EVT_bannerRefreshError_error_early_elapsed SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_early_required;)
-+ (NSString * _Nonnull)EVT_bannerRefreshError_error_early_required SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshError_error_manual;)
-+ (NSString * _Nonnull)EVT_bannerRefreshError_error_manual SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_bannerRefreshEarly;)
-+ (NSString * _Nonnull)EVT_bannerRefreshEarly SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialInitError;)
-+ (NSString * _Nonnull)EVT_interstitialInitError SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialInitError_error;)
-+ (NSString * _Nonnull)EVT_interstitialInitError_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialInitError_error_noAdUnit;)
-+ (NSString * _Nonnull)EVT_interstitialInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialInitError_error_badAdUnit;)
-+ (NSString * _Nonnull)EVT_interstitialInitError_error_badAdUnit SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialLoadError;)
-+ (NSString * _Nonnull)EVT_interstitialLoadError SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialLoadError_error;)
-+ (NSString * _Nonnull)EVT_interstitialLoadError_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialLoadError_error_notPrepared;)
-+ (NSString * _Nonnull)EVT_interstitialLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialLoadError_error_notLoaded;)
-+ (NSString * _Nonnull)EVT_interstitialLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_interstitialLoadError_error_notInternalRep;)
-+ (NSString * _Nonnull)EVT_interstitialLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInitError;)
-+ (NSString * _Nonnull)EVT_rewardedInitError SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInitError_error;)
-+ (NSString * _Nonnull)EVT_rewardedInitError_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInitError_error_noAdUnit;)
-+ (NSString * _Nonnull)EVT_rewardedInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInitError_error_badAdUnit;)
-+ (NSString * _Nonnull)EVT_rewardedInitError_error_badAdUnit SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError;)
-+ (NSString * _Nonnull)EVT_rewardedLoadError SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError_error;)
-+ (NSString * _Nonnull)EVT_rewardedLoadError_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError_error_notPrepared;)
-+ (NSString * _Nonnull)EVT_rewardedLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError_error_notLoaded;)
-+ (NSString * _Nonnull)EVT_rewardedLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedLoadError_error_notInternalRep;)
-+ (NSString * _Nonnull)EVT_rewardedLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedReward;)
-+ (NSString * _Nonnull)EVT_rewardedReward SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedReward_type;)
-+ (NSString * _Nonnull)EVT_rewardedReward_type SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedReward_amount;)
-+ (NSString * _Nonnull)EVT_rewardedReward_amount SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdInitError;)
-+ (NSString * _Nonnull)EVT_appOpenAdInitError SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdInitError_error;)
-+ (NSString * _Nonnull)EVT_appOpenAdInitError_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdInitError_error_noAdUnit;)
-+ (NSString * _Nonnull)EVT_appOpenAdInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdInitError_error_badAdUnit;)
-+ (NSString * _Nonnull)EVT_appOpenAdInitError_error_badAdUnit SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError;)
-+ (NSString * _Nonnull)EVT_appOpenAdLoadError SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError_error;)
-+ (NSString * _Nonnull)EVT_appOpenAdLoadError_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError_error_notPrepared;)
-+ (NSString * _Nonnull)EVT_appOpenAdLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError_error_notLoaded;)
-+ (NSString * _Nonnull)EVT_appOpenAdLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError_error_notInternalRep;)
-+ (NSString * _Nonnull)EVT_appOpenAdLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadError_error_notProfitable;)
-+ (NSString * _Nonnull)EVT_appOpenAdLoadError_error_notProfitable SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadWarning;)
-+ (NSString * _Nonnull)EVT_appOpenAdLoadWarning SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadWarning_warning;)
-+ (NSString * _Nonnull)EVT_appOpenAdLoadWarning_warning SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadWarning_warning_notProfitable;)
-+ (NSString * _Nonnull)EVT_appOpenAdLoadWarning_warning_notProfitable SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_appOpenAdLoadWarning_autoReload;)
-+ (NSString * _Nonnull)EVT_appOpenAdLoadWarning_autoReload SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialInitError;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialInitError SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialInitError_error;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialInitError_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialInitError_error_noAdUnit;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialInitError_error_badAdUnit;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialInitError_error_badAdUnit SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialLoadError;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialLoadError SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialLoadError_error;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialLoadError_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialLoadError_error_notPrepared;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialLoadError_error_notLoaded;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialLoadError_error_notInternalRep;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialReward;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialReward SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialReward_type;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialReward_type SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_rewardedInterstitialReward_amount;)
-+ (NSString * _Nonnull)EVT_rewardedInterstitialReward_amount SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adInitError;)
++ (NSString * _Nonnull)EVT_adInitError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adInitError_error;)
++ (NSString * _Nonnull)EVT_adInitError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adInitError_error_alreadyInitialized;)
++ (NSString * _Nonnull)EVT_adInitError_error_alreadyInitialized SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adInitError_error_noAdUnitName;)
++ (NSString * _Nonnull)EVT_adInitError_error_noAdUnitName SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adInitError_error_noAdUnit;)
++ (NSString * _Nonnull)EVT_adInitError_error_noAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adInitError_error_badAdUnit;)
++ (NSString * _Nonnull)EVT_adInitError_error_badAdUnit SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adInitError_error_badAdUnit_modeRequired;)
++ (NSString * _Nonnull)EVT_adInitError_error_badAdUnit_modeRequired SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adInitError_error_badAdUnit_modeConfig;)
++ (NSString * _Nonnull)EVT_adInitError_error_badAdUnit_modeConfig SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adInitError_error_noSizes;)
++ (NSString * _Nonnull)EVT_adInitError_error_noSizes SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adLoadError;)
++ (NSString * _Nonnull)EVT_adLoadError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adLoadError_error;)
++ (NSString * _Nonnull)EVT_adLoadError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adLoadError_error_notPrepared;)
++ (NSString * _Nonnull)EVT_adLoadError_error_notPrepared SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adLoadError_error_notInternalRep;)
++ (NSString * _Nonnull)EVT_adLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adLoadError_error_notLoaded;)
++ (NSString * _Nonnull)EVT_adLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adRefreshError;)
++ (NSString * _Nonnull)EVT_adRefreshError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adRefreshError_error;)
++ (NSString * _Nonnull)EVT_adRefreshError_error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adRefreshError_error_maxReached;)
++ (NSString * _Nonnull)EVT_adRefreshError_error_maxReached SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adRefreshError_error_maxReached_count;)
++ (NSString * _Nonnull)EVT_adRefreshError_error_maxReached_count SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adRefreshError_error_early;)
++ (NSString * _Nonnull)EVT_adRefreshError_error_early SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adRefreshError_error_early_elapsed;)
++ (NSString * _Nonnull)EVT_adRefreshError_error_early_elapsed SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adRefreshError_error_early_required;)
++ (NSString * _Nonnull)EVT_adRefreshError_error_early_required SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adRefreshError_error_manual;)
++ (NSString * _Nonnull)EVT_adRefreshError_error_manual SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adRefreshEarly;)
++ (NSString * _Nonnull)EVT_adRefreshEarly SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adReward;)
++ (NSString * _Nonnull)EVT_adReward SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adReward_type;)
++ (NSString * _Nonnull)EVT_adReward_type SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adReward_amount;)
++ (NSString * _Nonnull)EVT_adReward_amount SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adLoadWarning;)
++ (NSString * _Nonnull)EVT_adLoadWarning SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adLoadWarning_warning;)
++ (NSString * _Nonnull)EVT_adLoadWarning_warning SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adLoadWarning_warning_notProfitable;)
++ (NSString * _Nonnull)EVT_adLoadWarning_warning_notProfitable SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adLoadWarning_autoReload;)
++ (NSString * _Nonnull)EVT_adLoadWarning_autoReload SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@protocol PWInterstitialDelegate;
 
-SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
-@interface PWInterstitial : NSObject
-@property (nonatomic, weak) id <PWInterstitialDelegate> _Nullable delegate;
-- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWInterstitialDelegate> _Nullable)delegate;
-- (void)load;
-- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
-@property (nonatomic, readonly) BOOL isLoaded;
-- (void)showFromViewController:(UIViewController * _Nonnull)viewController;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
+@protocol GADFullScreenPresentingAd;
 
-
-@interface PWInterstitial (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
-- (void)adDidPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+@interface PWFullScreenAd (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
+- (void)adWillPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
+- (void)adWillDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
 - (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
 - (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
 - (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
@@ -671,15 +577,25 @@ SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
 @end
 
 
-SWIFT_PROTOCOL("_TtP8Playwire22PWInterstitialDelegate_")
-@protocol PWInterstitialDelegate
-- (void)interstitialDidReceiveAd:(PWInterstitial * _Nonnull)ad;
-- (void)interstitial:(PWInterstitial * _Nonnull)interstitial didFailToReceiveAdWithError:(NSString * _Nonnull)error;
-- (void)interstitialDidPresentFullScreenContent:(PWInterstitial * _Nonnull)interstitial;
-- (void)interstitialDidDismissFullScreenContent:(PWInterstitial * _Nonnull)interstitial;
-- (void)interstitial:(PWInterstitial * _Nonnull)interstitial didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
-- (void)interstitialDidRecordImpression:(PWInterstitial * _Nonnull)ad;
-- (void)interstitialDidRecordClick:(PWInterstitial * _Nonnull)ad;
+
+SWIFT_PROTOCOL("_TtP8Playwire22PWFullScreenAdDelegate_")
+@protocol PWFullScreenAdDelegate
+- (void)fullScreenAdDidLoad:(PWFullScreenAd * _Nonnull)ad;
+- (void)fullScreenAdDidFailToLoad:(PWFullScreenAd * _Nonnull)ad;
+- (void)fullScreenAdWillPresentFullScreenContent:(PWFullScreenAd * _Nonnull)ad;
+- (void)fullScreenAdWillDismissFullScreenContent:(PWFullScreenAd * _Nonnull)ad;
+- (void)fullScreenAdDidDismissFullScreenContent:(PWFullScreenAd * _Nonnull)ad;
+- (void)fullScreenAdDidFailToPresentFullScreenContent:(PWFullScreenAd * _Nonnull)ad;
+- (void)fullScreenAdDidRecordImpression:(PWFullScreenAd * _Nonnull)ad;
+- (void)fullScreenAdDidRecordClick:(PWFullScreenAd * _Nonnull)ad;
+- (void)fullScreenAdDidUserEarn:(PWFullScreenAd * _Nonnull)ad type:(NSString * _Nonnull)type amount:(double)amount;
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire14PWInterstitial")
+@interface PWInterstitial : PWFullScreenAd
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWFullScreenAdDelegate> _Nullable)delegate;
+- (void)showFromViewController:(UIViewController * _Nonnull)viewController;
 @end
 
 
@@ -688,6 +604,59 @@ SWIFT_CLASS("_TtC8Playwire15PWListenerToken")
 - (void)cancel;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@protocol PWNativeViewFactory;
+
+SWIFT_CLASS("_TtC8Playwire12PWNativeView")
+@interface PWNativeView : PWViewAd
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName controller:(UIViewController * _Nullable)controller factory:(id <PWNativeViewFactory> _Nonnull)factory delegate:(id <PWViewAdDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
+@end
+
+@class GADAdLoader;
+@class GADNativeAd;
+
+@interface PWNativeView (SWIFT_EXTENSION(Playwire)) <GADNativeAdLoaderDelegate>
+- (void)adLoader:(GADAdLoader * _Nonnull)adLoader didReceiveNativeAd:(GADNativeAd * _Nonnull)nativeAd;
+- (void)adLoader:(GADAdLoader * _Nonnull)adLoader didFailToReceiveAdWithError:(NSError * _Nonnull)error;
+@end
+
+
+@interface PWNativeView (SWIFT_EXTENSION(Playwire)) <GADNativeAdDelegate>
+- (void)nativeAdDidRecordImpression:(GADNativeAd * _Nonnull)nativeAd;
+- (void)nativeAdDidRecordClick:(GADNativeAd * _Nonnull)nativeAd;
+- (void)nativeAdWillPresentScreen:(GADNativeAd * _Nonnull)nativeAd;
+- (void)nativeAdWillDismissScreen:(GADNativeAd * _Nonnull)nativeAd;
+- (void)nativeAdDidDismissScreen:(GADNativeAd * _Nonnull)nativeAd;
+- (void)nativeAdIsMuted:(GADNativeAd * _Nonnull)nativeAd;
+@end
+
+@class UIImage;
+@class NSDecimalNumber;
+
+SWIFT_CLASS("_TtC8Playwire19PWNativeViewContent")
+@interface PWNativeViewContent : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nullable headline;
+@property (nonatomic, readonly, copy) NSString * _Nullable body;
+@property (nonatomic, readonly, copy) NSString * _Nullable callToAction;
+@property (nonatomic, readonly, strong) UIImage * _Nullable icon;
+@property (nonatomic, readonly, strong) UIImage * _Nullable image;
+@property (nonatomic, readonly, strong) UIView * _Nullable mediaView;
+@property (nonatomic, readonly, strong) NSDecimalNumber * _Nullable starRating;
+@property (nonatomic, readonly, copy) NSString * _Nullable store;
+@property (nonatomic, readonly, copy) NSString * _Nullable price;
+@property (nonatomic, readonly, copy) NSString * _Nullable advertiser;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire19PWNativeViewFactory_")
+@protocol PWNativeViewFactory
+- (UIView * _Nonnull)createAdContentViewWithNativeView:(PWNativeView * _Nonnull)nativeView adContent:(PWNativeViewContent * _Nonnull)adContent SWIFT_WARN_UNUSED_RESULT;
+- (UIView * _Nullable)callToActionViewWithNativeView:(PWNativeView * _Nonnull)nativeView adContentView:(UIView * _Nonnull)adContentView SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -711,76 +680,18 @@ SWIFT_CLASS("_TtC8Playwire10PWOMConfig")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@protocol PWRewardedDelegate;
 
 SWIFT_CLASS("_TtC8Playwire10PWRewarded")
-@interface PWRewarded : NSObject
-@property (nonatomic, weak) id <PWRewardedDelegate> _Nullable delegate;
-- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWRewardedDelegate> _Nullable)delegate;
-- (void)load;
-- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
-@property (nonatomic, readonly) BOOL isLoaded;
+@interface PWRewarded : PWFullScreenAd
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWFullScreenAdDelegate> _Nullable)delegate;
 - (void)showFromViewController:(UIViewController * _Nonnull)viewController;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-
-@interface PWRewarded (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
-- (void)adDidPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
-- (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
-- (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
-- (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
-- (void)adDidRecordClick:(id <GADFullScreenPresentingAd> _Nonnull)ad;
-@end
-
-
-SWIFT_PROTOCOL("_TtP8Playwire18PWRewardedDelegate_")
-@protocol PWRewardedDelegate
-- (void)rewardedDidLoad:(PWRewarded * _Nonnull)rewarded;
-- (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToLoadWithError:(NSString * _Nonnull)error;
-- (void)rewardedDidUserEarn:(PWRewarded * _Nonnull)rewarded type:(NSString * _Nonnull)type amount:(double)amount;
-- (void)rewardedDidPresentFullScreenContent:(PWRewarded * _Nonnull)rewarded;
-- (void)rewardedDidDismissFullScreenContent:(PWRewarded * _Nonnull)rewarded;
-- (void)rewarded:(PWRewarded * _Nonnull)rewarded didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
-- (void)rewardedDidRecordImpression:(PWRewarded * _Nonnull)ad;
-- (void)rewardedDidRecordClick:(PWRewarded * _Nonnull)ad;
-@end
-
-@protocol PWRewardedInterstitialDelegate;
 
 SWIFT_CLASS("_TtC8Playwire22PWRewardedInterstitial")
-@interface PWRewardedInterstitial : NSObject
-@property (nonatomic, weak) id <PWRewardedInterstitialDelegate> _Nullable delegate;
-- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWRewardedInterstitialDelegate> _Nullable)delegate;
-- (void)load;
-- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
-@property (nonatomic, readonly) BOOL isLoaded;
+@interface PWRewardedInterstitial : PWFullScreenAd
+- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWFullScreenAdDelegate> _Nullable)delegate;
 - (void)showFromViewController:(UIViewController * _Nonnull)viewController;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-
-@interface PWRewardedInterstitial (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
-- (void)adDidPresentFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
-- (void)adDidDismissFullScreenContent:(id <GADFullScreenPresentingAd> _Nonnull)ad;
-- (void)ad:(id <GADFullScreenPresentingAd> _Nonnull)ad didFailToPresentFullScreenContentWithError:(NSError * _Nonnull)error;
-- (void)adDidRecordImpression:(id <GADFullScreenPresentingAd> _Nonnull)ad;
-- (void)adDidRecordClick:(id <GADFullScreenPresentingAd> _Nonnull)ad;
-@end
-
-
-SWIFT_PROTOCOL("_TtP8Playwire30PWRewardedInterstitialDelegate_")
-@protocol PWRewardedInterstitialDelegate
-- (void)rewardedInterstitialDidLoad:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial;
-- (void)rewardedInterstitial:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial didFailToLoadWithError:(NSString * _Nonnull)error;
-- (void)rewardedInterstitialDidUserEarn:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial type:(NSString * _Nonnull)type amount:(double)amount;
-- (void)rewardedInterstitialDidPresentFullScreenContent:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial;
-- (void)rewardedInterstitialDidDismissFullScreenContent:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial;
-- (void)rewardedInterstitial:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial didFailToPresentFullScreenContentWithError:(NSString * _Nonnull)error;
-- (void)rewardedInterstitialDidRecordImpression:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial;
-- (void)rewardedInterstitialDidRecordClick:(PWRewardedInterstitial * _Nonnull)rewardedInterstitial;
 @end
 
 @class SchainNodeConfig;
@@ -807,6 +718,20 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly, copy) NSArray<NSString *> * _Nullable debugDevices;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+
+
+SWIFT_PROTOCOL("_TtP8Playwire16PWViewAdDelegate_")
+@protocol PWViewAdDelegate
+- (void)viewAdDidLoad:(PWViewAd * _Nonnull)ad;
+- (void)viewAdDidFailToLoad:(PWViewAd * _Nonnull)ad;
+- (void)viewAdWillPresentFullScreenContent:(PWViewAd * _Nonnull)ad;
+- (void)viewAdWillDismissFullScreenContent:(PWViewAd * _Nonnull)ad;
+- (void)viewAdDidDismissFullScreenContent:(PWViewAd * _Nonnull)ad;
+- (void)viewAdDidRecordImpression:(PWViewAd * _Nonnull)ad;
+- (void)viewAdDidRecordClick:(PWViewAd * _Nonnull)ad;
 @end
 
 @class GADRequest;

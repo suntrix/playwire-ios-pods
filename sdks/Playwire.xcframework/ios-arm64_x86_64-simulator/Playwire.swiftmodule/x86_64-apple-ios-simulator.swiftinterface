@@ -7,6 +7,42 @@ import Swift
 import UIKit
 import UserMessagingPlatform
 import _Concurrency
+@objc @_inheritsConvenienceInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWViewAd : UIKit.UIView {
+  @objc @_Concurrency.MainActor(unsafe) public var adUnitName: Swift.String? {
+    @objc get
+    @objc set(newName)
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var autoload: Swift.Bool
+  @objc @_Concurrency.MainActor(unsafe) public var adUnit: Playwire.PWAdUnit? {
+    get
+  }
+  @objc @_Concurrency.MainActor(unsafe) weak public var delegate: Playwire.PWViewAdDelegate?
+  @objc @_Concurrency.MainActor(unsafe) weak public var viewController: UIKit.UIViewController?
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc @_Concurrency.MainActor(unsafe) convenience public init(adUnitName: Swift.String, controller: UIKit.UIViewController?, delegate: Playwire.PWViewAdDelegate? = nil)
+  @objc @_Concurrency.MainActor(unsafe) convenience public init(adUnitName: Swift.String, delegate: Playwire.PWViewAdDelegate? = nil)
+  @objc @_Concurrency.MainActor(unsafe) convenience public init(adUnitName: Swift.String, controller: UIKit.UIViewController?)
+  @objc override dynamic public func awakeFromNib()
+  @objc @_Concurrency.MainActor(unsafe) public func load()
+  @objc @_Concurrency.MainActor(unsafe) public func load(customTargets: [Swift.String : Swift.String]?)
+  @objc @_Concurrency.MainActor(unsafe) public var isLoaded: Swift.Bool {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) public func refresh()
+  @objc deinit
+}
+@objc public protocol PWFullScreenAdDelegate {
+  @objc func fullScreenAdDidLoad(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidFailToLoad(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdWillPresentFullScreenContent(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdWillDismissFullScreenContent(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidDismissFullScreenContent(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidFailToPresentFullScreenContent(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidRecordImpression(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidRecordClick(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidUserEarn(_ ad: Playwire.PWFullScreenAd, type: Swift.String, amount: Swift.Double)
+}
 @objc @_hasMissingDesignatedInitializers public class PWListenerToken : ObjectiveC.NSObject {
   @objc public func cancel()
   @objc deinit
@@ -23,118 +59,12 @@ import _Concurrency
   @objc override dynamic public init()
   @objc deinit
 }
-@objc public protocol PWRewardedInterstitialDelegate {
-  @objc func rewardedInterstitialDidLoad(_ rewardedInterstitial: Playwire.PWRewardedInterstitial)
-  @objc func rewardedInterstitial(_ rewardedInterstitial: Playwire.PWRewardedInterstitial, didFailToLoadWithError error: Swift.String)
-  @objc func rewardedInterstitialDidUserEarn(_ rewardedInterstitial: Playwire.PWRewardedInterstitial, type: Swift.String, amount: Swift.Double)
-  @objc func rewardedInterstitialDidPresentFullScreenContent(_ rewardedInterstitial: Playwire.PWRewardedInterstitial)
-  @objc func rewardedInterstitialDidDismissFullScreenContent(_ rewardedInterstitial: Playwire.PWRewardedInterstitial)
-  @objc func rewardedInterstitial(_ rewardedInterstitial: Playwire.PWRewardedInterstitial, didFailToPresentFullScreenContentWithError error: Swift.String)
-  @objc func rewardedInterstitialDidRecordImpression(_ rewardedInterstitial: Playwire.PWRewardedInterstitial)
-  @objc func rewardedInterstitialDidRecordClick(_ rewardedInterstitial: Playwire.PWRewardedInterstitial)
-}
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWRewardedInterstitial : ObjectiveC.NSObject {
-  @objc weak public var delegate: Playwire.PWRewardedInterstitialDelegate?
-  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWRewardedInterstitialDelegate? = nil)
-  @objc public func load()
-  @objc public func load(customTargets: [Swift.String : Swift.String]?)
-  @objc public var isLoaded: Swift.Bool {
-    @objc get
+@objc @_inheritsConvenienceInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerView : Playwire.PWViewAd {
+  @_Concurrency.MainActor(unsafe) public var mode: Playwire.PWAdUnit.PWAdMode? {
+    @_Concurrency.MainActor(unsafe) get
   }
-  @objc public func show(fromViewController viewController: UIKit.UIViewController)
-  @objc deinit
-}
-extension Playwire.PWRewardedInterstitial : GoogleMobileAds.GADFullScreenContentDelegate {
-  @objc dynamic public func adDidPresentFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-  @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-  @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
-  @objc dynamic public func adDidRecordImpression(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-  @objc dynamic public func adDidRecordClick(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-}
-@objc public protocol PWAppOpenAdDelegate {
-  @objc func appOpenAdDidLoad(_ appOpenAd: Playwire.PWAppOpenAd)
-  @objc func appOpenAd(_ appOpenAd: Playwire.PWAppOpenAd, didFailToLoadWithError error: Swift.String)
-  @objc func appOpenAdDidPresentFullScreenContent(_ appOpenAd: Playwire.PWAppOpenAd)
-  @objc func appOpenAdDidDismissFullScreenContent(_ appOpenAd: Playwire.PWAppOpenAd)
-  @objc func appOpenAd(_ appOpenAd: Playwire.PWAppOpenAd, didFailToPresentFullScreenContentWithError error: Swift.String)
-  @objc func appOpenAdDidRecordImpression(_ appOpenAd: Playwire.PWAppOpenAd)
-  @objc func appOpenAdDidRecordClick(_ appOpenAd: Playwire.PWAppOpenAd)
-}
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAppOpenAd : ObjectiveC.NSObject {
-  @objc weak public var delegate: Playwire.PWAppOpenAdDelegate?
-  @objc public var autoReloadOnExpiration: Swift.Bool
-  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWAppOpenAdDelegate? = nil)
-  @objc public var isLoaded: Swift.Bool {
-    @objc get
-  }
-  @objc public func load()
-  @objc public func load(customTargets: [Swift.String : Swift.String]?)
-  @objc public func load(orientation: UIKit.UIInterfaceOrientation)
-  @objc public func load(orientation: UIKit.UIInterfaceOrientation, customTargets: [Swift.String : Swift.String]?)
-  @objc public func show(fromViewController viewController: UIKit.UIViewController)
-  @objc deinit
-}
-extension Playwire.PWAppOpenAd : GoogleMobileAds.GADFullScreenContentDelegate {
-  @objc dynamic public func adDidPresentFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-  @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-  @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
-  @objc dynamic public func adDidRecordImpression(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-  @objc dynamic public func adDidRecordClick(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-}
-@objc public protocol PWInterstitialDelegate {
-  @objc func interstitialDidReceiveAd(_ ad: Playwire.PWInterstitial)
-  @objc func interstitial(_ interstitial: Playwire.PWInterstitial, didFailToReceiveAdWithError error: Swift.String)
-  @objc func interstitialDidPresentFullScreenContent(_ interstitial: Playwire.PWInterstitial)
-  @objc func interstitialDidDismissFullScreenContent(_ interstitial: Playwire.PWInterstitial)
-  @objc func interstitial(_ interstitial: Playwire.PWInterstitial, didFailToPresentFullScreenContentWithError error: Swift.String)
-  @objc func interstitialDidRecordImpression(_ ad: Playwire.PWInterstitial)
-  @objc func interstitialDidRecordClick(_ ad: Playwire.PWInterstitial)
-}
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWInterstitial : ObjectiveC.NSObject {
-  @objc weak public var delegate: Playwire.PWInterstitialDelegate?
-  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWInterstitialDelegate? = nil)
-  @objc public func load()
-  @objc public func load(customTargets: [Swift.String : Swift.String]?)
-  @objc public var isLoaded: Swift.Bool {
-    @objc get
-  }
-  @objc public func show(fromViewController viewController: UIKit.UIViewController)
-  @objc deinit
-}
-extension Playwire.PWInterstitial : GoogleMobileAds.GADFullScreenContentDelegate {
-  @objc dynamic public func adDidPresentFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-  @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-  @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
-  @objc dynamic public func adDidRecordImpression(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-  @objc dynamic public func adDidRecordClick(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
-}
-@objc public protocol PWBannerViewDelegate {
-  @objc func bannerViewDidReceiveAd(_ bannerView: Playwire.PWBannerView)
-  @objc func bannerView(_ bannerView: Playwire.PWBannerView, didFailToReceiveAdWithError error: Swift.String)
-  @objc func bannerViewDidRecordImpression(_ bannerView: Playwire.PWBannerView)
-  @objc func bannerViewDidRecordClick(_ bannerView: Playwire.PWBannerView)
-  @objc func bannerViewWillPresentScreen(_ bannerView: Playwire.PWBannerView)
-  @objc func bannerViewWillDismissScreen(_ bannerView: Playwire.PWBannerView)
-  @objc func bannerViewDidDismissScreen(_ bannerView: Playwire.PWBannerView)
-}
-@objc @_inheritsConvenienceInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerView : UIKit.UIView {
-  @objc @_Concurrency.MainActor(unsafe) public var adUnitName: Swift.String? {
-    @objc get
-    @objc set(newName)
-  }
-  @objc @_Concurrency.MainActor(unsafe) public var autoload: Swift.Bool
-  @objc @_Concurrency.MainActor(unsafe) weak public var delegate: Playwire.PWBannerViewDelegate?
   @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
   @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
-  @objc @_Concurrency.MainActor(unsafe) convenience public init(adUnitName: Swift.String, delegate: Playwire.PWBannerViewDelegate? = nil)
-  @objc override dynamic public func awakeFromNib()
-  @_Concurrency.MainActor(unsafe) @objc override dynamic public func didMoveToSuperview()
-  @objc @_Concurrency.MainActor(unsafe) public func load()
-  @objc @_Concurrency.MainActor(unsafe) public func load(customTargets: [Swift.String : Swift.String]?)
-  @objc @_Concurrency.MainActor(unsafe) public var isLoaded: Swift.Bool {
-    @objc get
-  }
-  @objc @_Concurrency.MainActor(unsafe) public func refresh()
   @objc deinit
 }
 extension Playwire.PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
@@ -146,33 +76,52 @@ extension Playwire.PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
   @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewWillDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
   @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
 }
-@objc public protocol PWRewardedDelegate {
-  @objc func rewardedDidLoad(_ rewarded: Playwire.PWRewarded)
-  @objc func rewarded(_ rewarded: Playwire.PWRewarded, didFailToLoadWithError error: Swift.String)
-  @objc func rewardedDidUserEarn(_ rewarded: Playwire.PWRewarded, type: Swift.String, amount: Swift.Double)
-  @objc func rewardedDidPresentFullScreenContent(_ rewarded: Playwire.PWRewarded)
-  @objc func rewardedDidDismissFullScreenContent(_ rewarded: Playwire.PWRewarded)
-  @objc func rewarded(_ rewarded: Playwire.PWRewarded, didFailToPresentFullScreenContentWithError error: Swift.String)
-  @objc func rewardedDidRecordImpression(_ ad: Playwire.PWRewarded)
-  @objc func rewardedDidRecordClick(_ ad: Playwire.PWRewarded)
+extension Playwire.PWBannerView : GoogleMobileAds.GADAdSizeDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func adView(_ bannerView: GoogleMobileAds.GADBannerView, willChangeAdSizeTo size: GoogleMobileAds.GADAdSize)
 }
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWRewarded : ObjectiveC.NSObject {
-  @objc weak public var delegate: Playwire.PWRewardedDelegate?
-  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWRewardedDelegate? = nil)
-  @objc public func load()
-  @objc public func load(customTargets: [Swift.String : Swift.String]?)
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWRewardedInterstitial : Playwire.PWFullScreenAd {
+  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWFullScreenAdDelegate? = nil)
+  @objc override public func show(fromViewController viewController: UIKit.UIViewController)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAppOpenAd : Playwire.PWFullScreenAd {
+  @objc public var autoReloadOnExpiration: Swift.Bool
+  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWFullScreenAdDelegate? = nil)
+  @objc override public func load()
+  @objc override public func load(customTargets: [Swift.String : Swift.String]?)
+  @objc public func load(orientation: UIKit.UIInterfaceOrientation)
+  @objc public func load(orientation: UIKit.UIInterfaceOrientation, customTargets: [Swift.String : Swift.String]?)
+  @objc override public func show(fromViewController viewController: UIKit.UIViewController)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWInterstitial : Playwire.PWFullScreenAd {
+  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWFullScreenAdDelegate? = nil)
+  @objc override public func show(fromViewController viewController: UIKit.UIViewController)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWFullScreenAd : ObjectiveC.NSObject {
+  @objc final public let adUnit: Playwire.PWAdUnit?
   @objc public var isLoaded: Swift.Bool {
     @objc get
   }
+  @objc weak public var delegate: Playwire.PWFullScreenAdDelegate?
+  @objc public func load()
+  @objc public func load(customTargets: [Swift.String : Swift.String]?)
   @objc public func show(fromViewController viewController: UIKit.UIViewController)
   @objc deinit
 }
-extension Playwire.PWRewarded : GoogleMobileAds.GADFullScreenContentDelegate {
-  @objc dynamic public func adDidPresentFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+extension Playwire.PWFullScreenAd : GoogleMobileAds.GADFullScreenContentDelegate {
+  @objc dynamic public func adWillPresentFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adWillDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
   @objc dynamic public func adDidDismissFullScreenContent(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
   @objc dynamic public func ad(_ ad: GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Swift.Error)
   @objc dynamic public func adDidRecordImpression(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
   @objc dynamic public func adDidRecordClick(_ ad: GoogleMobileAds.GADFullScreenPresentingAd)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWRewarded : Playwire.PWFullScreenAd {
+  @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWFullScreenAdDelegate? = nil)
+  @objc override public func show(fromViewController viewController: UIKit.UIViewController)
+  @objc deinit
 }
 public typealias PWAdBid = [Swift.AnyHashable : Any]
 @_hasMissingDesignatedInitializers public class PWAdBidderConfig {
@@ -193,6 +142,10 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc override required dynamic public init()
   open func load()
   @objc deinit
+}
+@objc public protocol PWNativeViewFactory {
+  @objc func createAdContentView(nativeView: Playwire.PWNativeView, adContent: Playwire.PWNativeViewContent) -> UIKit.UIView
+  @objc func callToActionView(nativeView: Playwire.PWNativeView, adContentView: UIKit.UIView) -> UIKit.UIView?
 }
 @objc @_inheritsConvenienceInitializers @objcMembers public class PWC : ObjectiveC.NSObject {
   @objc public static let Version: Swift.String
@@ -237,75 +190,58 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let EVT_cachedConfigFileSavingFail: Swift.String
   @objc public static let EVT_cachedConfigFileFail_error: Swift.String
   @objc public static let EVT_cachedConfigFileSavingSuccess: Swift.String
-  @objc public static let EVT_bannerInitError: Swift.String
-  @objc public static let EVT_bannerInitError_error: Swift.String
-  @objc public static let EVT_bannerInitError_error_alreadyInitialized: Swift.String
-  @objc public static let EVT_bannerInitError_error_noAdUnitName: Swift.String
-  @objc public static let EVT_bannerInitError_error_noAdUnit: Swift.String
-  @objc public static let EVT_bannerInitError_error_badAdUnit: Swift.String
-  @objc public static let EVT_bannerInitError_error_noSizes: Swift.String
-  @objc public static let EVT_bannerLoadError: Swift.String
-  @objc public static let EVT_bannerLoadError_error: Swift.String
-  @objc public static let EVT_bannerLoadError_error_notPrepared: Swift.String
-  @objc public static let EVT_bannerLoadError_error_notInternalRep: Swift.String
-  @objc public static let EVT_bannerRefreshError: Swift.String
-  @objc public static let EVT_bannerRefreshError_error: Swift.String
-  @objc public static let EVT_bannerRefreshError_error_maxReached: Swift.String
-  @objc public static let EVT_bannerRefreshError_error_maxReached_count: Swift.String
-  @objc public static let EVT_bannerRefreshError_error_early: Swift.String
-  @objc public static let EVT_bannerRefreshError_error_early_elapsed: Swift.String
-  @objc public static let EVT_bannerRefreshError_error_early_required: Swift.String
-  @objc public static let EVT_bannerRefreshError_error_manual: Swift.String
-  @objc public static let EVT_bannerRefreshEarly: Swift.String
-  @objc public static let EVT_interstitialInitError: Swift.String
-  @objc public static let EVT_interstitialInitError_error: Swift.String
-  @objc public static let EVT_interstitialInitError_error_noAdUnit: Swift.String
-  @objc public static let EVT_interstitialInitError_error_badAdUnit: Swift.String
-  @objc public static let EVT_interstitialLoadError: Swift.String
-  @objc public static let EVT_interstitialLoadError_error: Swift.String
-  @objc public static let EVT_interstitialLoadError_error_notPrepared: Swift.String
-  @objc public static let EVT_interstitialLoadError_error_notLoaded: Swift.String
-  @objc public static let EVT_interstitialLoadError_error_notInternalRep: Swift.String
-  @objc public static let EVT_rewardedInitError: Swift.String
-  @objc public static let EVT_rewardedInitError_error: Swift.String
-  @objc public static let EVT_rewardedInitError_error_noAdUnit: Swift.String
-  @objc public static let EVT_rewardedInitError_error_badAdUnit: Swift.String
-  @objc public static let EVT_rewardedLoadError: Swift.String
-  @objc public static let EVT_rewardedLoadError_error: Swift.String
-  @objc public static let EVT_rewardedLoadError_error_notPrepared: Swift.String
-  @objc public static let EVT_rewardedLoadError_error_notLoaded: Swift.String
-  @objc public static let EVT_rewardedLoadError_error_notInternalRep: Swift.String
-  @objc public static let EVT_rewardedReward: Swift.String
-  @objc public static let EVT_rewardedReward_type: Swift.String
-  @objc public static let EVT_rewardedReward_amount: Swift.String
-  @objc public static let EVT_appOpenAdInitError: Swift.String
-  @objc public static let EVT_appOpenAdInitError_error: Swift.String
-  @objc public static let EVT_appOpenAdInitError_error_noAdUnit: Swift.String
-  @objc public static let EVT_appOpenAdInitError_error_badAdUnit: Swift.String
-  @objc public static let EVT_appOpenAdLoadError: Swift.String
-  @objc public static let EVT_appOpenAdLoadError_error: Swift.String
-  @objc public static let EVT_appOpenAdLoadError_error_notPrepared: Swift.String
-  @objc public static let EVT_appOpenAdLoadError_error_notLoaded: Swift.String
-  @objc public static let EVT_appOpenAdLoadError_error_notInternalRep: Swift.String
-  @objc public static let EVT_appOpenAdLoadError_error_notProfitable: Swift.String
-  @objc public static let EVT_appOpenAdLoadWarning: Swift.String
-  @objc public static let EVT_appOpenAdLoadWarning_warning: Swift.String
-  @objc public static let EVT_appOpenAdLoadWarning_warning_notProfitable: Swift.String
-  @objc public static let EVT_appOpenAdLoadWarning_autoReload: Swift.String
-  @objc public static let EVT_rewardedInterstitialInitError: Swift.String
-  @objc public static let EVT_rewardedInterstitialInitError_error: Swift.String
-  @objc public static let EVT_rewardedInterstitialInitError_error_noAdUnit: Swift.String
-  @objc public static let EVT_rewardedInterstitialInitError_error_badAdUnit: Swift.String
-  @objc public static let EVT_rewardedInterstitialLoadError: Swift.String
-  @objc public static let EVT_rewardedInterstitialLoadError_error: Swift.String
-  @objc public static let EVT_rewardedInterstitialLoadError_error_notPrepared: Swift.String
-  @objc public static let EVT_rewardedInterstitialLoadError_error_notLoaded: Swift.String
-  @objc public static let EVT_rewardedInterstitialLoadError_error_notInternalRep: Swift.String
-  @objc public static let EVT_rewardedInterstitialReward: Swift.String
-  @objc public static let EVT_rewardedInterstitialReward_type: Swift.String
-  @objc public static let EVT_rewardedInterstitialReward_amount: Swift.String
+  @objc public static let EVT_adInitError: Swift.String
+  @objc public static let EVT_adInitError_error: Swift.String
+  @objc public static let EVT_adInitError_error_alreadyInitialized: Swift.String
+  @objc public static let EVT_adInitError_error_noAdUnitName: Swift.String
+  @objc public static let EVT_adInitError_error_noAdUnit: Swift.String
+  @objc public static let EVT_adInitError_error_badAdUnit: Swift.String
+  @objc public static let EVT_adInitError_error_badAdUnit_modeRequired: Swift.String
+  @objc public static let EVT_adInitError_error_badAdUnit_modeConfig: Swift.String
+  @objc public static let EVT_adInitError_error_noSizes: Swift.String
+  @objc public static let EVT_adLoadError: Swift.String
+  @objc public static let EVT_adLoadError_error: Swift.String
+  @objc public static let EVT_adLoadError_error_notPrepared: Swift.String
+  @objc public static let EVT_adLoadError_error_notInternalRep: Swift.String
+  @objc public static let EVT_adLoadError_error_notLoaded: Swift.String
+  @objc public static let EVT_adRefreshError: Swift.String
+  @objc public static let EVT_adRefreshError_error: Swift.String
+  @objc public static let EVT_adRefreshError_error_maxReached: Swift.String
+  @objc public static let EVT_adRefreshError_error_maxReached_count: Swift.String
+  @objc public static let EVT_adRefreshError_error_early: Swift.String
+  @objc public static let EVT_adRefreshError_error_early_elapsed: Swift.String
+  @objc public static let EVT_adRefreshError_error_early_required: Swift.String
+  @objc public static let EVT_adRefreshError_error_manual: Swift.String
+  @objc public static let EVT_adRefreshEarly: Swift.String
+  @objc public static let EVT_adReward: Swift.String
+  @objc public static let EVT_adReward_type: Swift.String
+  @objc public static let EVT_adReward_amount: Swift.String
+  @objc public static let EVT_adLoadWarning: Swift.String
+  @objc public static let EVT_adLoadWarning_warning: Swift.String
+  @objc public static let EVT_adLoadWarning_warning_notProfitable: Swift.String
+  @objc public static let EVT_adLoadWarning_autoReload: Swift.String
   @objc override dynamic public init()
   @objc deinit
+}
+@objc @objcMembers @_Concurrency.MainActor(unsafe) public class PWNativeView : Playwire.PWViewAd {
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc @_Concurrency.MainActor(unsafe) public init(adUnitName: Swift.String, controller: UIKit.UIViewController?, factory: Playwire.PWNativeViewFactory, delegate: Playwire.PWViewAdDelegate? = nil)
+  @_Concurrency.MainActor(unsafe) public var mode: Playwire.PWAdUnit.PWAdMode? {
+    @_Concurrency.MainActor(unsafe) get
+  }
+  @objc deinit
+}
+extension Playwire.PWNativeView : GoogleMobileAds.GADNativeAdLoaderDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func adLoader(_ adLoader: GoogleMobileAds.GADAdLoader, didReceive nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func adLoader(_ adLoader: GoogleMobileAds.GADAdLoader, didFailToReceiveAdWithError error: Swift.Error)
+}
+extension Playwire.PWNativeView : GoogleMobileAds.GADNativeAdDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdDidRecordImpression(_ nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdDidRecordClick(_ nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdWillPresentScreen(_ nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdWillDismissScreen(_ nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdDidDismissScreen(_ nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdIsMuted(_ nativeAd: GoogleMobileAds.GADNativeAd)
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdSize : ObjectiveC.NSObject, Swift.Decodable {
   @objc public var width: Swift.Int {
@@ -464,6 +400,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
     case Rewarded
     case AppOpenAd
     case RewardedInterstitial
+    case Native
     public init?(rawValue: Swift.String)
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
@@ -607,6 +544,48 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
 }
 extension Foundation.Date {
   public static func timestamp() -> Swift.Int
+}
+@objc public protocol PWViewAdDelegate {
+  @objc func viewAdDidLoad(_ ad: Playwire.PWViewAd)
+  @objc func viewAdDidFailToLoad(_ ad: Playwire.PWViewAd)
+  @objc func viewAdWillPresentFullScreenContent(_ ad: Playwire.PWViewAd)
+  @objc func viewAdWillDismissFullScreenContent(_ ad: Playwire.PWViewAd)
+  @objc func viewAdDidDismissFullScreenContent(_ ad: Playwire.PWViewAd)
+  @objc func viewAdDidRecordImpression(_ ad: Playwire.PWViewAd)
+  @objc func viewAdDidRecordClick(_ ad: Playwire.PWViewAd)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWNativeViewContent : ObjectiveC.NSObject {
+  @objc public var headline: Swift.String? {
+    @objc get
+  }
+  @objc public var body: Swift.String? {
+    @objc get
+  }
+  @objc public var callToAction: Swift.String? {
+    @objc get
+  }
+  @objc public var icon: UIKit.UIImage? {
+    @objc get
+  }
+  @objc public var image: UIKit.UIImage? {
+    @objc get
+  }
+  @objc public var mediaView: UIKit.UIView? {
+    @objc get
+  }
+  @objc public var starRating: Foundation.NSDecimalNumber? {
+    @objc get
+  }
+  @objc public var store: Swift.String? {
+    @objc get
+  }
+  @objc public var price: Swift.String? {
+    @objc get
+  }
+  @objc public var advertiser: Swift.String? {
+    @objc get
+  }
+  @objc deinit
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class PlaywireSDK : ObjectiveC.NSObject {
   @objc public var config: Playwire.PWAdUnitStoreConfig? {
