@@ -184,7 +184,8 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let EVT_configFail: Swift.String
   @objc public static let EVT_configFail_config: Swift.String
   @objc public static let EVT_configFail_error: Swift.String
-  @objc public static let EVT_configFail_empty_file: Swift.String
+  @objc public static let EVT_configFail_error_empty_file: Swift.String
+  @objc public static let EVT_configFail_error_request_building: Swift.String
   @objc public static let EVT_configFileLoading: Swift.String
   @objc public static let EVT_configFileLoading_status_code: Swift.String
   @objc public static let EVT_cachedConfigFileSavingFail: Swift.String
@@ -223,7 +224,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc override dynamic public init()
   @objc deinit
 }
-@objc @objcMembers @_Concurrency.MainActor(unsafe) public class PWNativeView : Playwire.PWViewAd {
+@objc @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWNativeView : Playwire.PWViewAd {
   @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
   @objc @_Concurrency.MainActor(unsafe) public init(adUnitName: Swift.String, controller: UIKit.UIViewController?, factory: Playwire.PWNativeViewFactory, delegate: Playwire.PWViewAdDelegate? = nil)
   @_Concurrency.MainActor(unsafe) public var mode: Playwire.PWAdUnit.PWAdMode? {
@@ -445,8 +446,11 @@ extension Playwire.PWNativeView : GoogleMobileAds.GADNativeAdDelegate {
 @objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdMediatorConfig : ObjectiveC.NSObject, Swift.Decodable {
   public enum PWAdMediatorType : Swift.String, Swift.Decodable {
     case AdColony
+    case AppLovin
+    case Fyber
+    case Chartboost
+    case IronSource
     case Vungle
-    case Smaato
     public init?(rawValue: Swift.String)
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
@@ -534,13 +538,27 @@ extension Playwire.PWNativeView : GoogleMobileAds.GADNativeAdDelegate {
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @_inheritsConvenienceInitializers open class PWAdMediator : ObjectiveC.NSObject {
-  public var config: Playwire.PWAdMediatorConfig?
-  @objc override required dynamic public init()
-  open func initialize()
-  open func enableGDPR()
-  open func configure(request: GoogleMobileAds.GADRequest)
-  @objc deinit
+@available(*, unavailable)
+@objc extension Playwire.PWAdMediatorConfig {
+  @objc dynamic public var adcolony_shouldShowPrePopup: Foundation.NSNumber? {
+    @objc get
+  }
+  @objc dynamic public var adcolony_shouldShowPostPopup: Foundation.NSNumber? {
+    @objc get
+  }
+  @objc dynamic public var vungle_shouldStartMuted: Foundation.NSNumber? {
+    @objc get
+  }
+}
+@objc public protocol PWAdNetworkRegistrable {
+  @objc static func register()
+}
+@objc public protocol PWAdMediator {
+  @objc var config: Playwire.PWAdMediatorConfig? { get set }
+  @objc init()
+  @objc func setup()
+  @objc func enableGDPR(_ enabled: Swift.Bool)
+  @objc func configure(request: GoogleMobileAds.GADRequest)
 }
 extension Foundation.Date {
   public static func timestamp() -> Swift.Int
@@ -592,13 +610,13 @@ extension Foundation.Date {
     get
   }
   @objc public static let shared: Playwire.PlaywireSDK
-  @objc public func initialize(publisherId: Swift.String, appId: Swift.String, version: Swift.String, viewController: UIKit.UIViewController, completionHandler: @escaping (Swift.Error?) -> Swift.Void)
+  @objc public func initialize(publisherId: Swift.String, appId: Swift.String, viewController: UIKit.UIViewController, completionHandler: @escaping () -> Swift.Void)
   @objc public var adUnitsDictionary: [Swift.String : [Swift.String]] {
     @objc get
   }
   public func set(type: Playwire.PWAdBidder.Type, for serverType: Playwire.PWAdServerConfig.PWAdServerType)
   public func get(factoryFor serverType: Playwire.PWAdServerConfig.PWAdServerType) -> Playwire.PWAdBidder.Type?
-  public func set(type: Playwire.PWAdMediator.Type, for mediatorType: Playwire.PWAdMediatorConfig.PWAdMediatorType)
+  @objc public func set(type: Playwire.PWAdMediator.Type, for mediator: Swift.String)
   @objc open func configure(request: GoogleMobileAds.GADRequest)
   @objc deinit
 }

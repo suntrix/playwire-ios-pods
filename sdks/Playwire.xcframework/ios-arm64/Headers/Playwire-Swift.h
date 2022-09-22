@@ -218,10 +218,17 @@ SWIFT_CLASS("_TtC8Playwire10PWAdBidder")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class PWAdMediatorConfig;
+@class NSNumber;
+@class GADRequest;
 
-SWIFT_CLASS("_TtC8Playwire12PWAdMediator")
-@interface PWAdMediator : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+SWIFT_PROTOCOL("_TtP8Playwire12PWAdMediator_")
+@protocol PWAdMediator
+@property (nonatomic, strong) PWAdMediatorConfig * _Nullable config;
+- (nonnull instancetype)init;
+- (void)setup;
+- (void)enableGDPR:(BOOL)enabled;
+- (void)configureWithRequest:(GADRequest * _Nonnull)request;
 @end
 
 @class NSString;
@@ -244,6 +251,20 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @end
 
 
+SWIFT_UNAVAILABLE
+@interface PWAdMediatorConfig (SWIFT_EXTENSION(Playwire))
+@property (nonatomic, readonly, strong) NSNumber * _Nullable adcolony_shouldShowPrePopup;
+@property (nonatomic, readonly, strong) NSNumber * _Nullable adcolony_shouldShowPostPopup;
+@property (nonatomic, readonly, strong) NSNumber * _Nullable vungle_shouldStartMuted;
+@end
+
+
+SWIFT_PROTOCOL("_TtP8Playwire22PWAdNetworkRegistrable_")
+@protocol PWAdNetworkRegistrable
++ (void)register;
+@end
+
+
 SWIFT_CLASS("_TtC8Playwire16PWAdServerConfig")
 @interface PWAdServerConfig : NSObject
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdServerType_Amazon;)
@@ -257,7 +278,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-@class NSNumber;
 
 SWIFT_CLASS("_TtC8Playwire8PWAdSize")
 @interface PWAdSize : NSObject
@@ -489,8 +509,10 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_configFail_config SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_error;)
 + (NSString * _Nonnull)EVT_configFail_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_empty_file;)
-+ (NSString * _Nonnull)EVT_configFail_empty_file SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_error_empty_file;)
++ (NSString * _Nonnull)EVT_configFail_error_empty_file SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_error_request_building;)
++ (NSString * _Nonnull)EVT_configFail_error_request_building SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFileLoading;)
 + (NSString * _Nonnull)EVT_configFileLoading SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFileLoading_status_code;)
@@ -612,6 +634,8 @@ SWIFT_CLASS("_TtC8Playwire12PWNativeView")
 @interface PWNativeView : PWViewAd
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName controller:(UIViewController * _Nullable)controller factory:(id <PWNativeViewFactory> _Nonnull)factory delegate:(id <PWViewAdDelegate> _Nullable)delegate OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 - (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
 @end
 
@@ -734,15 +758,15 @@ SWIFT_PROTOCOL("_TtP8Playwire16PWViewAdDelegate_")
 - (void)viewAdDidRecordClick:(PWViewAd * _Nonnull)ad;
 @end
 
-@class GADRequest;
 
 SWIFT_CLASS("_TtC8Playwire11PlaywireSDK")
 @interface PlaywireSDK : NSObject
 @property (nonatomic, readonly, strong) PWAdUnitStoreConfig * _Nullable config;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PlaywireSDK * _Nonnull shared;)
 + (PlaywireSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
-- (void)initializeWithPublisherId:(NSString * _Nonnull)publisherId appId:(NSString * _Nonnull)appId version:(NSString * _Nonnull)version viewController:(UIViewController * _Nonnull)viewController completionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler;
+- (void)initializeWithPublisherId:(NSString * _Nonnull)publisherId appId:(NSString * _Nonnull)appId viewController:(UIViewController * _Nonnull)viewController completionHandler:(void (^ _Nonnull)(void))completionHandler;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, NSArray<NSString *> *> * _Nonnull adUnitsDictionary;
+- (void)setWithType:(Class <PWAdMediator> _Nonnull)type for:(NSString * _Nonnull)mediator;
 - (void)configureWithRequest:(GADRequest * _Nonnull)request;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
