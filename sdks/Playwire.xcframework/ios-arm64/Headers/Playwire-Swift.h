@@ -587,6 +587,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @end
 
 
+
 @protocol GADFullScreenPresentingAd;
 
 @interface PWFullScreenAd (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>

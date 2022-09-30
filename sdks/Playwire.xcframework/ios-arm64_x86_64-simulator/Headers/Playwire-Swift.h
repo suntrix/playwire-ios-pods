@@ -589,6 +589,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @end
 
 
+
 @protocol GADFullScreenPresentingAd;
 
 @interface PWFullScreenAd (SWIFT_EXTENSION(Playwire)) <GADFullScreenContentDelegate>
@@ -1372,6 +1373,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_adLoadWarning_autoReload SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
 
 
 @protocol GADFullScreenPresentingAd;
