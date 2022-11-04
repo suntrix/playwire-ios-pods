@@ -45,6 +45,238 @@ import _Concurrency
   @objc func fullScreenAdDidRecordClick(_ ad: Playwire.PWFullScreenAd)
   @objc func fullScreenAdDidUserEarn(_ ad: Playwire.PWFullScreenAd, type: Swift.String, amount: Swift.Double)
 }
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdSize : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var width: Swift.Int {
+    get
+  }
+  @objc public var height: Swift.Int {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdServerConfig : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWAdServerType : Swift.String, Swift.Hashable, Swift.Decodable {
+    case Amazon
+    case Prebid
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @objc public static let PWAdServerType_Amazon: Swift.String
+  @objc public static let PWAdServerType_Prebid: Swift.String
+  @objc public var name: Swift.String {
+    get
+  }
+  public var serverType: Playwire.PWAdServerConfig.PWAdServerType {
+    get
+  }
+  @objc public var host: Swift.String? {
+    get
+  }
+  @objc public var account: Swift.String? {
+    get
+  }
+  public var useGeo: Swift.Bool? {
+    get
+  }
+  public var isTest: Swift.Bool? {
+    get
+  }
+  public var timeout: Swift.Int? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdUnitConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var serverConfig: Swift.String {
+    get
+  }
+  @objc public var adUnitId: Swift.String {
+    get
+  }
+  @objc public var adSizes: Swift.Array<Playwire.PWAdSize>? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAppConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var gamAppId: Swift.String? {
+    get
+  }
+  @objc public var storeUrl: Swift.String? {
+    get
+  }
+  public var childProtection: Swift.Bool? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWOMConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var partnerName: Swift.String {
+    get
+  }
+  @objc public var partnerVersion: Swift.String {
+    get
+  }
+  public var apiCode: Swift.Int? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var serverConfigs: Swift.Array<Playwire.PWAdServerConfig>? {
+    get
+  }
+  @objc public var adUnits: Swift.Array<Playwire.PWAdUnit> {
+    get
+  }
+  @objc public var app: Playwire.PWAppConfig? {
+    get
+  }
+  @objc public var om: Playwire.PWOMConfig? {
+    get
+  }
+  @objc public var schain: Playwire.PWSchainConfig? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdUnit : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWAdBidStrategyType : Swift.String, Swift.Decodable {
+    case Priority
+    case Combined
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @objc public static let PWAdBidStrategyType_Priority: Swift.String
+  @objc public static let PWAdBidStrategyType_Combined: Swift.String
+  public enum PWAdMode : Swift.String, Swift.Decodable {
+    case Banner
+    case Interstitial
+    case Rewarded
+    case AppOpenAd
+    case RewardedInterstitial
+    case Native
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @objc public static let PWAdMode_Banner: Swift.String
+  @objc public static let PWAdMode_Interstitial: Swift.String
+  @objc public static let PWAdMode_Rewarded: Swift.String
+  @objc public static let PWAdMode_AppOpenAd: Swift.String
+  @objc public static let PWAdMode_RewardedInterstitial: Swift.String
+  @objc public var name: Swift.String {
+    get
+  }
+  @objc public var adUnitConfigs: Swift.Array<Playwire.PWAdUnitConfig>? {
+    get
+  }
+  public var strategy: Playwire.PWAdUnit.PWAdBidStrategyType? {
+    get
+  }
+  public var mode: Playwire.PWAdUnit.PWAdMode {
+    get
+  }
+  public var autorefreshTime: Swift.Int? {
+    get
+  }
+  @objc public var refresh: Playwire.PWBannerRefresh? {
+    get
+  }
+  @objc public var gadUnitId: Swift.String {
+    get
+  }
+  @objc public var gadSizes: Swift.Array<Playwire.PWAdSize>? {
+    get
+  }
+  @objc public var customTargets: [Swift.String : Swift.String]? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdMediatorConfig : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWAdMediatorType : Swift.String, Swift.Decodable {
+    case AdColony
+    case AppLovin
+    case Fyber
+    case Chartboost
+    case IronSource
+    case Vungle
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @objc public static let PWAdMediatorType_AdColony: Swift.String
+  @objc public static let PWAdMediatorType_Vungle: Swift.String
+  @objc public static let PWAdMediatorType_Smaato: Swift.String
+  public var type: Playwire.PWAdMediatorConfig.PWAdMediatorType {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWSchainConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc @_hasMissingDesignatedInitializers public class SchainNodeConfig : ObjectiveC.NSObject, Swift.Decodable {
+    public var asi: Swift.String {
+      get
+    }
+    public var sid: Swift.String {
+      get
+    }
+    public var hp: Swift.Int {
+      get
+    }
+    public var dictionary: [Swift.String : Any] {
+      get
+    }
+    @objc deinit
+    required public init(from decoder: Swift.Decoder) throws
+  }
+  @objc public var ver: Swift.String {
+    get
+  }
+  @objc public var complete: Swift.Int {
+    get
+  }
+  @objc public var nodes: [Playwire.PWSchainConfig.SchainNodeConfig] {
+    get
+  }
+  @objc public var dictionary: [Swift.String : Any] {
+    @objc get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWBannerRefresh : ObjectiveC.NSObject, Swift.Decodable {
+  public var autoTime: Swift.Int? {
+    get
+  }
+  public var manualTime: Swift.Int? {
+    get
+  }
+  public var manualCount: Swift.Int? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+}
 @objc @_hasMissingDesignatedInitializers public class PWListenerToken : ObjectiveC.NSObject {
   @objc public func cancel()
   @objc deinit
@@ -246,158 +478,68 @@ extension Playwire.PWNativeView : GoogleMobileAds.GADNativeAdDelegate {
   @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdDidDismissScreen(_ nativeAd: GoogleMobileAds.GADNativeAd)
   @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdIsMuted(_ nativeAd: GoogleMobileAds.GADNativeAd)
 }
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdSize : ObjectiveC.NSObject, Swift.Decodable {
-  @objc public var width: Swift.Int {
+@objc public protocol PWAdNetworkRegistrable {
+  @objc static func register()
+}
+@objc public protocol PWAdMediator {
+  @objc init()
+  @objc func setup()
+  @objc func enableGDPR(_ enabled: Swift.Bool)
+  @objc func configure(request: GoogleMobileAds.GADRequest)
+}
+extension Foundation.Date {
+  public static func timestamp() -> Swift.Int
+}
+@objc @objcMembers public class PWRampConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var settings: Playwire.PWRampConfig_Settings {
     get
   }
-  @objc public var height: Swift.Int {
+  @objc public var adUnits: [Playwire.PWRampConfig_AdUnit] {
     get
   }
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdServerConfig : ObjectiveC.NSObject, Swift.Decodable {
-  public enum PWAdServerType : Swift.String, Swift.Hashable, Swift.Decodable {
-    case Amazon
-    case Prebid
-    public init?(rawValue: Swift.String)
-    public typealias RawValue = Swift.String
-    public var rawValue: Swift.String {
-      get
-    }
-  }
-  @objc public static let PWAdServerType_Amazon: Swift.String
-  @objc public static let PWAdServerType_Prebid: Swift.String
-  @objc public var name: Swift.String {
+@objc public class PWRampConfig_Settings : ObjectiveC.NSObject, Swift.Decodable {
+  public var publisherId: Swift.Int {
     get
   }
-  public var serverType: Playwire.PWAdServerConfig.PWAdServerType {
+  public var gamAppId: Swift.String {
     get
   }
-  @objc public var host: Swift.String? {
+  public var storeUrl: Swift.String {
     get
   }
-  @objc public var account: Swift.String? {
+  public var coppa: Swift.Bool? {
     get
   }
-  public var useGeo: Swift.Bool? {
-    get
-  }
-  public var isTest: Swift.Bool? {
+  public var geo: Swift.Bool? {
     get
   }
   public var timeout: Swift.Int? {
     get
   }
-  @objc deinit
-  required public init(from decoder: Swift.Decoder) throws
-}
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWUMPConfig : ObjectiveC.NSObject, Swift.Decodable {
-  public enum PWUMPLocation : Swift.String, Swift.Decodable {
-    case Current
-    case EEA
-    case NotEEA
-    public init?(rawValue: Swift.String)
-    public typealias RawValue = Swift.String
-    public var rawValue: Swift.String {
-      get
-    }
-  }
-  @objc public static let PWUMPLocation_Current: Swift.String
-  @objc public static let PWUMPLocation_EEA: Swift.String
-  @objc public static let PWUMPLocation_NotEEA: Swift.String
-  public var enabled: Swift.Bool? {
+  public var amazon: Playwire.PWRampConfig_Bidder? {
     get
   }
-  public var debugReset: Swift.Bool? {
-    get
-  }
-  public var debugLocation: Playwire.PWUMPConfig.PWUMPLocation? {
-    get
-  }
-  @objc public var debugDevices: Swift.Array<Swift.String>? {
+  public var prebid: Playwire.PWRampConfig_Bidder? {
     get
   }
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdUnitConfig : ObjectiveC.NSObject, Swift.Decodable {
-  @objc public var serverConfig: Swift.String {
+@objc public class PWRampConfig_Bidder : ObjectiveC.NSObject, Swift.Decodable {
+  public var enabled: Swift.Bool {
     get
   }
-  @objc public var adUnitId: Swift.String {
-    get
-  }
-  @objc public var adSizes: Swift.Array<Playwire.PWAdSize>? {
+  public var id: Swift.String? {
     get
   }
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAppConfig : ObjectiveC.NSObject, Swift.Decodable {
-  @objc public var gamAppId: Swift.String? {
-    get
-  }
-  @objc public var storeUrl: Swift.String? {
-    get
-  }
-  public var childProtection: Swift.Bool? {
-    get
-  }
-  @objc deinit
-  required public init(from decoder: Swift.Decoder) throws
-}
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWOMConfig : ObjectiveC.NSObject, Swift.Decodable {
-  @objc public var partnerName: Swift.String {
-    get
-  }
-  @objc public var partnerVersion: Swift.String {
-    get
-  }
-  public var apiCode: Swift.Int? {
-    get
-  }
-  @objc deinit
-  required public init(from decoder: Swift.Decoder) throws
-}
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdUnitStoreConfig : ObjectiveC.NSObject, Swift.Decodable {
-  @objc public var serverConfigs: Swift.Array<Playwire.PWAdServerConfig>? {
-    get
-  }
-  @objc public var adUnits: Swift.Array<Playwire.PWAdUnit> {
-    get
-  }
-  @objc public var mediators: Swift.Array<Playwire.PWAdMediatorConfig>? {
-    get
-  }
-  @objc public var ump: Playwire.PWUMPConfig? {
-    get
-  }
-  @objc public var app: Playwire.PWAppConfig? {
-    get
-  }
-  @objc public var om: Playwire.PWOMConfig? {
-    get
-  }
-  @objc public var schain: Playwire.PWSchainConfig? {
-    get
-  }
-  @objc deinit
-  required public init(from decoder: Swift.Decoder) throws
-}
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdUnit : ObjectiveC.NSObject, Swift.Decodable {
-  public enum PWAdBidStrategyType : Swift.String, Swift.Decodable {
-    case Priority
-    case Combined
-    public init?(rawValue: Swift.String)
-    public typealias RawValue = Swift.String
-    public var rawValue: Swift.String {
-      get
-    }
-  }
-  @objc public static let PWAdBidStrategyType_Priority: Swift.String
-  @objc public static let PWAdBidStrategyType_Combined: Swift.String
-  public enum PWAdMode : Swift.String, Swift.Decodable {
+@objc public class PWRampConfig_AdUnit : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWRampConfigAdUnitUnit : Swift.String, Swift.Decodable {
     case Banner
     case Interstitial
     case Rewarded
@@ -410,160 +552,87 @@ extension Playwire.PWNativeView : GoogleMobileAds.GADNativeAdDelegate {
       get
     }
   }
-  @objc public static let PWAdMode_Banner: Swift.String
-  @objc public static let PWAdMode_Interstitial: Swift.String
-  @objc public static let PWAdMode_Rewarded: Swift.String
-  @objc public static let PWAdMode_AppOpenAd: Swift.String
-  @objc public static let PWAdMode_RewardedInterstitial: Swift.String
-  @objc public var name: Swift.String {
+  public static let PWRampConfig_AdUnit_Unit_Banner: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_Interstitial: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_Rewarded: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_AppOpenAd: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_RewardedInterstitial: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_Native: Swift.String
+  public var alias: Swift.String {
     get
   }
-  @objc public var adUnitConfigs: Swift.Array<Playwire.PWAdUnitConfig>? {
+  public var unit: Playwire.PWRampConfig_AdUnit.PWRampConfigAdUnitUnit {
     get
   }
-  public var strategy: Playwire.PWAdUnit.PWAdBidStrategyType? {
+  public var code: Swift.String {
     get
   }
-  public var mode: Playwire.PWAdUnit.PWAdMode {
+  public var sizes: [[Swift.Int]] {
     get
   }
-  public var autorefreshTime: Swift.Int? {
+  public var refresh: Playwire.PWRampConfigAdUnitRefresh? {
     get
   }
-  @objc public var refresh: Playwire.PWBannerRefresh? {
-    get
-  }
-  @objc public var gadUnitId: Swift.String {
-    get
-  }
-  @objc public var gadSizes: Swift.Array<Playwire.PWAdSize>? {
-    get
-  }
-  @objc public var customTargets: [Swift.String : Swift.String]? {
+  public var bids: [Playwire.PWRampConfig_AdUnit_Bid] {
     get
   }
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdMediatorConfig : ObjectiveC.NSObject, Swift.Decodable {
-  public enum PWAdMediatorType : Swift.String, Swift.Decodable {
-    case AdColony
-    case AppLovin
-    case Fyber
-    case Chartboost
-    case IronSource
-    case Vungle
+@objc public class PWRampConfig_AdUnit_Bid : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWRampConfig_AdUnit_Bid_Type : Swift.String, Swift.Decodable {
+    case Amazon
+    case Prebid
     public init?(rawValue: Swift.String)
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
       get
     }
   }
-  @objc public static let PWAdMediatorType_AdColony: Swift.String
-  @objc public static let PWAdMediatorType_Vungle: Swift.String
-  @objc public static let PWAdMediatorType_Smaato: Swift.String
-  public var type: Playwire.PWAdMediatorConfig.PWAdMediatorType {
+  public var bidder: Playwire.PWRampConfig_AdUnit_Bid.PWRampConfig_AdUnit_Bid_Type {
     get
   }
-  @objc public var adcolony_appId: Swift.String? {
+  public var params: Playwire.PWRampConfig_AdUnit_Bid_Params? {
     get
   }
-  @objc public var adcolony_zones: Swift.Array<Swift.String>? {
-    get
-  }
-  public var adcolony_showPrePopup: Swift.Bool? {
-    get
-  }
-  public var adcolony_showPostPopup: Swift.Bool? {
-    get
-  }
-  @objc public var vungle_placements: Swift.Array<Swift.String>? {
-    get
-  }
-  @objc public var vungle_userId: Swift.String? {
-    get
-  }
-  public var vungle_startMuted: Swift.Bool? {
-    get
-  }
-  @objc public var smaato_publisherId: Swift.String? {
-    get
-  }
-  public var smaato_gpsEnabled: Swift.Bool? {
+  public var sizes: [[Swift.Int]]? {
     get
   }
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWSchainConfig : ObjectiveC.NSObject, Swift.Decodable {
-  @objc @_hasMissingDesignatedInitializers public class SchainNodeConfig : ObjectiveC.NSObject, Swift.Decodable {
-    public var asi: Swift.String {
-      get
-    }
-    public var sid: Swift.String {
-      get
-    }
-    public var hp: Swift.Int {
-      get
-    }
-    public var dictionary: [Swift.String : Any] {
-      get
-    }
-    @objc deinit
-    required public init(from decoder: Swift.Decoder) throws
-  }
-  @objc public var ver: Swift.String {
-    get
-  }
-  @objc public var complete: Swift.Int {
-    get
-  }
-  @objc public var nodes: [Playwire.PWSchainConfig.SchainNodeConfig] {
-    get
-  }
-  @objc public var dictionary: [Swift.String : Any] {
-    @objc get
-  }
-  @objc deinit
-  required public init(from decoder: Swift.Decoder) throws
-}
-@objc @_hasMissingDesignatedInitializers @objcMembers public class PWBannerRefresh : ObjectiveC.NSObject, Swift.Decodable {
-  public var autoTime: Swift.Int? {
-    get
-  }
-  public var manualTime: Swift.Int? {
-    get
-  }
-  public var manualCount: Swift.Int? {
+@objc public class PWRampConfig_AdUnit_Bid_Params : ObjectiveC.NSObject, Swift.Decodable {
+  public var adUnitId: Swift.String {
     get
   }
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
 }
-@available(*, unavailable)
-@objc extension Playwire.PWAdMediatorConfig {
-  @objc dynamic public var adcolony_shouldShowPrePopup: Foundation.NSNumber? {
-    @objc get
+@objc @_inheritsConvenienceInitializers public class PWRampConfigAdUnitRefresh : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWRampConfigAdUnitRefreshType : Swift.String, Swift.Decodable {
+    case No
+    case Auto
+    case Manual
+    case Hybrid
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
   }
-  @objc dynamic public var adcolony_shouldShowPostPopup: Foundation.NSNumber? {
-    @objc get
+  public static let PWRampConfigAdUnitRefresh_No: Swift.String
+  public static let PWRampConfigAdUnitRefresh_Auto: Swift.String
+  public static let PWRampConfigAdUnitRefresh_Manual: Swift.String
+  public static let PWRampConfigAdUnitRefresh_Hybrid: Swift.String
+  public var type: Playwire.PWRampConfigAdUnitRefresh.PWRampConfigAdUnitRefreshType? {
+    get
   }
-  @objc dynamic public var vungle_shouldStartMuted: Foundation.NSNumber? {
-    @objc get
+  public var rate: Swift.Int? {
+    get
   }
-}
-@objc public protocol PWAdNetworkRegistrable {
-  @objc static func register()
-}
-@objc public protocol PWAdMediator {
-  @objc var config: Playwire.PWAdMediatorConfig? { get set }
-  @objc init()
-  @objc func setup()
-  @objc func enableGDPR(_ enabled: Swift.Bool)
-  @objc func configure(request: GoogleMobileAds.GADRequest)
-}
-extension Foundation.Date {
-  public static func timestamp() -> Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
 }
 @objc public protocol PWViewAdDelegate {
   @objc func viewAdDidLoad(_ ad: Playwire.PWViewAd)
@@ -608,7 +677,7 @@ extension Foundation.Date {
   @objc deinit
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class PlaywireSDK : ObjectiveC.NSObject {
-  @objc public var config: Playwire.PWAdUnitStoreConfig? {
+  @objc public var config: Playwire.PWConfig? {
     get
   }
   @objc public static let shared: Playwire.PlaywireSDK
@@ -623,9 +692,6 @@ extension Foundation.Date {
   @objc deinit
 }
 extension Playwire.PWAdServerConfig.PWAdServerType : Swift.RawRepresentable {}
-extension Playwire.PWUMPConfig.PWUMPLocation : Swift.Equatable {}
-extension Playwire.PWUMPConfig.PWUMPLocation : Swift.Hashable {}
-extension Playwire.PWUMPConfig.PWUMPLocation : Swift.RawRepresentable {}
 extension Playwire.PWAdUnit.PWAdBidStrategyType : Swift.Equatable {}
 extension Playwire.PWAdUnit.PWAdBidStrategyType : Swift.Hashable {}
 extension Playwire.PWAdUnit.PWAdBidStrategyType : Swift.RawRepresentable {}
@@ -635,3 +701,12 @@ extension Playwire.PWAdUnit.PWAdMode : Swift.RawRepresentable {}
 extension Playwire.PWAdMediatorConfig.PWAdMediatorType : Swift.Equatable {}
 extension Playwire.PWAdMediatorConfig.PWAdMediatorType : Swift.Hashable {}
 extension Playwire.PWAdMediatorConfig.PWAdMediatorType : Swift.RawRepresentable {}
+extension Playwire.PWRampConfig_AdUnit.PWRampConfigAdUnitUnit : Swift.Equatable {}
+extension Playwire.PWRampConfig_AdUnit.PWRampConfigAdUnitUnit : Swift.Hashable {}
+extension Playwire.PWRampConfig_AdUnit.PWRampConfigAdUnitUnit : Swift.RawRepresentable {}
+extension Playwire.PWRampConfig_AdUnit_Bid.PWRampConfig_AdUnit_Bid_Type : Swift.Equatable {}
+extension Playwire.PWRampConfig_AdUnit_Bid.PWRampConfig_AdUnit_Bid_Type : Swift.Hashable {}
+extension Playwire.PWRampConfig_AdUnit_Bid.PWRampConfig_AdUnit_Bid_Type : Swift.RawRepresentable {}
+extension Playwire.PWRampConfigAdUnitRefresh.PWRampConfigAdUnitRefreshType : Swift.Equatable {}
+extension Playwire.PWRampConfigAdUnitRefresh.PWRampConfigAdUnitRefreshType : Swift.Hashable {}
+extension Playwire.PWRampConfigAdUnitRefresh.PWRampConfigAdUnitRefreshType : Swift.RawRepresentable {}
