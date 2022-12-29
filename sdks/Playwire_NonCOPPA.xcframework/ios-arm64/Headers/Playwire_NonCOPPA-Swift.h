@@ -267,6 +267,13 @@ SWIFT_CLASS("_TtC17Playwire_NonCOPPA14Playwire_Fyber")
 @end
 
 
+SWIFT_CLASS("_TtC17Playwire_NonCOPPA15Playwire_Pangle")
+@interface Playwire_Pangle : NSObject <PWAdNetworkRegistrable>
++ (void)register;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 SWIFT_CLASS("_TtC17Playwire_NonCOPPA15Playwire_Prebid")
 @interface Playwire_Prebid : NSObject <PWAdNetworkRegistrable>
 + (void)register;

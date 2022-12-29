@@ -6,11 +6,18 @@ import DTBiOSSDK
 import Foundation
 import GoogleMobileAds
 import IASDKCore
+import PAGAdSDK
+import PangleAdapter
 import Playwire
 import PrebidMobile
 import Swift
 import UIKit
 import _Concurrency
+@_inheritsConvenienceInitializers @objc public class Playwire_Pangle : ObjectiveC.NSObject, Playwire.PWAdNetworkRegistrable {
+  @objc public class func register()
+  @objc override dynamic public init()
+  @objc deinit
+}
 @objc @_inheritsConvenienceInitializers @objcMembers public class PWC_PBD : ObjectiveC.NSObject {
   @objc public static let EVT_prebidRequestSuccess: Swift.String
   @objc public static let EVT_prebidRequestSuccess_response: Swift.String

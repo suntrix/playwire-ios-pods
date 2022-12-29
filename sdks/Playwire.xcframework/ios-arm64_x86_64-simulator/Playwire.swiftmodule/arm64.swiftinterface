@@ -9,7 +9,16 @@ import Swift
 import UIKit
 import UserMessagingPlatform
 import _Concurrency
-@objc @_inheritsConvenienceInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWViewAd : UIKit.UIView {
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerViewInline : Playwire.PWBannerViewBase {
+  @_Concurrency.MainActor(unsafe) public var mode: Playwire.PWAdUnit.PWAdMode? {
+    @_Concurrency.MainActor(unsafe) get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override public func load(params: Playwire.PWLoadParams)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWViewAd : UIKit.UIView {
   @objc @_Concurrency.MainActor(unsafe) public var adUnitName: Swift.String? {
     @objc get
     @objc set(newName)
@@ -22,12 +31,11 @@ import _Concurrency
   @objc @_Concurrency.MainActor(unsafe) weak public var viewController: UIKit.UIViewController?
   @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
   @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
-  @objc @_Concurrency.MainActor(unsafe) convenience public init(adUnitName: Swift.String, controller: UIKit.UIViewController?, delegate: Playwire.PWViewAdDelegate? = nil)
   @objc @_Concurrency.MainActor(unsafe) convenience public init(adUnitName: Swift.String, delegate: Playwire.PWViewAdDelegate? = nil)
   @objc @_Concurrency.MainActor(unsafe) convenience public init(adUnitName: Swift.String, controller: UIKit.UIViewController?)
   @objc override dynamic public func awakeFromNib()
   @objc @_Concurrency.MainActor(unsafe) public func load()
-  @objc @_Concurrency.MainActor(unsafe) public func load(customTargets: [Swift.String : Swift.String]?)
+  @objc @_Concurrency.MainActor(unsafe) public func load(params: Playwire.PWLoadParams)
   @objc @_Concurrency.MainActor(unsafe) public var isLoaded: Swift.Bool {
     @objc get
   }
@@ -163,6 +171,8 @@ import _Concurrency
   @objc public static let PWAdBidStrategyType_Combined: Swift.String
   public enum PWAdMode : Swift.String, Swift.Decodable {
     case Banner
+    case BannerAnchored
+    case BannerInline
     case Interstitial
     case Rewarded
     case AppOpenAd
@@ -175,6 +185,8 @@ import _Concurrency
     }
   }
   @objc public static let PWAdMode_Banner: Swift.String
+  @objc public static let PWAdMode_BannerAnchored: Swift.String
+  @objc public static let PWAdMode_BannerInline: Swift.String
   @objc public static let PWAdMode_Interstitial: Swift.String
   @objc public static let PWAdMode_Rewarded: Swift.String
   @objc public static let PWAdMode_AppOpenAd: Swift.String
@@ -217,6 +229,7 @@ import _Concurrency
     case Chartboost
     case IronSource
     case Vungle
+    case Pangle
     public init?(rawValue: Swift.String)
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
@@ -289,29 +302,17 @@ import _Concurrency
   public typealias PWNotifierAction = (Swift.AnyObject, Swift.String, Swift.Bool, [Swift.String : Any], [Swift.String : Any]) -> Swift.Void
   @objc @discardableResult
   public func addListener(_ listener: Swift.AnyObject, filter: @escaping Playwire.PWNotifier.PWNotifierFilter, action: @escaping Playwire.PWNotifier.PWNotifierAction) -> Playwire.PWListenerToken
-  @objc public func notify(event: Swift.String, critical: Swift.Bool, context: [Swift.String : Any]?, data: [Swift.String : Any])
+  @objc public func notify(event: Swift.String, critical: Swift.Bool, context: [Swift.String : Any]?, data: [Swift.String : Any]?)
   @objc override dynamic public init()
   @objc deinit
 }
-@objc @_inheritsConvenienceInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerView : Playwire.PWViewAd {
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerView : Playwire.PWBannerViewBase {
   @_Concurrency.MainActor(unsafe) public var mode: Playwire.PWAdUnit.PWAdMode? {
     @_Concurrency.MainActor(unsafe) get
   }
   @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
   @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
   @objc deinit
-}
-extension Playwire.PWBannerView : GoogleMobileAds.GADBannerViewDelegate {
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidReceiveAd(_ bannerView: GoogleMobileAds.GADBannerView)
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerView(_ bannerView: GoogleMobileAds.GADBannerView, didFailToReceiveAdWithError error: Swift.Error)
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidRecordImpression(_ bannerView: GoogleMobileAds.GADBannerView)
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidRecordClick(_ bannerView: GoogleMobileAds.GADBannerView)
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewWillPresentScreen(_ bannerView: GoogleMobileAds.GADBannerView)
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewWillDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
-}
-extension Playwire.PWBannerView : GoogleMobileAds.GADAdSizeDelegate {
-  @_Concurrency.MainActor(unsafe) @objc dynamic public func adView(_ bannerView: GoogleMobileAds.GADBannerView, willChangeAdSizeTo size: GoogleMobileAds.GADAdSize)
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class PWRewardedInterstitial : Playwire.PWFullScreenAd {
   @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWFullScreenAdDelegate? = nil)
@@ -321,10 +322,7 @@ extension Playwire.PWBannerView : GoogleMobileAds.GADAdSizeDelegate {
 @objc @_hasMissingDesignatedInitializers @objcMembers public class PWAppOpenAd : Playwire.PWFullScreenAd {
   @objc public var autoReloadOnExpiration: Swift.Bool
   @objc convenience public init(adUnitName: Swift.String, delegate: Playwire.PWFullScreenAdDelegate? = nil)
-  @objc override public func load()
-  @objc override public func load(customTargets: [Swift.String : Swift.String]?)
-  @objc public func load(orientation: UIKit.UIInterfaceOrientation)
-  @objc public func load(orientation: UIKit.UIInterfaceOrientation, customTargets: [Swift.String : Swift.String]?)
+  @objc override public func load(params: Playwire.PWLoadParams)
   @objc override public func show(fromViewController viewController: UIKit.UIViewController)
   @objc deinit
 }
@@ -340,7 +338,7 @@ extension Playwire.PWBannerView : GoogleMobileAds.GADAdSizeDelegate {
   }
   @objc weak public var delegate: Playwire.PWFullScreenAdDelegate?
   @objc public func load()
-  @objc public func load(customTargets: [Swift.String : Swift.String]?)
+  @objc public func load(params: Playwire.PWLoadParams)
   @objc public func show(fromViewController viewController: UIKit.UIViewController)
   @objc deinit
 }
@@ -410,21 +408,37 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let EVT_gamRequestFail_duration: Swift.String
   @objc public static let EVT_gamImpression: Swift.String
   @objc public static let EVT_gamImpression_timestamp: Swift.String
-  @objc public static let EVT_CTX_configType: Swift.String
-  @objc public static let EVT_CTX_configType_Backend: Swift.String
-  @objc public static let EVT_CTX_configType_Cache: Swift.String
-  @objc public static let EVT_configSuccess: Swift.String
-  @objc public static let EVT_configSuccess_config: Swift.String
-  @objc public static let EVT_configFail: Swift.String
-  @objc public static let EVT_configFail_config: Swift.String
-  @objc public static let EVT_configFail_error: Swift.String
-  @objc public static let EVT_configFail_error_empty_file: Swift.String
-  @objc public static let EVT_configFail_error_request_building: Swift.String
-  @objc public static let EVT_configFileLoading: Swift.String
-  @objc public static let EVT_configFileLoading_status_code: Swift.String
-  @objc public static let EVT_cachedConfigFileSavingFail: Swift.String
-  @objc public static let EVT_cachedConfigFileFail_error: Swift.String
-  @objc public static let EVT_cachedConfigFileSavingSuccess: Swift.String
+  @objc public static let EVT_configMetadata: Swift.String
+  @objc public static let EVT_configMetadata_Publisher: Swift.String
+  @objc public static let EVT_configMetadata_App: Swift.String
+  @objc public static let EVT_configMetadata_Version: Swift.String
+  @objc public static let EVT_configMetadata_Backend: Swift.String
+  @objc public static let EVT_configMetadata_SkipCache: Swift.String
+  @objc public static let EVT_configMetadata_RampEnvironment: Swift.String
+  @objc public static let EVT_configMetadata_Format: Swift.String
+  @objc public static let EVT_configMetadata_Format_Platform: Swift.String
+  @objc public static let EVT_configMetadata_Format_Ramp: Swift.String
+  @objc public static let EVT_configMetadata_GitBranch: Swift.String
+  @objc public static let EVT_configMetadata_GitToken: Swift.String
+  @objc public static let EVT_configCacheSuccess: Swift.String
+  @objc public static let EVT_configCacheEmpty: Swift.String
+  @objc public static let EVT_configCacheUpdated: Swift.String
+  @objc public static let EVT_configRetry: Swift.String
+  @objc public static let EVT_configRetry_Count: Swift.String
+  @objc public static let EVT_configRetry_Total: Swift.String
+  @objc public static let EVT_configHttpError: Swift.String
+  @objc public static let EVT_configHttpError_Error: Swift.String
+  @objc public static let EVT_configHttpSuccess: Swift.String
+  @objc public static let EVT_configHttpSuccess_Config: Swift.String
+  @objc public static let EVT_configHttpFailure: Swift.String
+  @objc public static let EVT_configHttpFailure_Status: Swift.String
+  @objc public static let EVT_configHttpFailure_Retry: Swift.String
+  @objc public static let EVT_configParserSuccess: Swift.String
+  @objc public static let EVT_configParserError: Swift.String
+  @objc public static let EVT_configParserError_Empty: Swift.String
+  @objc public static let EVT_configParser_Text: Swift.String
+  @objc public static let EVT_configDataLoaderSuccess: Swift.String
+  @objc public static let EVT_configDataLoaderError: Swift.String
   @objc public static let EVT_adInitError: Swift.String
   @objc public static let EVT_adInitError_error: Swift.String
   @objc public static let EVT_adInitError_error_alreadyInitialized: Swift.String
@@ -439,6 +453,7 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let EVT_adLoadError_error_notPrepared: Swift.String
   @objc public static let EVT_adLoadError_error_notInternalRep: Swift.String
   @objc public static let EVT_adLoadError_error_notLoaded: Swift.String
+  @objc public static let EVT_adLoadError_error_missingRequiredLoadParams: Swift.String
   @objc public static let EVT_adRefreshError: Swift.String
   @objc public static let EVT_adRefreshError_error: Swift.String
   @objc public static let EVT_adRefreshError_error_maxReached: Swift.String
@@ -457,6 +472,23 @@ public typealias PWAdBid = [Swift.AnyHashable : Any]
   @objc public static let EVT_adLoadWarning_autoReload: Swift.String
   @objc override dynamic public init()
   @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerViewBase : Playwire.PWViewAd {
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+extension Playwire.PWBannerViewBase : GoogleMobileAds.GADBannerViewDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidReceiveAd(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerView(_ bannerView: GoogleMobileAds.GADBannerView, didFailToReceiveAdWithError error: Swift.Error)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidRecordImpression(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidRecordClick(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewWillPresentScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewWillDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+}
+extension Playwire.PWBannerViewBase : GoogleMobileAds.GADAdSizeDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func adView(_ bannerView: GoogleMobileAds.GADBannerView, willChangeAdSizeTo size: GoogleMobileAds.GADAdSize)
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWNativeView : Playwire.PWViewAd {
   @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
@@ -480,6 +512,13 @@ extension Playwire.PWNativeView : GoogleMobileAds.GADNativeAdDelegate {
 }
 @objc public protocol PWAdNetworkRegistrable {
   @objc static func register()
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class PWLoadParams : ObjectiveC.NSObject {
+  @objc public func withTargeting(_ targeting: [Swift.String : Swift.String]) -> Playwire.PWLoadParams
+  @objc public func withWidth(_ width: CoreGraphics.CGFloat) -> Playwire.PWLoadParams
+  @objc public func withDeviceOrientation(_ orientation: UIKit.UIInterfaceOrientation) -> Playwire.PWLoadParams
+  @objc override dynamic public init()
+  @objc deinit
 }
 @objc public protocol PWAdMediator {
   @objc init()
@@ -541,6 +580,8 @@ extension Foundation.Date {
 @objc public class PWRampConfig_AdUnit : ObjectiveC.NSObject, Swift.Decodable {
   public enum PWRampConfigAdUnitUnit : Swift.String, Swift.Decodable {
     case Banner
+    case BannerAnchored
+    case BannerInline
     case Interstitial
     case Rewarded
     case AppOpenAd
@@ -553,6 +594,8 @@ extension Foundation.Date {
     }
   }
   public static let PWRampConfig_AdUnit_Unit_Banner: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_BannerAnchored: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_BannerInline: Swift.String
   public static let PWRampConfig_AdUnit_Unit_Interstitial: Swift.String
   public static let PWRampConfig_AdUnit_Unit_Rewarded: Swift.String
   public static let PWRampConfig_AdUnit_Unit_AppOpenAd: Swift.String
@@ -642,6 +685,15 @@ extension Foundation.Date {
   @objc func viewAdDidDismissFullScreenContent(_ ad: Playwire.PWViewAd)
   @objc func viewAdDidRecordImpression(_ ad: Playwire.PWViewAd)
   @objc func viewAdDidRecordClick(_ ad: Playwire.PWViewAd)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerViewAnchored : Playwire.PWBannerViewBase {
+  @_Concurrency.MainActor(unsafe) public var mode: Playwire.PWAdUnit.PWAdMode? {
+    @_Concurrency.MainActor(unsafe) get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override public func load(params: Playwire.PWLoadParams)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class PWNativeViewContent : ObjectiveC.NSObject {
   @objc public var headline: Swift.String? {

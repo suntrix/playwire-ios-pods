@@ -282,6 +282,10 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)PWAdBidStrategyType_Combined SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_Banner;)
 + (NSString * _Nonnull)PWAdMode_Banner SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_BannerAnchored;)
++ (NSString * _Nonnull)PWAdMode_BannerAnchored SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_BannerInline;)
++ (NSString * _Nonnull)PWAdMode_BannerInline SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_Interstitial;)
 + (NSString * _Nonnull)PWAdMode_Interstitial SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull PWAdMode_Rewarded;)
@@ -320,6 +324,7 @@ SWIFT_CLASS("_TtC8Playwire11PWAppConfig")
 @end
 
 @protocol PWFullScreenAdDelegate;
+@class PWLoadParams;
 @class UIViewController;
 
 SWIFT_CLASS("_TtC8Playwire14PWFullScreenAd")
@@ -328,7 +333,7 @@ SWIFT_CLASS("_TtC8Playwire14PWFullScreenAd")
 @property (nonatomic, readonly) BOOL isLoaded;
 @property (nonatomic, weak) id <PWFullScreenAdDelegate> _Nullable delegate;
 - (void)load;
-- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
+- (void)loadWithParams:(PWLoadParams * _Nonnull)params;
 - (void)showFromViewController:(UIViewController * _Nonnull)viewController;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
@@ -339,10 +344,7 @@ SWIFT_CLASS("_TtC8Playwire11PWAppOpenAd")
 @interface PWAppOpenAd : PWFullScreenAd
 @property (nonatomic) BOOL autoReloadOnExpiration;
 - (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWFullScreenAdDelegate> _Nullable)delegate;
-- (void)load;
-- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
-- (void)loadWithOrientation:(UIInterfaceOrientation)orientation;
-- (void)loadWithOrientation:(UIInterfaceOrientation)orientation customTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
+- (void)loadWithParams:(PWLoadParams * _Nonnull)params;
 - (void)showFromViewController:(UIViewController * _Nonnull)viewController;
 @end
 
@@ -366,31 +368,46 @@ SWIFT_CLASS("_TtC8Playwire8PWViewAd")
 @property (nonatomic, weak) UIViewController * _Nullable viewController;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName controller:(UIViewController * _Nullable)controller delegate:(id <PWViewAdDelegate> _Nullable)delegate;
 - (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName delegate:(id <PWViewAdDelegate> _Nullable)delegate;
 - (nonnull instancetype)initWithAdUnitName:(NSString * _Nonnull)adUnitName controller:(UIViewController * _Nullable)controller;
 - (void)awakeFromNib;
 - (void)load;
-- (void)loadWithCustomTargets:(NSDictionary<NSString *, NSString *> * _Nullable)customTargets;
+- (void)loadWithParams:(PWLoadParams * _Nonnull)params;
 @property (nonatomic, readonly) BOOL isLoaded;
 - (void)refresh;
 @end
 
 
-SWIFT_CLASS("_TtC8Playwire12PWBannerView")
-@interface PWBannerView : PWViewAd
+SWIFT_CLASS("_TtC8Playwire16PWBannerViewBase")
+@interface PWBannerViewBase : PWViewAd
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 @end
 
+
+SWIFT_CLASS("_TtC8Playwire12PWBannerView")
+@interface PWBannerView : PWBannerViewBase
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire20PWBannerViewAnchored")
+@interface PWBannerViewAnchored : PWBannerViewBase
+- (void)loadWithParams:(PWLoadParams * _Nonnull)params;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 @class GADBannerView;
 
-@interface PWBannerView (SWIFT_EXTENSION(Playwire)) <GADAdSizeDelegate>
+@interface PWBannerViewBase (SWIFT_EXTENSION(Playwire)) <GADAdSizeDelegate>
 - (void)adView:(GADBannerView * _Nonnull)bannerView willChangeAdSizeTo:(GADAdSize)size;
 @end
 
 
-@interface PWBannerView (SWIFT_EXTENSION(Playwire)) <GADBannerViewDelegate>
+@interface PWBannerViewBase (SWIFT_EXTENSION(Playwire)) <GADBannerViewDelegate>
 - (void)bannerViewDidReceiveAd:(GADBannerView * _Nonnull)bannerView;
 - (void)bannerView:(GADBannerView * _Nonnull)bannerView didFailToReceiveAdWithError:(NSError * _Nonnull)error;
 - (void)bannerViewDidRecordImpression:(GADBannerView * _Nonnull)bannerView;
@@ -398,6 +415,14 @@ SWIFT_CLASS("_TtC8Playwire12PWBannerView")
 - (void)bannerViewWillPresentScreen:(GADBannerView * _Nonnull)bannerView;
 - (void)bannerViewWillDismissScreen:(GADBannerView * _Nonnull)bannerView;
 - (void)bannerViewDidDismissScreen:(GADBannerView * _Nonnull)bannerView;
+@end
+
+
+SWIFT_CLASS("_TtC8Playwire18PWBannerViewInline")
+@interface PWBannerViewInline : PWBannerViewBase
+- (void)loadWithParams:(PWLoadParams * _Nonnull)params;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)coder OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
@@ -459,36 +484,68 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_gamImpression SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_gamImpression_timestamp;)
 + (NSString * _Nonnull)EVT_gamImpression_timestamp SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_configType;)
-+ (NSString * _Nonnull)EVT_CTX_configType SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_configType_Backend;)
-+ (NSString * _Nonnull)EVT_CTX_configType_Backend SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_CTX_configType_Cache;)
-+ (NSString * _Nonnull)EVT_CTX_configType_Cache SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configSuccess;)
-+ (NSString * _Nonnull)EVT_configSuccess SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configSuccess_config;)
-+ (NSString * _Nonnull)EVT_configSuccess_config SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail;)
-+ (NSString * _Nonnull)EVT_configFail SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_config;)
-+ (NSString * _Nonnull)EVT_configFail_config SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_error;)
-+ (NSString * _Nonnull)EVT_configFail_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_error_empty_file;)
-+ (NSString * _Nonnull)EVT_configFail_error_empty_file SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFail_error_request_building;)
-+ (NSString * _Nonnull)EVT_configFail_error_request_building SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFileLoading;)
-+ (NSString * _Nonnull)EVT_configFileLoading SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configFileLoading_status_code;)
-+ (NSString * _Nonnull)EVT_configFileLoading_status_code SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_cachedConfigFileSavingFail;)
-+ (NSString * _Nonnull)EVT_cachedConfigFileSavingFail SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_cachedConfigFileFail_error;)
-+ (NSString * _Nonnull)EVT_cachedConfigFileFail_error SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_cachedConfigFileSavingSuccess;)
-+ (NSString * _Nonnull)EVT_cachedConfigFileSavingSuccess SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata;)
++ (NSString * _Nonnull)EVT_configMetadata SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata_Publisher;)
++ (NSString * _Nonnull)EVT_configMetadata_Publisher SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata_App;)
++ (NSString * _Nonnull)EVT_configMetadata_App SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata_Version;)
++ (NSString * _Nonnull)EVT_configMetadata_Version SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata_Backend;)
++ (NSString * _Nonnull)EVT_configMetadata_Backend SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata_SkipCache;)
++ (NSString * _Nonnull)EVT_configMetadata_SkipCache SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata_RampEnvironment;)
++ (NSString * _Nonnull)EVT_configMetadata_RampEnvironment SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata_Format;)
++ (NSString * _Nonnull)EVT_configMetadata_Format SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata_Format_Platform;)
++ (NSString * _Nonnull)EVT_configMetadata_Format_Platform SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata_Format_Ramp;)
++ (NSString * _Nonnull)EVT_configMetadata_Format_Ramp SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata_GitBranch;)
++ (NSString * _Nonnull)EVT_configMetadata_GitBranch SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configMetadata_GitToken;)
++ (NSString * _Nonnull)EVT_configMetadata_GitToken SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configCacheSuccess;)
++ (NSString * _Nonnull)EVT_configCacheSuccess SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configCacheEmpty;)
++ (NSString * _Nonnull)EVT_configCacheEmpty SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configCacheUpdated;)
++ (NSString * _Nonnull)EVT_configCacheUpdated SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configRetry;)
++ (NSString * _Nonnull)EVT_configRetry SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configRetry_Count;)
++ (NSString * _Nonnull)EVT_configRetry_Count SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configRetry_Total;)
++ (NSString * _Nonnull)EVT_configRetry_Total SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configHttpError;)
++ (NSString * _Nonnull)EVT_configHttpError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configHttpError_Error;)
++ (NSString * _Nonnull)EVT_configHttpError_Error SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configHttpSuccess;)
++ (NSString * _Nonnull)EVT_configHttpSuccess SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configHttpSuccess_Config;)
++ (NSString * _Nonnull)EVT_configHttpSuccess_Config SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configHttpFailure;)
++ (NSString * _Nonnull)EVT_configHttpFailure SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configHttpFailure_Status;)
++ (NSString * _Nonnull)EVT_configHttpFailure_Status SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configHttpFailure_Retry;)
++ (NSString * _Nonnull)EVT_configHttpFailure_Retry SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configParserSuccess;)
++ (NSString * _Nonnull)EVT_configParserSuccess SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configParserError;)
++ (NSString * _Nonnull)EVT_configParserError SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configParserError_Empty;)
++ (NSString * _Nonnull)EVT_configParserError_Empty SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configParser_Text;)
++ (NSString * _Nonnull)EVT_configParser_Text SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configDataLoaderSuccess;)
++ (NSString * _Nonnull)EVT_configDataLoaderSuccess SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_configDataLoaderError;)
++ (NSString * _Nonnull)EVT_configDataLoaderError SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adInitError;)
 + (NSString * _Nonnull)EVT_adInitError SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adInitError_error;)
@@ -517,6 +574,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)EVT_adLoadError_error_notInternalRep SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adLoadError_error_notLoaded;)
 + (NSString * _Nonnull)EVT_adLoadError_error_notLoaded SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adLoadError_error_missingRequiredLoadParams;)
++ (NSString * _Nonnull)EVT_adLoadError_error_missingRequiredLoadParams SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adRefreshError;)
 + (NSString * _Nonnull)EVT_adRefreshError SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull EVT_adRefreshError_error;)
@@ -610,6 +669,15 @@ SWIFT_CLASS("_TtC8Playwire15PWListenerToken")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
+
+SWIFT_CLASS("_TtC8Playwire12PWLoadParams")
+@interface PWLoadParams : NSObject
+- (PWLoadParams * _Nonnull)withTargeting:(NSDictionary<NSString *, NSString *> * _Nonnull)targeting SWIFT_WARN_UNUSED_RESULT;
+- (PWLoadParams * _Nonnull)withWidth:(CGFloat)width SWIFT_WARN_UNUSED_RESULT;
+- (PWLoadParams * _Nonnull)withDeviceOrientation:(UIInterfaceOrientation)orientation SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 @protocol PWNativeViewFactory;
 
 SWIFT_CLASS("_TtC8Playwire12PWNativeView")
@@ -673,7 +741,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PWNotifier *
 - (void)startConsoleLogger;
 - (void)startConsoleLoggerWithFilter:(BOOL (^ _Nonnull)(NSString * _Nonnull, BOOL, NSDictionary<NSString *, id> * _Nonnull))filter;
 - (PWListenerToken * _Nonnull)addListener:(id _Nonnull)listener filter:(BOOL (^ _Nonnull)(NSString * _Nonnull, BOOL, NSDictionary<NSString *, id> * _Nonnull))filter action:(void (^ _Nonnull)(id _Nonnull, NSString * _Nonnull, BOOL, NSDictionary<NSString *, id> * _Nonnull, NSDictionary<NSString *, id> * _Nonnull))action;
-- (void)notifyWithEvent:(NSString * _Nonnull)event critical:(BOOL)critical context:(NSDictionary<NSString *, id> * _Nullable)context data:(NSDictionary<NSString *, id> * _Nonnull)data;
+- (void)notifyWithEvent:(NSString * _Nonnull)event critical:(BOOL)critical context:(NSDictionary<NSString *, id> * _Nullable)context data:(NSDictionary<NSString *, id> * _Nullable)data;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
