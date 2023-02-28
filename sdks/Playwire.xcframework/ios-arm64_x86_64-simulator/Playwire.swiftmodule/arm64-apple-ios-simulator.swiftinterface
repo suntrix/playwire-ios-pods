@@ -732,6 +732,7 @@ extension Foundation.Date {
   @objc public var config: Playwire.PWConfig? {
     get
   }
+  @objc public var test: Swift.Bool
   @objc public static let shared: Playwire.PlaywireSDK
   @objc public func initialize(publisherId: Swift.String, appId: Swift.String, viewController: UIKit.UIViewController, completionHandler: @escaping () -> Swift.Void)
   @objc public var adUnitsDictionary: [Swift.String : [Swift.String]] {
@@ -740,7 +741,7 @@ extension Foundation.Date {
   public func set(type: Playwire.PWAdBidder.Type, for serverType: Playwire.PWAdServerConfig.PWAdServerType)
   public func get(factoryFor serverType: Playwire.PWAdServerConfig.PWAdServerType) -> Playwire.PWAdBidder.Type?
   @objc public func set(type: Playwire.PWAdMediator.Type, for mediator: Swift.String)
-  @objc open func configure(request: GoogleMobileAds.GADRequest)
+  @objc open func configure(request: GoogleMobileAds.GAMRequest)
   @objc deinit
 }
 extension Playwire.PWAdServerConfig.PWAdServerType : Swift.RawRepresentable {}

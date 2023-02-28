@@ -834,16 +834,18 @@ SWIFT_PROTOCOL("_TtP8Playwire16PWViewAdDelegate_")
 - (void)viewAdDidRecordClick:(PWViewAd * _Nonnull)ad;
 @end
 
+@class GAMRequest;
 
 SWIFT_CLASS("_TtC8Playwire11PlaywireSDK")
 @interface PlaywireSDK : NSObject
 @property (nonatomic, readonly, strong) PWConfig * _Nullable config;
+@property (nonatomic) BOOL test;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) PlaywireSDK * _Nonnull shared;)
 + (PlaywireSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 - (void)initializeWithPublisherId:(NSString * _Nonnull)publisherId appId:(NSString * _Nonnull)appId viewController:(UIViewController * _Nonnull)viewController completionHandler:(void (^ _Nonnull)(void))completionHandler;
 @property (nonatomic, readonly, copy) NSDictionary<NSString *, NSArray<NSString *> *> * _Nonnull adUnitsDictionary;
 - (void)setWithType:(Class <PWAdMediator> _Nonnull)type for:(NSString * _Nonnull)mediator;
-- (void)configureWithRequest:(GADRequest * _Nonnull)request;
+- (void)configureWithRequest:(GAMRequest * _Nonnull)request;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
