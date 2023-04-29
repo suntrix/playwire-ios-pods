@@ -260,6 +260,13 @@ SWIFT_CLASS("_TtC17Playwire_NonCOPPA15Playwire_Amazon")
 @end
 
 
+SWIFT_CLASS("_TtC17Playwire_NonCOPPA17Playwire_AppLovin")
+@interface Playwire_AppLovin : NSObject <PWAdNetworkRegistrable>
++ (void)register;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 SWIFT_CLASS("_TtC17Playwire_NonCOPPA14Playwire_Fyber")
 @interface Playwire_Fyber : NSObject <PWAdNetworkRegistrable>
 + (void)register;
@@ -279,7 +286,6 @@ SWIFT_CLASS("_TtC17Playwire_NonCOPPA15Playwire_Prebid")
 + (void)register;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
-
 
 
 #if __has_attribute(external_source_symbol)
