@@ -117,7 +117,7 @@ framework module PrebidMobile {
     header "PBMExternalLinkHandler.h"
     header "PBMURLOpenAttempterBlock.h"
     header "PBMExternalURLOpenCallbacks.h"
-    header "PBMClickthroughBrowserOpener.h"
+    header "PBMSafariVCOpener.h"
     header "PBMDeepLinkPlusHelper.h"
     header "PBMDeepLinkPlusHelper+PBMExternalLinkHandler.h"
     
@@ -167,6 +167,6 @@ framework module PrebidMobile {
 }
 
 module PrebidMobile.Swift {
-    header "PrebidMobile-Swift.h"
-    requires objc
+  header "PrebidMobile-Swift.h"
+  requires objc
 }

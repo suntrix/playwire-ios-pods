@@ -1,0 +1,767 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.8 (swiftlang-5.8.0.124.2 clang-1403.0.22.11.100)
+// swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Playwire
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import FirebaseAnalytics
+import FirebaseCore
+import Foundation
+import GoogleMobileAds
+import Swift
+import UIKit
+import UserMessagingPlatform
+import _Concurrency
+import _StringProcessing
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerViewInline : Playwire.PWBannerViewBase {
+  @_Concurrency.MainActor(unsafe) public var mode: Playwire.PWAdUnit.PWAdMode? {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override public func load(params: Playwire.PWLoadParams)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWViewAd : UIKit.UIView {
+  @objc @_Concurrency.MainActor(unsafe) public var adUnitName: Swift.String? {
+    @objc get
+    @objc set(newName)
+  }
+  @objc @_Concurrency.MainActor(unsafe) public var autoload: Swift.Bool
+  @objc @_Concurrency.MainActor(unsafe) public var adUnit: Playwire.PWAdUnit? {
+    get
+  }
+  @objc @_Concurrency.MainActor(unsafe) weak public var delegate: (any Playwire.PWViewAdDelegate)?
+  @objc @_Concurrency.MainActor(unsafe) weak public var viewController: UIKit.UIViewController?
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @objc @_Concurrency.MainActor(unsafe) convenience public init(adUnitName: Swift.String, delegate: (any Playwire.PWViewAdDelegate)? = nil)
+  @objc @_Concurrency.MainActor(unsafe) convenience public init(adUnitName: Swift.String, controller: UIKit.UIViewController?)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func awakeFromNib()
+  @objc @_Concurrency.MainActor(unsafe) public func load()
+  @objc @_Concurrency.MainActor(unsafe) public func load(params: Playwire.PWLoadParams)
+  @objc @_Concurrency.MainActor(unsafe) public var isLoaded: Swift.Bool {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) public func refresh()
+  @objc deinit
+}
+@objc public protocol PWFullScreenAdDelegate {
+  @objc func fullScreenAdDidLoad(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidFailToLoad(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdWillPresentFullScreenContent(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdWillDismissFullScreenContent(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidDismissFullScreenContent(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidFailToPresentFullScreenContent(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidRecordImpression(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidRecordClick(_ ad: Playwire.PWFullScreenAd)
+  @objc func fullScreenAdDidUserEarn(_ ad: Playwire.PWFullScreenAd, type: Swift.String, amount: Swift.Double)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdSize : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var width: Swift.Int {
+    get
+  }
+  @objc public var height: Swift.Int {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdServerConfig : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWAdServerType : Swift.String, Swift.Hashable, Swift.Decodable {
+    case Amazon
+    case Prebid
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @objc public static let PWAdServerType_Amazon: Swift.String
+  @objc public static let PWAdServerType_Prebid: Swift.String
+  @objc public var name: Swift.String {
+    get
+  }
+  public var serverType: Playwire.PWAdServerConfig.PWAdServerType {
+    get
+  }
+  @objc public var host: Swift.String? {
+    get
+  }
+  @objc public var account: Swift.String? {
+    get
+  }
+  public var useGeo: Swift.Bool? {
+    get
+  }
+  public var isTest: Swift.Bool? {
+    get
+  }
+  public var timeout: Swift.Int? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdUnitConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var serverConfig: Swift.String {
+    get
+  }
+  @objc public var adUnitId: Swift.String {
+    get
+  }
+  @objc public var adSizes: Swift.Array<Playwire.PWAdSize>? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAppConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var gamAppId: Swift.String? {
+    get
+  }
+  @objc public var storeUrl: Swift.String? {
+    get
+  }
+  public var childProtection: Swift.Bool? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWOMConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var partnerName: Swift.String {
+    get
+  }
+  @objc public var partnerVersion: Swift.String {
+    get
+  }
+  public var apiCode: Swift.Int? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var serverConfigs: Swift.Array<Playwire.PWAdServerConfig>? {
+    get
+  }
+  @objc public var adUnits: Swift.Array<Playwire.PWAdUnit> {
+    get
+  }
+  @objc public var app: Playwire.PWAppConfig? {
+    get
+  }
+  @objc public var om: Playwire.PWOMConfig? {
+    get
+  }
+  @objc public var schain: Playwire.PWSchainConfig? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdUnit : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWAdBidStrategyType : Swift.String, Swift.Decodable {
+    case Priority
+    case Combined
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @objc public static let PWAdBidStrategyType_Priority: Swift.String
+  @objc public static let PWAdBidStrategyType_Combined: Swift.String
+  public enum PWAdMode : Swift.String, Swift.Decodable {
+    case Banner
+    case BannerAnchored
+    case BannerInline
+    case Interstitial
+    case Rewarded
+    case AppOpenAd
+    case RewardedInterstitial
+    case Native
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @objc public static let PWAdMode_Banner: Swift.String
+  @objc public static let PWAdMode_BannerAnchored: Swift.String
+  @objc public static let PWAdMode_BannerInline: Swift.String
+  @objc public static let PWAdMode_Interstitial: Swift.String
+  @objc public static let PWAdMode_Rewarded: Swift.String
+  @objc public static let PWAdMode_AppOpenAd: Swift.String
+  @objc public static let PWAdMode_RewardedInterstitial: Swift.String
+  @objc public var name: Swift.String {
+    get
+  }
+  @objc public var adUnitConfigs: Swift.Array<Playwire.PWAdUnitConfig>? {
+    get
+  }
+  public var strategy: Playwire.PWAdUnit.PWAdBidStrategyType? {
+    get
+  }
+  public var mode: Playwire.PWAdUnit.PWAdMode {
+    get
+  }
+  public var autorefreshTime: Swift.Int? {
+    get
+  }
+  @objc public var refresh: Playwire.PWBannerRefresh? {
+    get
+  }
+  @objc public var gadUnitId: Swift.String {
+    get
+  }
+  @objc public var gadSizes: Swift.Array<Playwire.PWAdSize>? {
+    get
+  }
+  @objc public var customTargets: [Swift.String : Swift.String]? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAdMediatorConfig : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWAdMediatorType : Swift.String, Swift.Decodable {
+    case AdColony
+    case AppLovin
+    case Fyber
+    case Chartboost
+    case IronSource
+    case Vungle
+    case Pangle
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @objc public static let PWAdMediatorType_AdColony: Swift.String
+  @objc public static let PWAdMediatorType_Vungle: Swift.String
+  @objc public static let PWAdMediatorType_Smaato: Swift.String
+  public var type: Playwire.PWAdMediatorConfig.PWAdMediatorType {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWSchainConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc @_hasMissingDesignatedInitializers public class SchainNodeConfig : ObjectiveC.NSObject, Swift.Decodable {
+    public var asi: Swift.String {
+      get
+    }
+    public var sid: Swift.String {
+      get
+    }
+    public var hp: Swift.Int {
+      get
+    }
+    public var dictionary: [Swift.String : Any] {
+      get
+    }
+    @objc deinit
+    required public init(from decoder: any Swift.Decoder) throws
+  }
+  @objc public var ver: Swift.String {
+    get
+  }
+  @objc public var complete: Swift.Int {
+    get
+  }
+  @objc public var nodes: [Playwire.PWSchainConfig.SchainNodeConfig] {
+    get
+  }
+  @objc public var dictionary: [Swift.String : Any] {
+    @objc get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWBannerRefresh : ObjectiveC.NSObject, Swift.Decodable {
+  public var autoTime: Swift.Int? {
+    get
+  }
+  public var manualTime: Swift.Int? {
+    get
+  }
+  public var manualCount: Swift.Int? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_hasMissingDesignatedInitializers public class PWListenerToken : ObjectiveC.NSObject {
+  @objc public func cancel()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class PWNotifier : ObjectiveC.NSObject {
+  @objc public static let shared: Playwire.PWNotifier
+  @objc public func startConsoleLogger()
+  @objc public func startConsoleLogger(filter: @escaping (Swift.String, Swift.Bool, [Swift.String : Any]) -> Swift.Bool)
+  public typealias PWNotifierFilter = (Swift.String, Swift.Bool, [Swift.String : Any]) -> Swift.Bool
+  public typealias PWNotifierAction = (Swift.AnyObject, Swift.String, Swift.Bool, [Swift.String : Any], [Swift.String : Any]) -> Swift.Void
+  @objc @discardableResult
+  public func addListener(_ listener: Swift.AnyObject, filter: @escaping Playwire.PWNotifier.PWNotifierFilter, action: @escaping Playwire.PWNotifier.PWNotifierAction) -> Playwire.PWListenerToken
+  @objc public func notify(event: Swift.String, critical: Swift.Bool, context: [Swift.String : Any]?, data: [Swift.String : Any]?)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerView : Playwire.PWBannerViewBase {
+  @_Concurrency.MainActor(unsafe) public var mode: Playwire.PWAdUnit.PWAdMode? {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWRewardedInterstitial : Playwire.PWFullScreenAd {
+  @objc convenience public init(adUnitName: Swift.String, delegate: (any Playwire.PWFullScreenAdDelegate)? = nil)
+  @objc override public func show(fromViewController viewController: UIKit.UIViewController)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWAppOpenAd : Playwire.PWFullScreenAd {
+  @objc public var autoReloadOnExpiration: Swift.Bool
+  @objc convenience public init(adUnitName: Swift.String, delegate: (any Playwire.PWFullScreenAdDelegate)? = nil)
+  @objc override public func load(params: Playwire.PWLoadParams)
+  @objc override public func show(fromViewController viewController: UIKit.UIViewController)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWInterstitial : Playwire.PWFullScreenAd {
+  @objc convenience public init(adUnitName: Swift.String, delegate: (any Playwire.PWFullScreenAdDelegate)? = nil)
+  @objc override public func show(fromViewController viewController: UIKit.UIViewController)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWFullScreenAd : ObjectiveC.NSObject {
+  @objc final public let adUnit: Playwire.PWAdUnit?
+  @objc public var isLoaded: Swift.Bool {
+    @objc get
+  }
+  @objc weak public var delegate: (any Playwire.PWFullScreenAdDelegate)?
+  @objc public func load()
+  @objc public func load(params: Playwire.PWLoadParams)
+  @objc public func show(fromViewController viewController: UIKit.UIViewController)
+  @objc deinit
+}
+extension Playwire.PWFullScreenAd : GoogleMobileAds.GADFullScreenContentDelegate {
+  @objc dynamic public func adWillPresentFullScreenContent(_ ad: any GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adWillDismissFullScreenContent(_ ad: any GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adDidDismissFullScreenContent(_ ad: any GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func ad(_ ad: any GoogleMobileAds.GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: any Swift.Error)
+  @objc dynamic public func adDidRecordImpression(_ ad: any GoogleMobileAds.GADFullScreenPresentingAd)
+  @objc dynamic public func adDidRecordClick(_ ad: any GoogleMobileAds.GADFullScreenPresentingAd)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWRewarded : Playwire.PWFullScreenAd {
+  @objc convenience public init(adUnitName: Swift.String, delegate: (any Playwire.PWFullScreenAdDelegate)? = nil)
+  @objc override public func show(fromViewController viewController: UIKit.UIViewController)
+  @objc deinit
+}
+public typealias PWAdBid = [Swift.AnyHashable : Any]
+@_hasMissingDesignatedInitializers public class PWAdBidderConfig {
+  public var adUnit: Playwire.PWAdUnit
+  public var adUnitConfig: Playwire.PWAdUnitConfig
+  public var adServerConfig: Playwire.PWAdServerConfig
+  public var onSuccess: () -> ()
+  public var onFailure: () -> ()
+  public var bid: Playwire.PWAdBid?
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers open class PWAdBidder : ObjectiveC.NSObject {
+  public var config: Playwire.PWAdBidderConfig!
+  public var logContext: [Swift.String : Any]? {
+    get
+    set
+  }
+  @objc override required dynamic public init()
+  open func load()
+  @objc deinit
+}
+@objc public protocol PWNativeViewFactory {
+  @objc func createAdContentView(nativeView: Playwire.PWNativeView, adContent: Playwire.PWNativeViewContent) -> UIKit.UIView
+  @objc func callToActionView(nativeView: Playwire.PWNativeView, adContentView: UIKit.UIView) -> UIKit.UIView?
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class PWC : ObjectiveC.NSObject {
+  @objc public static let Version: Swift.String
+  @objc public static let EVT_gamInit: Swift.String
+  @objc public static let EVT_gamInit_status: Swift.String
+  @objc public static let EVT_ump: Swift.String
+  @objc public static let EVT_ump_result: Swift.String
+  @objc public static let EVT_CTX_bidding_index: Swift.String
+  @objc public static let EVT_CTX_bidding_adUnit: Swift.String
+  @objc public static let EVT_biddingStart: Swift.String
+  @objc public static let EVT_biddingStart_timestamp: Swift.String
+  @objc public static let EVT_biddingEnd: Swift.String
+  @objc public static let EVT_biddingEnd_timestamp: Swift.String
+  @objc public static let EVT_biddingEnd_duration: Swift.String
+  @objc public static let EVT_CTX_adUnit_mode: Swift.String
+  @objc public static let EVT_CTX_adUnit_name: Swift.String
+  @objc public static let EVT_CTX_adUnit_gadUnitId: Swift.String
+  @objc public static let EVT_CTX_requestTimestamp: Swift.String
+  @objc public static let EVT_CTX_staticTargeting: Swift.String
+  @objc public static let EVT_CTX_dynamicTargeting: Swift.String
+  @objc public static let EVT_gamRequestSuccess: Swift.String
+  @objc public static let EVT_gamRequestSuccess_response: Swift.String
+  @objc public static let EVT_gamRequestSuccess_timestamp: Swift.String
+  @objc public static let EVT_gamRequestSuccess_duration: Swift.String
+  @objc public static let EVT_gamRequestFail: Swift.String
+  @objc public static let EVT_gamRequestFail_error: Swift.String
+  @objc public static let EVT_gamRequestFail_timestamp: Swift.String
+  @objc public static let EVT_gamRequestFail_duration: Swift.String
+  @objc public static let EVT_gamImpression: Swift.String
+  @objc public static let EVT_gamImpression_timestamp: Swift.String
+  @objc public static let EVT_configMetadata: Swift.String
+  @objc public static let EVT_configMetadata_Publisher: Swift.String
+  @objc public static let EVT_configMetadata_App: Swift.String
+  @objc public static let EVT_configMetadata_Version: Swift.String
+  @objc public static let EVT_configMetadata_Backend: Swift.String
+  @objc public static let EVT_configMetadata_SkipCache: Swift.String
+  @objc public static let EVT_configMetadata_RampEnvironment: Swift.String
+  @objc public static let EVT_configMetadata_Format: Swift.String
+  @objc public static let EVT_configMetadata_Format_Platform: Swift.String
+  @objc public static let EVT_configMetadata_Format_Ramp: Swift.String
+  @objc public static let EVT_configMetadata_GitBranch: Swift.String
+  @objc public static let EVT_configMetadata_GitToken: Swift.String
+  @objc public static let EVT_configCacheSuccess: Swift.String
+  @objc public static let EVT_configCacheEmpty: Swift.String
+  @objc public static let EVT_configCacheUpdated: Swift.String
+  @objc public static let EVT_configRetry: Swift.String
+  @objc public static let EVT_configRetry_Count: Swift.String
+  @objc public static let EVT_configRetry_Total: Swift.String
+  @objc public static let EVT_configHttpError: Swift.String
+  @objc public static let EVT_configHttpError_Error: Swift.String
+  @objc public static let EVT_configHttpSuccess: Swift.String
+  @objc public static let EVT_configHttpSuccess_Config: Swift.String
+  @objc public static let EVT_configHttpFailure: Swift.String
+  @objc public static let EVT_configHttpFailure_Status: Swift.String
+  @objc public static let EVT_configHttpFailure_Retry: Swift.String
+  @objc public static let EVT_configParserSuccess: Swift.String
+  @objc public static let EVT_configParserError: Swift.String
+  @objc public static let EVT_configParserError_Empty: Swift.String
+  @objc public static let EVT_configParser_Text: Swift.String
+  @objc public static let EVT_configDataLoaderSuccess: Swift.String
+  @objc public static let EVT_configDataLoaderError: Swift.String
+  @objc public static let EVT_adInitError: Swift.String
+  @objc public static let EVT_adInitError_error: Swift.String
+  @objc public static let EVT_adInitError_error_alreadyInitialized: Swift.String
+  @objc public static let EVT_adInitError_error_noAdUnitName: Swift.String
+  @objc public static let EVT_adInitError_error_noAdUnit: Swift.String
+  @objc public static let EVT_adInitError_error_badAdUnit: Swift.String
+  @objc public static let EVT_adInitError_error_badAdUnit_modeRequired: Swift.String
+  @objc public static let EVT_adInitError_error_badAdUnit_modeConfig: Swift.String
+  @objc public static let EVT_adInitError_error_noSizes: Swift.String
+  @objc public static let EVT_adLoadError: Swift.String
+  @objc public static let EVT_adLoadError_error: Swift.String
+  @objc public static let EVT_adLoadError_error_notPrepared: Swift.String
+  @objc public static let EVT_adLoadError_error_notInternalRep: Swift.String
+  @objc public static let EVT_adLoadError_error_notLoaded: Swift.String
+  @objc public static let EVT_adLoadError_error_missingRequiredLoadParams: Swift.String
+  @objc public static let EVT_adRefreshError: Swift.String
+  @objc public static let EVT_adRefreshError_error: Swift.String
+  @objc public static let EVT_adRefreshError_error_maxReached: Swift.String
+  @objc public static let EVT_adRefreshError_error_maxReached_count: Swift.String
+  @objc public static let EVT_adRefreshError_error_early: Swift.String
+  @objc public static let EVT_adRefreshError_error_early_elapsed: Swift.String
+  @objc public static let EVT_adRefreshError_error_early_required: Swift.String
+  @objc public static let EVT_adRefreshError_error_manual: Swift.String
+  @objc public static let EVT_adRefreshEarly: Swift.String
+  @objc public static let EVT_adReward: Swift.String
+  @objc public static let EVT_adReward_type: Swift.String
+  @objc public static let EVT_adReward_amount: Swift.String
+  @objc public static let EVT_adLoadWarning: Swift.String
+  @objc public static let EVT_adLoadWarning_warning: Swift.String
+  @objc public static let EVT_adLoadWarning_warning_notProfitable: Swift.String
+  @objc public static let EVT_adLoadWarning_autoReload: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerViewBase : Playwire.PWViewAd {
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @objc deinit
+}
+extension Playwire.PWBannerViewBase : GoogleMobileAds.GADBannerViewDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidReceiveAd(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerView(_ bannerView: GoogleMobileAds.GADBannerView, didFailToReceiveAdWithError error: any Swift.Error)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidRecordImpression(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidRecordClick(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewWillPresentScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewWillDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func bannerViewDidDismissScreen(_ bannerView: GoogleMobileAds.GADBannerView)
+}
+extension Playwire.PWBannerViewBase : GoogleMobileAds.GADAdSizeDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func adView(_ bannerView: GoogleMobileAds.GADBannerView, willChangeAdSizeTo size: GoogleMobileAds.GADAdSize)
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWNativeView : Playwire.PWViewAd {
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc @_Concurrency.MainActor(unsafe) public init(adUnitName: Swift.String, controller: UIKit.UIViewController?, factory: any Playwire.PWNativeViewFactory, delegate: (any Playwire.PWViewAdDelegate)? = nil)
+  @_Concurrency.MainActor(unsafe) public var mode: Playwire.PWAdUnit.PWAdMode? {
+    get
+  }
+  @objc deinit
+}
+extension Playwire.PWNativeView : GoogleMobileAds.GADNativeAdLoaderDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func adLoader(_ adLoader: GoogleMobileAds.GADAdLoader, didReceive nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func adLoader(_ adLoader: GoogleMobileAds.GADAdLoader, didFailToReceiveAdWithError error: any Swift.Error)
+}
+extension Playwire.PWNativeView : GoogleMobileAds.GADNativeAdDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdDidRecordImpression(_ nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdDidRecordClick(_ nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdWillPresentScreen(_ nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdWillDismissScreen(_ nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdDidDismissScreen(_ nativeAd: GoogleMobileAds.GADNativeAd)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func nativeAdIsMuted(_ nativeAd: GoogleMobileAds.GADNativeAd)
+}
+@objc public protocol PWAdNetworkRegistrable {
+  @objc static func register()
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class PWLoadParams : ObjectiveC.NSObject {
+  @objc public func withTargeting(_ targeting: [Swift.String : Swift.String]) -> Playwire.PWLoadParams
+  @objc public func withWidth(_ width: CoreFoundation.CGFloat) -> Playwire.PWLoadParams
+  @objc public func withDeviceOrientation(_ orientation: UIKit.UIInterfaceOrientation) -> Playwire.PWLoadParams
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public protocol PWAdMediator {
+  @objc init()
+  @objc func setup()
+  @objc func enableGDPR(_ enabled: Swift.Bool)
+  @objc func configure(request: GoogleMobileAds.GADRequest)
+}
+extension Foundation.Date {
+  public static func timestamp() -> Swift.Int
+}
+@objc @objcMembers public class PWRampConfig : ObjectiveC.NSObject, Swift.Decodable {
+  @objc public var settings: Playwire.PWRampConfig_Settings {
+    get
+  }
+  @objc public var adUnits: [Playwire.PWRampConfig_AdUnit] {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc public class PWRampConfig_Settings : ObjectiveC.NSObject, Swift.Decodable {
+  public var publisherId: Swift.Int {
+    get
+  }
+  public var gamAppId: Swift.String {
+    get
+  }
+  public var storeUrl: Swift.String {
+    get
+  }
+  public var coppa: Swift.Bool? {
+    get
+  }
+  public var geo: Swift.Bool? {
+    get
+  }
+  public var timeout: Swift.Int? {
+    get
+  }
+  public var amazon: Playwire.PWRampConfig_Bidder? {
+    get
+  }
+  public var prebid: Playwire.PWRampConfig_Bidder? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc public class PWRampConfig_Bidder : ObjectiveC.NSObject, Swift.Decodable {
+  public var enabled: Swift.Bool {
+    get
+  }
+  public var id: Swift.String? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc public class PWRampConfig_AdUnit : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWRampConfigAdUnitUnit : Swift.String, Swift.Decodable {
+    case Banner
+    case BannerAnchored
+    case BannerInline
+    case Interstitial
+    case Rewarded
+    case AppOpenAd
+    case RewardedInterstitial
+    case Native
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public static let PWRampConfig_AdUnit_Unit_Banner: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_BannerAnchored: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_BannerInline: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_Interstitial: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_Rewarded: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_AppOpenAd: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_RewardedInterstitial: Swift.String
+  public static let PWRampConfig_AdUnit_Unit_Native: Swift.String
+  public var alias: Swift.String {
+    get
+  }
+  public var unit: Playwire.PWRampConfig_AdUnit.PWRampConfigAdUnitUnit {
+    get
+  }
+  public var code: Swift.String {
+    get
+  }
+  public var sizes: [[Swift.Int]] {
+    get
+  }
+  public var refresh: Playwire.PWRampConfigAdUnitRefresh? {
+    get
+  }
+  public var bids: [Playwire.PWRampConfig_AdUnit_Bid] {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc public class PWRampConfig_AdUnit_Bid : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWRampConfig_AdUnit_Bid_Type : Swift.String, Swift.Decodable {
+    case Amazon
+    case Prebid
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public var bidder: Playwire.PWRampConfig_AdUnit_Bid.PWRampConfig_AdUnit_Bid_Type {
+    get
+  }
+  public var params: Playwire.PWRampConfig_AdUnit_Bid_Params? {
+    get
+  }
+  public var sizes: [[Swift.Int]]? {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc public class PWRampConfig_AdUnit_Bid_Params : ObjectiveC.NSObject, Swift.Decodable {
+  public var adUnitId: Swift.String {
+    get
+  }
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_inheritsConvenienceInitializers public class PWRampConfigAdUnitRefresh : ObjectiveC.NSObject, Swift.Decodable {
+  public enum PWRampConfigAdUnitRefreshType : Swift.String, Swift.Decodable {
+    case No
+    case Auto
+    case Manual
+    case Hybrid
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public static let PWRampConfigAdUnitRefresh_No: Swift.String
+  public static let PWRampConfigAdUnitRefresh_Auto: Swift.String
+  public static let PWRampConfigAdUnitRefresh_Manual: Swift.String
+  public static let PWRampConfigAdUnitRefresh_Hybrid: Swift.String
+  public var type: Playwire.PWRampConfigAdUnitRefresh.PWRampConfigAdUnitRefreshType? {
+    get
+  }
+  public var rate: Swift.Int? {
+    get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+  required public init(from decoder: any Swift.Decoder) throws
+}
+@objc public protocol PWViewAdDelegate {
+  @objc func viewAdDidLoad(_ ad: Playwire.PWViewAd)
+  @objc func viewAdDidFailToLoad(_ ad: Playwire.PWViewAd)
+  @objc func viewAdWillPresentFullScreenContent(_ ad: Playwire.PWViewAd)
+  @objc func viewAdWillDismissFullScreenContent(_ ad: Playwire.PWViewAd)
+  @objc func viewAdDidDismissFullScreenContent(_ ad: Playwire.PWViewAd)
+  @objc func viewAdDidRecordImpression(_ ad: Playwire.PWViewAd)
+  @objc func viewAdDidRecordClick(_ ad: Playwire.PWViewAd)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @_Concurrency.MainActor(unsafe) public class PWBannerViewAnchored : Playwire.PWBannerViewBase {
+  @_Concurrency.MainActor(unsafe) public var mode: Playwire.PWAdUnit.PWAdMode? {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override public func load(params: Playwire.PWLoadParams)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PWNativeViewContent : ObjectiveC.NSObject {
+  @objc public var headline: Swift.String? {
+    @objc get
+  }
+  @objc public var body: Swift.String? {
+    @objc get
+  }
+  @objc public var callToAction: Swift.String? {
+    @objc get
+  }
+  @objc public var icon: UIKit.UIImage? {
+    @objc get
+  }
+  @objc public var image: UIKit.UIImage? {
+    @objc get
+  }
+  @objc public var mediaView: UIKit.UIView? {
+    @objc get
+  }
+  @objc public var starRating: Foundation.NSDecimalNumber? {
+    @objc get
+  }
+  @objc public var store: Swift.String? {
+    @objc get
+  }
+  @objc public var price: Swift.String? {
+    @objc get
+  }
+  @objc public var advertiser: Swift.String? {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @objcMembers public class PlaywireSDK : ObjectiveC.NSObject {
+  @objc public var config: Playwire.PWConfig? {
+    get
+  }
+  @objc public var test: Swift.Bool
+  @objc public static let shared: Playwire.PlaywireSDK
+  @objc public func initialize(publisherId: Swift.String, appId: Swift.String, viewController: UIKit.UIViewController, completionHandler: @escaping () -> Swift.Void)
+  @objc public var adUnitsDictionary: [Swift.String : [Swift.String]] {
+    @objc get
+  }
+  public func set(type: Playwire.PWAdBidder.Type, for serverType: Playwire.PWAdServerConfig.PWAdServerType)
+  public func get(factoryFor serverType: Playwire.PWAdServerConfig.PWAdServerType) -> Playwire.PWAdBidder.Type?
+  @objc public func set(type: any Playwire.PWAdMediator.Type, for mediator: Swift.String)
+  @objc open func configure(request: GoogleMobileAds.GAMRequest)
+  @objc deinit
+}
+extension Playwire.PWAdServerConfig.PWAdServerType : Swift.RawRepresentable {}
+extension Playwire.PWAdUnit.PWAdBidStrategyType : Swift.Equatable {}
+extension Playwire.PWAdUnit.PWAdBidStrategyType : Swift.Hashable {}
+extension Playwire.PWAdUnit.PWAdBidStrategyType : Swift.RawRepresentable {}
+extension Playwire.PWAdUnit.PWAdMode : Swift.Equatable {}
+extension Playwire.PWAdUnit.PWAdMode : Swift.Hashable {}
+extension Playwire.PWAdUnit.PWAdMode : Swift.RawRepresentable {}
+extension Playwire.PWAdMediatorConfig.PWAdMediatorType : Swift.Equatable {}
+extension Playwire.PWAdMediatorConfig.PWAdMediatorType : Swift.Hashable {}
+extension Playwire.PWAdMediatorConfig.PWAdMediatorType : Swift.RawRepresentable {}
+extension Playwire.PWRampConfig_AdUnit.PWRampConfigAdUnitUnit : Swift.Equatable {}
+extension Playwire.PWRampConfig_AdUnit.PWRampConfigAdUnitUnit : Swift.Hashable {}
+extension Playwire.PWRampConfig_AdUnit.PWRampConfigAdUnitUnit : Swift.RawRepresentable {}
+extension Playwire.PWRampConfig_AdUnit_Bid.PWRampConfig_AdUnit_Bid_Type : Swift.Equatable {}
+extension Playwire.PWRampConfig_AdUnit_Bid.PWRampConfig_AdUnit_Bid_Type : Swift.Hashable {}
+extension Playwire.PWRampConfig_AdUnit_Bid.PWRampConfig_AdUnit_Bid_Type : Swift.RawRepresentable {}
+extension Playwire.PWRampConfigAdUnitRefresh.PWRampConfigAdUnitRefreshType : Swift.Equatable {}
+extension Playwire.PWRampConfigAdUnitRefresh.PWRampConfigAdUnitRefreshType : Swift.Hashable {}
+extension Playwire.PWRampConfigAdUnitRefresh.PWRampConfigAdUnitRefreshType : Swift.RawRepresentable {}
