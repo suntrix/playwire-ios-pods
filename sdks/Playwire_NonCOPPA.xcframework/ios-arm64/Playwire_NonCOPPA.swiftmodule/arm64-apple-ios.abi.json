@@ -2180,63 +2180,77 @@
     {
       "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/Playwire_NonCOPPA\/Prebid\/PWAdBidder_Prebid.swift",
       "kind": "IntegerLiteral",
-      "offset": 3213,
+      "offset": 2155,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/Playwire_NonCOPPA\/Prebid\/PWAdBidder_Prebid.swift",
+      "kind": "StringLiteral",
+      "offset": 2355,
+      "length": 5,
+      "value": "\"\/id\""
+    },
+    {
+      "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/Playwire_NonCOPPA\/Prebid\/PWAdBidder_Prebid.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3580,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/Playwire_NonCOPPA\/Prebid\/PWAdBidder_Prebid.swift",
       "kind": "IntegerLiteral",
-      "offset": 3480,
+      "offset": 3847,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/Playwire_NonCOPPA\/Prebid\/PWAdBidder_Prebid.swift",
       "kind": "StringLiteral",
-      "offset": 4420,
+      "offset": 4787,
       "length": 7,
       "value": "\"hb_pb\""
     },
     {
       "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/Playwire_NonCOPPA\/Prebid\/PWAdBidder_Prebid.swift",
       "kind": "StringLiteral",
-      "offset": 4635,
+      "offset": 5002,
       "length": 8,
       "value": "\"hb_val\""
     },
     {
       "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/Playwire_NonCOPPA\/Prebid\/PWAdBidder_Prebid.swift",
       "kind": "StringLiteral",
-      "offset": 4662,
+      "offset": 5029,
       "length": 6,
       "value": "\"%.2f\""
     },
     {
       "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/Playwire_NonCOPPA\/Prebid\/PWAdBidder_Prebid.swift",
       "kind": "BooleanLiteral",
-      "offset": 4871,
+      "offset": 5238,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/Playwire_NonCOPPA\/Prebid\/PWAdBidder_Prebid.swift",
       "kind": "BooleanLiteral",
-      "offset": 5486,
+      "offset": 5853,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/Playwire_NonCOPPA\/Prebid\/PWAdBidder_Prebid.swift",
       "kind": "BooleanLiteral",
-      "offset": 6923,
+      "offset": 7290,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/Playwire_NonCOPPA\/Prebid\/PWAdBidder_Prebid.swift",
       "kind": "BooleanLiteral",
-      "offset": 7538,
+      "offset": 7905,
       "length": 4,
       "value": "true"
     },

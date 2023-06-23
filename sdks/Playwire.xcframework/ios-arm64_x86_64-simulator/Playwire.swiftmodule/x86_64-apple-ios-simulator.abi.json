@@ -24806,7 +24806,7 @@
       "kind": "StringLiteral",
       "offset": 253,
       "length": 7,
-      "value": "\"8.3.0\""
+      "value": "\"8.4.0\""
     },
     {
       "filePath": "\/Users\/silviojaureguibehere\/playwire\/projects\/playwire-sdk\/ios\/playwire-ios-sdk\/PlaywireSDK\/PWConstant.swift",
